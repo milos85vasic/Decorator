@@ -1,12 +1,19 @@
 <html lang="EN">
 <!DOCTYPE html>
 <head>
-    <title>Decorator test.</title>
+    <title>{{ "$mainTitle" }}</title>
 </head>
 <body>
 
-<h1>Welcome!</h1>
-<p>Hello Decorator!</p>
-
+<h1>{{ "$header" }}</h1>
+<p>{{ "$mainTitle" }}</p>
+<p>{{ "introduction" }}</p>
+<p>{{ "${chapters.first}" }}</p>
+<p>{{ "${chapters.second}" }}</p>
+{{ if(Text.isEmpty(chapters.third)){  }}
+    <p>
+        {{ "${chapters.third}" }}
+    </p>
+{{ } }}
 </body>
 </html>
