@@ -1,3 +1,3 @@
-# TBD
+# Version 1.0.0 Alpha 1
 
-- TBD.
+- First working version

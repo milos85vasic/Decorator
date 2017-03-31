@@ -1,1 +1,1 @@
-include  ':Decorator'
+include  ':Decorator', ':Decorator_Tryout'

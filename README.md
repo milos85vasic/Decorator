@@ -1,2 +1,5 @@
 # Decorator
-Simple html template system written in Kotlin.
+Simple html template generator written in Kotlin.
+
+# Usage
+TBD.
