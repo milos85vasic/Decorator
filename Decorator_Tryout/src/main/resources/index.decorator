@@ -1,2 +1,12 @@
-<html>
+<html lang="EN">
+<!DOCTYPE html>
+<head>
+    <title>Decorator test.</title>
+</head>
+<body>
+
+<h1>Welcome!</h1>
+<p>Hello Decorator!</p>
+
+</body>
 </html>
