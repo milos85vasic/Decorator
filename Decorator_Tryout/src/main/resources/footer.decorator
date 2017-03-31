@@ -1,0 +1,4 @@
+<!-- <dc> "${decorator.describe()}" </dc> -->
+<p>
+    <dc>"$footer"</dc>
+</p>
