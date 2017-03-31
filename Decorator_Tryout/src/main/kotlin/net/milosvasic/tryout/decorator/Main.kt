@@ -6,5 +6,6 @@ fun main(args: Array<String>) {
 
     val decorator = Decorator()
     val html = decorator.decorate("index")
+    println(html)
 
 }
