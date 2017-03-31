@@ -39,6 +39,10 @@ groot.kotlin.project.setup(
 	projectPackage
 )
 
+dependencies {
+	compile project(":Decorator")
+}
+
 String fullPackage = groot.kotlin.project.projectPackage
 String fullVersion = groot.kotlin.project.projectVersion
 
