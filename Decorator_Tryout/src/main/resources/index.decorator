@@ -1,28 +1,30 @@
-<!-- <dc> "${decorator.describe()}" </dc> -->
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<dc> decorator.describe() </dc>
 <head>
-    <title><dc>"$mainTitle"</dc></title>
+    <title><dc>decorator.println("$mainTitle by Milos Vasic")</dc></title>
 </head>
 <body>
 
 // Single line comment
-<h1><dc>"$header"</dc></h1>
+<h1><dc>decorator.println(header)</dc></h1>
 
 /*
     Some multiline comment
     as example.
 */
-<p><dc>"$mainTitle"</dc></p>
-<p><dc>"introduction"</dc></p>
-<p><dc>"${chapters.first}"</dc></p>
-<p><dc>"${chapters.second}"</dc></p>
+<p><dc>decorator.println(mainTitle)</dc></p>
+<p><dc>decorator.println(introduction)</dc></p>
+<p><dc>decorator.println(chapters.first)</dc></p>
+<p><dc>decorator.println(chapters.second)</dc></p>
 
 <dc> if(Text.isEmpty(chapters.third)){  </dc>
-    <p><dc>"${chapters.third}"</dc></p>
+    <p><dc>decorator.println(chapters.third)</dc></p>
+<dc> } else if(chapters.third == "special") { </dc>
+    <p>decorator.println("Some nice Kotlin string: ${chapters.special}")</p>
 <dc> } else { </dc>
     <p>- - -</p>
 <dc> } </dc>
+
+<dc> decorator.include("footer") </dc>
+
 </body>
 </html>
