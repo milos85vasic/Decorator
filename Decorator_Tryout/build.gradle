@@ -26,8 +26,8 @@ final beta = 0
 final version = 1
 final secondaryVersion = 0
 final tertiaryVersion = 0
-final projectPackage = "net.milosvasic.tryout"
-final projectGroup = "decorator"
+final projectPackage = "decorator"
+final projectGroup = "net.milosvasic.tryout"
 
 groot.kotlin.project.setup(
 	alpha,
