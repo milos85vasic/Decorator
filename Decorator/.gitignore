@@ -2,5 +2,4 @@
 # Git ignore for module ':Decorator'
 build/*
 credentials*.gradle
-!Decorator_Templating_System.jar
                 
