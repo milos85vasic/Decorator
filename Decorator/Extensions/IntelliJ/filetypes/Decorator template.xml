@@ -1,9 +1,9 @@
 <filetype binary="false" description="Decorator template files" name="Decorator template">
   <highlighting>
     <options>
-      <option name="LINE_COMMENT" value="<dc> //" />
-      <option name="COMMENT_START" value="<dc> /*" />
-      <option name="COMMENT_END" value="<dc> */" />
+      <option name="LINE_COMMENT" value="//" />
+      <option name="COMMENT_START" value="/*" />
+      <option name="COMMENT_END" value="*/" />
       <option name="HEX_PREFIX" value="" />
       <option name="NUM_POSTFIXES" value="" />
       <option name="HAS_BRACES" value="true" />
