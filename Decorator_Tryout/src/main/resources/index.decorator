@@ -1,19 +1,21 @@
 <html lang="EN">
 <!DOCTYPE html>
 <head>
-    <title>{{ "$mainTitle" }}</title>
+    <title><dc>"$mainTitle"</dc></title>
 </head>
 <body>
 
-<h1>{{ "$header" }}</h1>
-<p>{{ "$mainTitle" }}</p>
-<p>{{ "introduction" }}</p>
-<p>{{ "${chapters.first}" }}</p>
-<p>{{ "${chapters.second}" }}</p>
-{{ if(Text.isEmpty(chapters.third)){  }}
-    <p>
-        {{ "${chapters.third}" }}
-    </p>
-{{ } }}
+<h1><dc>"$header"</dc></h1>
+
+<p><dc>"$mainTitle"</dc></p>
+<p><dc>"introduction"</dc></p>
+<p><dc>"${chapters.first}"</dc></p>
+<p><dc>"${chapters.second}"</dc></p>
+
+<dc> if(Text.isEmpty(chapters.third)){  </dc>
+    <p><dc>"${chapters.third}"</dc></p>
+<dc> } else { </dc>
+    <p>- - -</p>
+<dc> } </dc>
 </body>
 </html>
