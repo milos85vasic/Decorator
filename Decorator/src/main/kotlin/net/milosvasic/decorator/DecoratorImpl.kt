@@ -33,6 +33,7 @@ class DecoratorImpl : Decorator {
         }
         rows.forEachIndexed {
             index, line ->
+            var renderedLine = line
             if (decoratedRows.containsKey(index)) {
                 decoratedRows[index]?.forEach {
                     row ->
@@ -41,21 +42,21 @@ class DecoratorImpl : Decorator {
                             .replace(closingTag, "")
                     val evaluationResult = evaluate(decoration)
                     when (evaluationResult) {
-                        is ContentResult -> rendered.append(evaluationResult.content)
+                        is ContentResult -> {
+                            renderedLine = line.replace(row, evaluationResult.content)
+                        }
                     }
                 }
-            } else {
-                rendered
-                        .append(line)
-                        .append("\n")
+
             }
+            rendered.append("$renderedLine\n")
         }
         return rendered.toString()
     }
 
     fun evaluate(line: String): EvaluationResult {
         println("EVAL: $line")
-        return ContentResult("- - - - - - -\n")
+        return ContentResult("[ ... ]")
     }
 
 }
