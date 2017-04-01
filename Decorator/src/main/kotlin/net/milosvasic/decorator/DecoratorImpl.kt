@@ -1,5 +1,7 @@
 package net.milosvasic.decorator
 
+import net.milosvasic.decorator.evaluation.ContentResult
+import net.milosvasic.decorator.evaluation.EvaluationResult
 import java.util.regex.Pattern
 
 class DecoratorImpl : Decorator {
@@ -37,9 +39,9 @@ class DecoratorImpl : Decorator {
                     val decoration = row
                             .replace(openingTag, "")
                             .replace(closingTag, "")
-                    val evaluateResult = evaluate(decoration)
-                    when (evaluateResult) {
-                        is String -> rendered.append(evaluateResult)
+                    val evaluationResult = evaluate(decoration)
+                    when (evaluationResult) {
+                        is ContentResult -> rendered.append(evaluationResult.content)
                     }
                 }
             } else {
@@ -51,9 +53,9 @@ class DecoratorImpl : Decorator {
         return rendered.toString()
     }
 
-    fun evaluate(line: String): Any {
+    fun evaluate(line: String): EvaluationResult {
         println("EVAL: $line")
-        return ""
+        return ContentResult("- - - - - - -\n")
     }
 
 }
