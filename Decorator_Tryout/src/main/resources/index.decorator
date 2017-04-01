@@ -1,4 +1,5 @@
 <dc> decorator.describe() </dc>
+<html>
 <head>
     <title><dc>decorator.println("$mainTitle by Milos Vasic")</dc></title>
 </head>
@@ -29,7 +30,7 @@
 <dc> decorator.println(chapters.last) </dc>
 
 <p>
-    <dc>decorator.println(stuff[1])</dc> and <dc>decorator.println(stuff[2])</dc>
+    <dc>decorator.println(stuff[1])</dc> and <dc>decorator.println(stuff[2])</dc> and <dc>decorator.println(stuff[3])</dc>
 </p>
 
 </body>

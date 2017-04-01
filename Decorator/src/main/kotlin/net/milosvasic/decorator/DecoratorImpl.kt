@@ -2,10 +2,12 @@ package net.milosvasic.decorator
 
 import net.milosvasic.decorator.evaluation.ContentResult
 import net.milosvasic.decorator.evaluation.EvaluationResult
+import net.milosvasic.logger.SimpleLogger
 import java.util.regex.Pattern
 
 class DecoratorImpl : Decorator {
 
+    private val logger = SimpleLogger()
     override val openingTag: String = "<dc>"
     override val closingTag: String = "</dc>"
     override val templateExtension = "decorator"
@@ -28,8 +30,12 @@ class DecoratorImpl : Decorator {
             if (!commands.isEmpty()) {
                 decoratedRows[index] = commands
             }
+
             // TODO: To be removed.
-            commands.forEach(::println)
+            commands.forEach {
+                item ->
+                logger.v("", item)
+            }
         }
         rows.forEachIndexed {
             index, line ->
@@ -40,10 +46,11 @@ class DecoratorImpl : Decorator {
                     val decoration = row
                             .replace(openingTag, "")
                             .replace(closingTag, "")
+                            .trim()
                     val evaluationResult = evaluate(decoration)
                     when (evaluationResult) {
                         is ContentResult -> {
-                            renderedLine = line.replace(row, evaluationResult.content)
+                            renderedLine = renderedLine.replace(row, evaluationResult.content)
                         }
                     }
                 }
@@ -55,7 +62,7 @@ class DecoratorImpl : Decorator {
     }
 
     fun evaluate(line: String): EvaluationResult {
-        println("EVAL: $line")
+        logger.d("", line)
         return ContentResult("[ ... ]")
     }
 

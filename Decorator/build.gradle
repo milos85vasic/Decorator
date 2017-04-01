@@ -18,6 +18,7 @@ apply plugin: "groot-kotlin"
 apply plugin: "groot-credentials"
 
 groot.registerRepository("http://repo.milosvasic.net/releases")
+groot.depend("net.milosvasic.logger", "Logger", "1.2.1")
 
 groot.kotlin.version = "1.1.1"
 
