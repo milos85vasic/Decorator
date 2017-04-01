@@ -26,5 +26,7 @@
 
 <dc> decorator.include("footer") </dc>
 
+<dc> decorator.println(chapters.last) </dc>
+
 </body>
 </html>
