@@ -13,21 +13,27 @@ class DecoratorImpl : Decorator {
         var rendered = StringBuilder()
         val content = templateFile.readText()
         val rows = content.split("\n")
-        val decoratedRows = mutableMapOf<Int, String>()
+        val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
             val p = Pattern.compile("$openingTag(.+?)$closingTag")
             val m = p.matcher(line)
+            val commands = mutableListOf<String>()
             while (m.find()) {
-                val result = m
-                        .group()
-                        .replace(openingTag, "")
-                        .replace(closingTag, "")
-                        .trim()
-                decoratedRows[index] = result
-                println(result)
+                val result = m.group()
+                commands.add(result)
             }
+            decoratedRows[index] = commands
+            commands.forEach(::println)
         }
+
+
+        /*
+            .replace(openingTag, "")
+            .replace(closingTag, "")
+            .trim()
+         */
+
         return rendered.toString()
     }
 
