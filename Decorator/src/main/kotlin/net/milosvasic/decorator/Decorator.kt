@@ -1,13 +1,9 @@
 package net.milosvasic.decorator
 
-class Decorator {
+interface Decorator {
 
-    val templateExtension = "decorator"
+    val templateExtension : String
 
-    fun decorate(template: String): String {
-        val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
-        val content = templateFile.readText()
-        return content
-    }
+    fun decorate(template: String): String
 
 }
