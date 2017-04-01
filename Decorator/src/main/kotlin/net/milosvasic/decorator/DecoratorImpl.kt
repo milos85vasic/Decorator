@@ -23,7 +23,7 @@ class DecoratorImpl : Decorator {
                 val result = m.group()
                 commands.add(result)
             }
-            if(!commands.isEmpty()) {
+            if (!commands.isEmpty()) {
                 decoratedRows[index] = commands
             }
             // TODO: To be removed.
@@ -37,7 +37,10 @@ class DecoratorImpl : Decorator {
                     val decoration = row
                             .replace(openingTag, "")
                             .replace(closingTag, "")
-                    println(">>>>     $decoration")
+                    val evaluateResult = evaluate(decoration)
+                    when (evaluateResult) {
+                        is String -> rendered.append(evaluateResult)
+                    }
                 }
             } else {
                 rendered
@@ -46,6 +49,11 @@ class DecoratorImpl : Decorator {
             }
         }
         return rendered.toString()
+    }
+
+    fun evaluate(line: String): Any {
+        println("EVAL: $line")
+        return ""
     }
 
 }
