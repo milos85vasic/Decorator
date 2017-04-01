@@ -2,7 +2,7 @@ package net.milosvasic.decorator
 
 import net.milosvasic.decorator.template.TemplateClass
 
-interface TemplatingSystem {
+interface TemplateSystem {
 
     val openingTag : String
     val closingTag : String
