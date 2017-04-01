@@ -9,8 +9,8 @@ class DecoratorImpl : Decorator {
     override val templateExtension = "decorator"
 
     override fun decorate(template: String): String {
-        val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
         var rendered = StringBuilder()
+        val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
         val content = templateFile.readText()
         val rows = content.split("\n")
         val decoratedRows = mutableMapOf<Int, List<String>>()
@@ -23,17 +23,28 @@ class DecoratorImpl : Decorator {
                 val result = m.group()
                 commands.add(result)
             }
-            decoratedRows[index] = commands
+            if(!commands.isEmpty()) {
+                decoratedRows[index] = commands
+            }
+            // TODO: To be removed.
             commands.forEach(::println)
         }
-
-
-        /*
-            .replace(openingTag, "")
-            .replace(closingTag, "")
-            .trim()
-         */
-
+        rows.forEachIndexed {
+            index, line ->
+            if (decoratedRows.containsKey(index)) {
+                decoratedRows[index]?.forEach {
+                    row ->
+                    val decoration = row
+                            .replace(openingTag, "")
+                            .replace(closingTag, "")
+                    println(">>>>     $decoration")
+                }
+            } else {
+                rendered
+                        .append(line)
+                        .append("\n")
+            }
+        }
         return rendered.toString()
     }
 

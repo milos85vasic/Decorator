@@ -19,7 +19,7 @@
 <dc> if(Text.isEmpty(chapters.third)){  </dc>
     <p><dc>decorator.println(chapters.third)</dc></p>
 <dc> } else if(chapters.third == "special") { </dc>
-    <p>decorator.println("Some nice Kotlin string: ${chapters.special}")</p>
+    <p><dc>decorator.println("Some nice Kotlin string: ${chapters.special}")</dc></p>
 <dc> } else { </dc>
     <p>- - -</p>
 <dc> } </dc>
