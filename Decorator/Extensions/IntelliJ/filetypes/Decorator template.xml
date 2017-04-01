@@ -13,7 +13,7 @@
     </options>
     <keywords keywords="do;else;for;if;switch;while" ignore_case="false" />
     <keywords2 keywords="&lt;/dc&gt;;&lt;dc&gt;" />
-    <keywords3 keywords="--&gt;;&lt;!--;&lt;!DOCTYPE&gt;;&lt;/a&gt;;&lt;/body&gt;;&lt;/dl&gt;;&lt;/h1&gt;;&lt;/h2&gt;;&lt;/h3&gt;;&lt;/h4&gt;;&lt;/head&gt;;&lt;/html&gt;;&lt;/li&gt;;&lt;/meta&gt;;&lt;/p&gt;;&lt;/span&gt;;&lt;/title&gt;;&lt;/ul&gt;;&lt;a&gt;;&lt;body&gt;;&lt;dl&gt;;&lt;h1&gt;;&lt;h2&gt;;&lt;h3&gt;;&lt;h4&gt;;&lt;head&gt;;&lt;html&gt;;&lt;li&gt;;&lt;meta&gt;;&lt;p&gt;;&lt;span&gt;;&lt;title&gt;;&lt;ul&gt;" />
+    <keywords3 keywords="--&gt;;&lt;!--;&lt;!DOCTYPE&gt;;&lt;/a&gt;;&lt;/body&gt;;&lt;/dl&gt;;&lt;/h1&gt;;&lt;/h2&gt;;&lt;/h3&gt;;&lt;/h4&gt;;&lt;/head&gt;;&lt;/html&gt;;&lt;/li&gt;;&lt;/meta&gt;;&lt;/p&gt;;&lt;/span&gt;;&lt;/table&gt;;&lt;/td&gt;;&lt;/title&gt;;&lt;/tr&gt;;&lt;/ul&gt;;&lt;a&gt;;&lt;body&gt;;&lt;dl&gt;;&lt;h1&gt;;&lt;h2&gt;;&lt;h3&gt;;&lt;h4&gt;;&lt;head&gt;;&lt;html&gt;;&lt;li&gt;;&lt;meta&gt;;&lt;p&gt;;&lt;span&gt;;&lt;table&gt;;&lt;td&gt;;&lt;title&gt;;&lt;tr&gt;;&lt;ul&gt;" />
   </highlighting>
   <extensionMap>
     <mapping ext="decorator" />
