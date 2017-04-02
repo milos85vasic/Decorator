@@ -66,16 +66,50 @@ class Decorator : TemplateSystem {
 
     fun evaluate(template: String, line: String, position: Int): EvaluationResult {
         logger.d("", line)
-        val p = Pattern.compile("(\\w+)")
-        val m = p.matcher(line)
+
         val params = mutableListOf<String>()
         val clazzName = this::class.simpleName?.toLowerCase()
-        while (m.find()) {
-            val param = m.group(0)
-            params.add(param)
-            logger.c("", "PARAM: [ $param ]") // TODO: Remove this logs.
-            logger.c("", "- - - - - -")
+        val patterns = listOf(
+                "(\\w+).(\\w+)\\((.+?)\\)",
+                "(\\w+).(\\w+)()"
+        )
+        patterns.forEach {
+            pattern ->
+            val p = Pattern.compile(pattern)
+            val m = p.matcher(line)
+            while (m.find()) {
+                logger.w("", "Pattern matched: $pattern")
+                (0..m.groupCount() - 1)
+                        .map { m.group(it) }
+                        .forEach { logger.w("", ">>>>> $it") }
+//                val param = m.group(1)
+//                val param2 = m.group(2)
+//                val param3 = m.group(2)
+//                params.add(param)
+//                params.add(param2)
+//                params.add(param3)
+                return@forEach
+            }
         }
+
+//        val p = Pattern.compile("\"(.+?)\"")
+
+//        val p2 = Pattern.compile("(\\w+)")
+
+//        val m2 = p2.matcher(line)
+
+
+//        while (m2.find()) {
+//            val param = m2.group(0)
+//            params.add(param)
+//        }
+
+        params.forEach {
+            param ->
+            logger.c("", "PARAM: [ $param ]") // TODO: Remove this logs.
+        }
+        logger.c("", "- - - - - -")
+
         if (!params.isEmpty()) {
             if (params[0] == clazzName) {
                 if (params.size == 1) {
