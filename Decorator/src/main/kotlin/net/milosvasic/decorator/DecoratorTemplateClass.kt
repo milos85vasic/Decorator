@@ -1,7 +1,7 @@
-package net.milosvasic.decorator.template
+package net.milosvasic.decorator
 
-import net.milosvasic.decorator.BuildConfig
-import net.milosvasic.decorator.Decorator
+
+import net.milosvasic.decorator.template.TemplateClass
 
 class DecoratorTemplateClass : TemplateClass {
 

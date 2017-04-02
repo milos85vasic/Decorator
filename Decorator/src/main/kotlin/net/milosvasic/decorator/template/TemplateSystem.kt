@@ -1,4 +1,4 @@
-package net.milosvasic.decorator
+package net.milosvasic.decorator.template
 
 import net.milosvasic.decorator.template.TemplateClass
 

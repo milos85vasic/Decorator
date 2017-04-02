@@ -17,6 +17,8 @@
 <p><dc>decorator.println(chapters.first)</dc></p>
 <p><dc>decorator.println(chapters.second)</dc></p>
 
+<dc>decorator.describe(12)</dc>
+
 <dc> if(Text.isEmpty(chapters.third)){  </dc>
     <p><dc>decorator.println(chapters.third)</dc></p>
 <dc> } else if(chapters.third == "special") { </dc>

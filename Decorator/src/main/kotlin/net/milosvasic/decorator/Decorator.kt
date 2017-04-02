@@ -3,20 +3,22 @@ package net.milosvasic.decorator
 import net.milosvasic.decorator.content.Messages
 import net.milosvasic.decorator.evaluation.ContentResult
 import net.milosvasic.decorator.evaluation.EvaluationResult
-import net.milosvasic.decorator.template.DecoratorTemplateClass
+import net.milosvasic.decorator.template.TemplateSystem
 import net.milosvasic.logger.SimpleLogger
 import java.util.regex.Pattern
 
 class Decorator : TemplateSystem {
 
     private val logger = SimpleLogger()
+    private val commands = DecoratorCommands
+
     override val openingTag: String = "<dc>"
     override val closingTag: String = "</dc>"
     override val templateExtension = "decorator"
     override val templateMainClass = DecoratorTemplateClass()
 
     override fun decorate(template: String): String {
-        var rendered = StringBuilder()
+        val rendered = StringBuilder()
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
         val content = templateFile.readText()
         val rows = content.split("\n")
@@ -50,7 +52,7 @@ class Decorator : TemplateSystem {
                             .replace(openingTag, "")
                             .replace(closingTag, "")
                             .trim()
-                    val evaluationResult = evaluate(decoration, index)
+                    val evaluationResult = evaluate(template, decoration, index)
                     when (evaluationResult) {
                         is ContentResult -> {
                             renderedLine = renderedLine.replace(row, evaluationResult.content)
@@ -64,7 +66,7 @@ class Decorator : TemplateSystem {
         return rendered.toString()
     }
 
-    fun evaluate(line: String, position: Int): EvaluationResult {
+    fun evaluate(template: String, line: String, position: Int): EvaluationResult {
         logger.d("", line)
         val p = Pattern.compile("(\\w+)")
         val m = p.matcher(line)
@@ -81,25 +83,27 @@ class Decorator : TemplateSystem {
                 clazzName -> {
                     if (params.size == 1) {
                         throw IllegalArgumentException(
-                                Messages.NO_ARGUMENTS_PROVIDED_FOR(clazzName, position)
+                                Messages.NO_ARGUMENTS_PROVIDED_FOR(clazzName, template, position)
                         )
                     } else {
                         when (params[1]) {
-                            "describe" -> {
-                                if (params.size > 2) {
+                            commands.describe.name -> {
+                                if (params.size > 2 + commands.describe.parameters.size) {
                                     throw IllegalArgumentException(
                                             Messages.INVALID_ARGUMENTS_PASSED(
-                                                    "$clazzName.${params[1]}", position
+                                                    "$clazzName.${params[1]}",
+                                                    template,
+                                                    position
                                             )
                                     )
                                 }
                                 return ContentResult(templateMainClass.describe())
                             }
-                            else -> throw IllegalArgumentException(
-                                    Messages.UNKNOWN_OPERATION(
-                                            "$clazzName.${params[1]}", position
-                                    )
-                            )
+//                            else -> throw IllegalArgumentException(
+//                                    Messages.UNKNOWN_OPERATION(
+//                                            "$clazzName.${params[1]}", position
+//                                    )
+//                            )
                         }
                     }
                 }
