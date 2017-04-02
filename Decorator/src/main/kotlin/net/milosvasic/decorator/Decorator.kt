@@ -85,20 +85,17 @@ class Decorator : TemplateSystem {
                 } else {
                     val command = templateMainClass.commands[params[1]]
                     if (command != null) {
-                        if (params.size > 2 + command.parameters.size) {
-                            throw IllegalArgumentException(
-                                    Messages.INVALID_ARGUMENTS_PASSED(
-                                            "$clazzName.${params[1]}",
-                                            template,
-                                            position
-                                    )
-                            )
-                        }
                         val commandParams = mutableListOf<String>()
-                        if (params.size >= 2) {
+                        if (params.size > 2) {
                             commandParams.addAll(params.subList(2, params.lastIndex))
                         }
-                        return command.invoke(commandParams)
+                        try {
+                            return command.invoke(commandParams)
+                        } catch (e: IllegalArgumentException) {
+                            throw IllegalArgumentException(
+                                    "${e.message}\n\t\ttemplate: $template.decorator\n\t\tline: $position"
+                            )
+                        }
                     } else {
                         throw IllegalArgumentException(
                                 Messages.UNKNOWN_OPERATION(

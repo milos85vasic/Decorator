@@ -15,7 +15,7 @@ object Messages {
     }
 
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
-        return "Could no invoke '$what' with arguments: $args"
+        return "Could no invoke '$what'\n\t\targuments: $args"
     }
 
     private fun describe(what: String, who: String, where: Int): String {
