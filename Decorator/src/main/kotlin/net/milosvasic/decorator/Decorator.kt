@@ -10,8 +10,6 @@ import java.util.regex.Pattern
 class Decorator : TemplateSystem {
 
     private val logger = SimpleLogger()
-    private val commands = DecoratorCommands
-
     override val openingTag: String = "<dc>"
     override val closingTag: String = "</dc>"
     override val templateExtension = "decorator"
@@ -87,8 +85,8 @@ class Decorator : TemplateSystem {
                         )
                     } else {
                         when (params[1]) {
-                            commands.describe.name -> {
-                                if (params.size > 2 + commands.describe.parameters.size) {
+                            templateMainClass.describe.name -> {
+                                if (params.size > 2 + templateMainClass.describe.parameters.size) {
                                     throw IllegalArgumentException(
                                             Messages.INVALID_ARGUMENTS_PASSED(
                                                     "$clazzName.${params[1]}",
@@ -97,13 +95,15 @@ class Decorator : TemplateSystem {
                                             )
                                     )
                                 }
-                                return ContentResult(templateMainClass.describe())
+                                return ContentResult(templateMainClass.describe.describe())
                             }
-//                            else -> throw IllegalArgumentException(
-//                                    Messages.UNKNOWN_OPERATION(
-//                                            "$clazzName.${params[1]}", position
-//                                    )
-//                            )
+                            else -> throw IllegalArgumentException(
+                                    Messages.UNKNOWN_OPERATION(
+                                            "$clazzName.${params[1]}",
+                                            template,
+                                            position
+                                    )
+                            )
                         }
                     }
                 }
