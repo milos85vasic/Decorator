@@ -1,6 +1,5 @@
 package net.milosvasic.decorator.template
 
-import net.milosvasic.decorator.template.TemplateClass
 
 interface TemplateSystem {
 

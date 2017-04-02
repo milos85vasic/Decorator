@@ -14,6 +14,10 @@ object Messages {
         return "Invalid arguments passed to ${describe(what, who, where)}"
     }
 
+    fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
+        return "Could no invoke '$what' with arguments: $args"
+    }
+
     private fun describe(what: String, who: String, where: Int): String {
         return "'$what' from '$who.decorator' at line: ${where + 1}"
     }

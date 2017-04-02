@@ -7,8 +7,11 @@ import net.milosvasic.decorator.template.TemplateClass
 
 class DecoratorTemplateClass : TemplateClass {
 
-    val describe = DescribeCommand()
-    val println = PrintlnCommand()
+    override val commands = mapOf(
+            Pair("describe", DescribeCommand()),
+            Pair("println", PrintlnCommand()),
+            Pair("echo", PrintlnCommand()) // Synonym for println
+    )
 
 }
 

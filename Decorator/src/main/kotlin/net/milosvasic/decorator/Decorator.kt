@@ -77,37 +77,41 @@ class Decorator : TemplateSystem {
             logger.c("", "- - - - - -")
         }
         if (!params.isEmpty()) {
-            when (params[0]) {
-                clazzName -> {
-                    if (params.size == 1) {
-                        throw IllegalArgumentException(
-                                Messages.NO_ARGUMENTS_PROVIDED_FOR(clazzName, template, position)
-                        )
-                    } else {
-                        when (params[1]) {
-                            templateMainClass.describe.name -> {
-                                if (params.size > 2 + templateMainClass.describe.parameters.size) {
-                                    throw IllegalArgumentException(
-                                            Messages.INVALID_ARGUMENTS_PASSED(
-                                                    "$clazzName.${params[1]}",
-                                                    template,
-                                                    position
-                                            )
-                                    )
-                                }
-                                return ContentResult(templateMainClass.describe.describe())
-                            }
-                            else -> throw IllegalArgumentException(
-                                    Messages.UNKNOWN_OPERATION(
+            if (params[0] == clazzName) {
+                if (params.size == 1) {
+                    throw IllegalArgumentException(
+                            Messages.NO_ARGUMENTS_PROVIDED_FOR(clazzName, template, position)
+                    )
+                } else {
+                    val command = templateMainClass.commands[params[1]]
+                    if (command != null) {
+                        if (params.size > 2 + command.parameters.size) {
+                            throw IllegalArgumentException(
+                                    Messages.INVALID_ARGUMENTS_PASSED(
                                             "$clazzName.${params[1]}",
                                             template,
                                             position
                                     )
                             )
                         }
+                        val commandParams = mutableListOf<String>()
+                        if (params.size >= 2) {
+                            commandParams.addAll(params.subList(2, params.lastIndex))
+                        }
+                        return command.invoke(commandParams)
+                    } else {
+                        throw IllegalArgumentException(
+                                Messages.UNKNOWN_OPERATION(
+                                        "$clazzName.${params[1]}",
+                                        template,
+                                        position
+                                )
+                        )
                     }
                 }
             }
+        } else {
+            // TODO: Handle other than decorator methods.
         }
         return ContentResult("[ ... ]")
     }
