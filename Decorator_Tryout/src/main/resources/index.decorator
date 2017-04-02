@@ -16,6 +16,7 @@
 <p><dc>decorator.println(introduction)</dc></p>
 <p><dc>decorator.println(chapters.first)</dc></p>
 <p><dc>decorator.println(chapters.second)</dc></p>
+<p><dc>decorator.println(1985)</dc></p>
 
 <dc> if(Text.isEmpty(chapters.third)){  </dc>
     <p><dc>decorator.println(chapters.third)</dc></p>

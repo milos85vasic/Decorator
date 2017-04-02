@@ -73,7 +73,7 @@ class Decorator : TemplateSystem {
         while (m.find()) {
             val param = m.group(0)
             params.add(param)
-            logger.c("", "PARAM: [ $param ]")
+            logger.c("", "PARAM: [ $param ]") // TODO: Remove this logs.
             logger.c("", "- - - - - -")
         }
         if (!params.isEmpty()) {
@@ -110,7 +110,7 @@ class Decorator : TemplateSystem {
         } else {
             // TODO: Handle other than decorator methods.
         }
-        return ContentResult("[ ... ]")
+        return ContentResult("[ ... ]") // TODO: Update this to different value.
     }
 
 }
