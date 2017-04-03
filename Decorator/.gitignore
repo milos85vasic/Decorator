@@ -1,5 +1,3 @@
-"
-# Git ignore for module ':Decorator'
 build/*
 credentials*.gradle
                 
