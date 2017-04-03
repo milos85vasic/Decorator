@@ -6,6 +6,6 @@ import net.milosvasic.logger.SimpleLogger
 fun main(args: Array<String>) {
     val logger = SimpleLogger()
     val decorator = Decorator()
-    val html = decorator.decorate("index")
+    val html = decorator.decorate("sample")
     logger.i("", html)
 }

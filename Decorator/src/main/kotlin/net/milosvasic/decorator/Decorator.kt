@@ -4,6 +4,7 @@ import net.milosvasic.decorator.content.Messages
 import net.milosvasic.decorator.evaluation.ContentResult
 import net.milosvasic.decorator.evaluation.EvaluationResult
 import net.milosvasic.decorator.template.TemplateSystem
+import net.milosvasic.decorator.utils.Text
 import net.milosvasic.logger.SimpleLogger
 import java.util.regex.Pattern
 
@@ -73,40 +74,26 @@ class Decorator : TemplateSystem {
                 "(\\w+).(\\w+)\\((.+?)\\)",
                 "(\\w+).(\\w+)()"
         )
-        patterns.forEach {
-            pattern ->
+
+        val iterator = patterns.iterator()
+        loop@ while (iterator.hasNext()) {
+            val pattern = iterator.next()
             val p = Pattern.compile(pattern)
             val m = p.matcher(line)
             while (m.find()) {
-                logger.w("", "Pattern matched: $pattern")
-                (0..m.groupCount() - 1)
+                logger.w("", "Pattern matched: $pattern") // TODO: Remove this log.
+                (1..m.groupCount())
                         .map { m.group(it) }
-                        .forEach { logger.w("", ">>>>> $it") }
-//                val param = m.group(1)
-//                val param2 = m.group(2)
-//                val param3 = m.group(2)
-//                params.add(param)
-//                params.add(param2)
-//                params.add(param3)
-                return@forEach
+                        .filter { !Text.isEmpty(it) }
+                        .forEach { params.add(it) }
+                break@loop
             }
         }
 
-//        val p = Pattern.compile("\"(.+?)\"")
-
-//        val p2 = Pattern.compile("(\\w+)")
-
-//        val m2 = p2.matcher(line)
-
-
-//        while (m2.find()) {
-//            val param = m2.group(0)
-//            params.add(param)
-//        }
-
+        // TODO: Remove this logs.
         params.forEach {
             param ->
-            logger.c("", "PARAM: [ $param ]") // TODO: Remove this logs.
+            logger.c("", "PARAM: [ $param ]")
         }
         logger.c("", "- - - - - -")
 
@@ -121,7 +108,7 @@ class Decorator : TemplateSystem {
                     if (command != null) {
                         val commandParams = mutableListOf<String>()
                         if (params.size > 2) {
-                            commandParams.addAll(params.subList(2, params.lastIndex))
+                            commandParams.addAll(params.subList(2, params.size))
                         }
                         try {
                             return command.invoke(commandParams)
