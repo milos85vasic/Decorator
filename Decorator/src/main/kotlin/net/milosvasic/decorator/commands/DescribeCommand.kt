@@ -12,8 +12,10 @@ class DescribeCommand : TemplateCommand() {
 
     override fun invoke(parameters: List<String>): ContentResult {
         checkParameters(parameters)
-        val content = "<!-- Template system: ${Decorator::class.simpleName} ${BuildConfig.VERSION.replace("_", " ")} -->"
-        return ContentResult(content)
+        val content = StringBuilder()
+                .append("<!-- Template system: ${Decorator::class.simpleName}, https://github.com/milos85vasic/Decorator -->\n")
+                .append("<!-- Template system version: ${BuildConfig.VERSION.replace("_", " ")} -->")
+        return ContentResult(content.toString())
     }
 
 }
