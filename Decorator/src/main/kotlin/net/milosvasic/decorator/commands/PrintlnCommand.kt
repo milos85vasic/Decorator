@@ -16,8 +16,8 @@ class PrintlnCommand : TemplateCommand() {
         if (toPrint.endsWith("\"")) {
             toPrint = toPrint.substring(toPrint.lastIndex - 1, toPrint.lastIndex)
         }
-//        parameters[0]
-//                .split(" ")
+        val regex = Regex("(\\$\\w+)")
+        toPrint = toPrint.replace(regex, "- - - -") // TODO: Match property
         return ContentResult(toPrint)
     }
 
