@@ -1,9 +1,9 @@
 package net.milosvasic.decorator.template
 
-import net.milosvasic.decorator.commands.TemplateCommand
+import net.milosvasic.decorator.data.Data
 
-interface TemplateClass {
+abstract class TemplateClass {
 
-    val commands : Map<String, TemplateCommand>
+    val data = Data()
 
 }

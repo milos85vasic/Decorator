@@ -6,6 +6,10 @@ object Messages {
         return "Unknown operation ${describe(what, who, where)}"
     }
 
+    fun UNKNOWN_TEMPLATE_MEMBER(what: String, who: String, where: Int): String {
+        return "Unknown template member ${describe(what, who, where)}"
+    }
+
     fun NO_ARGUMENTS_PROVIDED_FOR(what: String, who: String, where: Int): String {
         return "No arguments provided to ${describe(what, who, where)}"
     }
@@ -16,6 +20,10 @@ object Messages {
 
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
         return "Could no invoke '$what'\n\t\targuments: $args"
+    }
+
+    fun UNKNOWN_TEMPLATE_DATA_TYPE(what: String, type: String?, who: String, where: Int): String {
+        return "Unknown type passed '$type', ${describe(what, who, where)}"
     }
 
     private fun describe(what: String, who: String, where: Int): String {
