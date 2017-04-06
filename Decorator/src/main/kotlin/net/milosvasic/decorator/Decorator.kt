@@ -106,7 +106,6 @@ class Decorator : TemplateSystem {
             throw IllegalArgumentException("errrrror")
         }
 
-
 //        if (!params.isEmpty()) {
 //            if (params[0] == clazzName) {
 //                if (params.size == 1) {
@@ -141,7 +140,6 @@ class Decorator : TemplateSystem {
 //        } else {
 //            // TODO: Handle other than decorator methods.
 //        }
-        return ContentResult("[ ... ]") // TODO: Update this to different value.
     }
 
 }
