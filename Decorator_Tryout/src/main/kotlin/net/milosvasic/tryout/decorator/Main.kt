@@ -8,19 +8,4 @@ fun main(args: Array<String>) {
     val decorator = Decorator()
     val html = decorator.decorate("sample")
     logger.i("", html)
-
-    val s = Something()
-
-}
-
-private class Something {
-
-    val elze = Else()
-
-    private class Else {
-        fun doIt() {
-            println("Do it.")
-        }
-    }
-
 }
