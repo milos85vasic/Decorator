@@ -55,7 +55,7 @@ class Decorator : TemplateSystem {
                             .replace(openingTag, "")
                             .replace(closingTag, "")
                             .trim()
-                    val evaluationResult = evaluate(template, decoration, index)
+                    val evaluationResult = evaluate(template, data, decoration, index)
                     when (evaluationResult) {
                         is ContentResult -> {
                             renderedLine = renderedLine.replace(row, evaluationResult.content)
@@ -102,8 +102,10 @@ class Decorator : TemplateSystem {
         logger.c("", "- - - - - -")
 
         var data: TemplateData? = null
-        params.forEachIndexed {
-            index, param ->
+        var index = 0
+        val it = params.iterator()
+        while (it.hasNext()) {
+            val param = it.next()
             if (index == 0) {
                 data = getData(param, templateMainClass.data)
                 if (data == null) {
@@ -118,7 +120,9 @@ class Decorator : TemplateSystem {
                 is Value -> return ContentResult(data.content)
                 else -> IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE(param, data::class.simpleName, template, position))
             }
+            index++
         }
+
 
 //        if (!params.isEmpty()) {
 //            if (params[0] == clazzName) {
