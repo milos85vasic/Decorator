@@ -70,29 +70,9 @@ class Decorator : TemplateSystem {
     }
 
     fun evaluate(template: String, templateData: Data, line: String, position: Int): EvaluationResult {
-        logger.d("", line)
+        logger.d("", line) // TODO: Remove this.
 
-        val params = mutableListOf<String>()
-        val clazzName = this::class.simpleName?.toLowerCase()
-        val patterns = listOf(
-                "(\\w+).(\\w+)\\((.+?)\\)",
-                "(\\w+).(\\w+)()"
-        )
-
-        val iterator = patterns.iterator()
-        loop@ while (iterator.hasNext()) {
-            val pattern = iterator.next()
-            val p = Pattern.compile(pattern)
-            val m = p.matcher(line)
-            while (m.find()) {
-                logger.w("", "Pattern matched: $pattern") // TODO: Remove this log.
-                (1..m.groupCount())
-                        .map { m.group(it) }
-                        .filter { !Text.isEmpty(it) }
-                        .forEach { params.add(it) }
-                break@loop
-            }
-        }
+        val params = line.trim().split(".")
 
         // TODO: Remove this logs.
         params.forEach {
