@@ -111,14 +111,15 @@ class Decorator : TemplateSystem {
                 if (data == null) {
                     data = getData(param, templateData)
                 }
-            }
-            if (data == null) {
-                throw IllegalArgumentException(Messages.UNKNOWN_TEMPLATE_MEMBER(param, template, position))
-            }
-            when (data) {
-                is Data -> data = getData(param, data)
-                is Value -> return ContentResult(data.content)
-                else -> IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE(param, data::class.simpleName, template, position))
+            } else {
+                if (data == null) {
+                    throw IllegalArgumentException(Messages.UNKNOWN_TEMPLATE_MEMBER(param, template, position))
+                }
+                when (data) {
+                    is Data -> data = getData(param, data)
+                    is Value -> return ContentResult(data.content)
+                    else -> IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE(param, data::class.simpleName, template, position))
+                }
             }
             index++
         }
