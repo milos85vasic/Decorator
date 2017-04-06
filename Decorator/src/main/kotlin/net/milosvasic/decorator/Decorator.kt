@@ -101,27 +101,29 @@ class Decorator : TemplateSystem {
         }
         logger.c("", "- - - - - -")
 
-        var data: TemplateData? = null
-        var index = 0
+        templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
-        while (it.hasNext()) {
-            val param = it.next()
-            if (index == 0) {
-                data = getData(param, templateMainClass.data)
-                if (data == null) {
-                    data = getData(param, templateData)
+        var data: TemplateData? = null
+        if (it.hasNext()) {
+            data = templateData.content[it.next()]
+        }
+        while (data !is Value && it.hasNext()) {
+            when(data){
+                is Data -> {
+                    val param = it.next()
+                    data = data.content[param]
                 }
-            } else {
-                if (data == null) {
-                    throw IllegalArgumentException(Messages.UNKNOWN_TEMPLATE_MEMBER(param, template, position))
+                is Value -> {
+                    return ContentResult(data.content)
                 }
-                when (data) {
-                    is Data -> data = getData(param, data)
-                    is Value -> return ContentResult(data.content)
-                    else -> IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE(param, data::class.simpleName, template, position))
-                }
+                else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }
-            index++
+
+        }
+        if (data != null && data is Value) {
+            return ContentResult(data.content)
+        } else {
+            throw IllegalArgumentException("errrrror")
         }
 
 
@@ -160,10 +162,6 @@ class Decorator : TemplateSystem {
 //            // TODO: Handle other than decorator methods.
 //        }
         return ContentResult("[ ... ]") // TODO: Update this to different value.
-    }
-
-    fun getData(param: String, data: Data): TemplateData? {
-        return data.content[param]
     }
 
 }

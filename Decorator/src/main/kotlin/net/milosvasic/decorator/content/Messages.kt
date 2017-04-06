@@ -2,6 +2,8 @@ package net.milosvasic.decorator.content
 
 object Messages {
 
+    val UNKNOWN_TEMPLATE_DATA_TYPE = "Unknown type passed."
+
     fun UNKNOWN_OPERATION(what: String, who: String, where: Int): String {
         return "Unknown operation ${describe(what, who, where)}"
     }
@@ -20,10 +22,6 @@ object Messages {
 
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
         return "Could no invoke '$what'\n\t\targuments: $args"
-    }
-
-    fun UNKNOWN_TEMPLATE_DATA_TYPE(what: String, type: String?, who: String, where: Int): String {
-        return "Unknown type passed '$type', ${describe(what, who, where)}"
     }
 
     private fun describe(what: String, who: String, where: Int): String {
