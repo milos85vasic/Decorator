@@ -21,5 +21,6 @@ fun main(args: Array<String>) {
         logger.i("", html)
     } catch (e: Exception){
         logger.e("", "Error: $e")
+        e.printStackTrace()
     }
 }
