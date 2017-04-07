@@ -26,6 +26,16 @@ class Decorator : TemplateSystem {
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
+
+
+            val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
+            val mInclude = pInclude.matcher(line)
+            if(mInclude.matches()){
+                val include = mInclude.group(1)
+                logger.i("", "INCLUDE [ $include ]") // TODO: Remove this
+            }
+
+
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
             val m = p.matcher(line)
             val commands = mutableListOf<String>()
