@@ -32,7 +32,8 @@ class Decorator : TemplateSystem {
             val mInclude = pInclude.matcher(line)
             if(mInclude.matches()){
                 val include = mInclude.group(1)
-                logger.i("", "INCLUDE [ $include ]") // TODO: Remove this
+                val element = decorate(include, data)
+                logger.i("", "INCLUDE [ $include ]\n$element") // TODO: Remove this
             }
 
 
