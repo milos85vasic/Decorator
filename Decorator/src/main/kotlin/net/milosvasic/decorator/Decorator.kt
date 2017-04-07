@@ -104,41 +104,6 @@ class Decorator : TemplateSystem {
         } else {
             throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
         }
-
-//        if (!params.isEmpty()) {
-//            if (params[0] == clazzName) {
-//                if (params.size == 1) {
-//                    throw IllegalArgumentException(
-//                            Messages.NO_ARGUMENTS_PROVIDED_FOR(clazzName, template, position)
-//                    )
-//                } else {
-//                    val command = templateMainClass.commands[params[1]]
-//                    if (command != null) {
-//                        val commandParams = mutableListOf<String>()
-//                        if (params.size > 2) {
-//                            commandParams.addAll(params.subList(2, params.size))
-//                        }
-//                        try {
-//                            return command.invoke(commandParams)
-//                        } catch (e: IllegalArgumentException) {
-//                            throw IllegalArgumentException(
-//                                    "${e.message}\n\t\ttemplate: $template.decorator\n\t\tline: $position"
-//                            )
-//                        }
-//                    } else {
-//                        throw IllegalArgumentException(
-//                                Messages.UNKNOWN_OPERATION(
-//                                        "$clazzName.${params[1]}",
-//                                        template,
-//                                        position
-//                                )
-//                        )
-//                    }
-//                }
-//            }
-//        } else {
-//            // TODO: Handle other than decorator methods.
-//        }
     }
 
 }
