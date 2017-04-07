@@ -11,7 +11,7 @@
 <h1>This is: <dc>storage.header</dc></h1>
 <p><dc>storage.body</dc></p>
 
-<dc><include>footer</include></dc>
+<include>footer</include>
 
 </body>
 </html>

@@ -19,19 +19,15 @@
 
 <br />
 
-<dc><if>chapters.third</if></dc>
-    <p><dc>chapters.third</dc></p>
-<dc><endif/></dc>
+<if>chapters.third</if>
+<p><dc>chapters.third</dc></p>
+<endif/>
 
-<dc>
-    <if>chapters.second</if>
-        <p><dc>chapters.second</dc></p>
-    <else>
-        <p>- - -</p>
-    </else>
-</dc>
+<if>chapters.second</if>
+<p><dc>chapters.second</dc></p>
+<else><p>- - -</p></else>
 
-<dc><include>footer</include></dc>
+<include>footer</include>
 
 <dc>chapters.last</dc>
 
