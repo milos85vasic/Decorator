@@ -1,4 +1,1 @@
-<dc> decorator.describe() </dc>
-<p>
-    <dc>decorator.println(footer)</dc>
-</p>
+<p>Footer text: <dc>footer</dc></p>
