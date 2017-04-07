@@ -12,6 +12,7 @@
 <h2>This is: <dc>storage.header</dc> with title assigned: <dc>mainTitle</dc></h2>
 <p><dc>storage.body</dc></p>
 
+<include>elements/credits</include>
 <include>footer</include>
 
 </body>
