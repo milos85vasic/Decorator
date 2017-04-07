@@ -1,39 +1,38 @@
-<dc> decorator.describe() </dc>
+<dc>decorator.describe</dc>
 <html>
 <head>
-    <title><dc>decorator.println("$mainTitle by Milos Vasic")</dc></title>
+    <title><dc>mainTitle</dc> by Milos Vasic</title>
 </head>
 <body>
 
 // Single line comment
-<h1><dc>decorator.println(header)</dc></h1>
+<h1><dc>header</dc></h1>
 
 /*
     Some multiline comment
     as example.
 */
-<p><dc>decorator.println(mainTitle)</dc></p>
-<p><dc>decorator.println(introduction)</dc></p>
-<p><dc>decorator.println(chapters.first)</dc></p>
-<p><dc>decorator.println(chapters.second)</dc></p>
-<p><dc>decorator.println(1985)</dc></p>
+<p><dc>mainTitle</dc></p>
+<p><dc>introduction</dc></p>
+<p><dc>chapters.first</dc></p>
+<p><dc>chapters.second</dc></p>
 
 <br />
 
-<dc> if(Text.isEmpty(chapters.third)){  </dc>
-    <p><dc>decorator.println(chapters.third)</dc></p>
-<dc> } else if(chapters.third == "special") { </dc>
-    <p><dc>decorator.println("Some nice Kotlin string: ${chapters.special}")</dc></p>
-<dc> } else { </dc>
+<dc> if chapters.third  </dc>
+    <p><dc>chapters.third</dc></p>
+<dc> else if chapters.third == "special" { </dc>
+    <p>Some nice string:<dc>chapters.special</dc></p>
+<dc> else </dc>
     <p>- - -</p>
-<dc> } </dc>
+<dc> endif </dc>
 
 <dc> decorator.include("footer") </dc>
 
 <dc> decorator.println(chapters.last) </dc>
 
 <p>
-    <dc>decorator.println(stuff[1])</dc> and <dc>decorator.println(stuff[2])</dc> and <dc>decorator.println(stuff[3])</dc>
+    <dc>stuff[1]</dc> and <dc>stuff[2]</dc> and <dc>stuff[3]</dc>
 </p>
 
 </body>
