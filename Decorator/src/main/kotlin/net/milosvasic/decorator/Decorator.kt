@@ -7,7 +7,6 @@ import net.milosvasic.decorator.data.Value
 import net.milosvasic.decorator.evaluation.ContentResult
 import net.milosvasic.decorator.evaluation.EvaluationResult
 import net.milosvasic.decorator.template.TemplateSystem
-import net.milosvasic.decorator.utils.Text
 import net.milosvasic.logger.SimpleLogger
 import java.lang.IllegalStateException
 import java.util.regex.Pattern
@@ -87,8 +86,8 @@ class Decorator : TemplateSystem {
         if (it.hasNext()) {
             data = templateData.content[it.next()]
         }
-        while (data !is Value && it.hasNext()) {
-            when(data){
+        while (data != null && data !is Value && it.hasNext()) {
+            when (data) {
                 is Data -> {
                     val param = it.next()
                     data = data.content[param]
@@ -103,7 +102,7 @@ class Decorator : TemplateSystem {
         if (data != null && data is Value) {
             return ContentResult(data.content)
         } else {
-            throw IllegalArgumentException("errrrror")
+            throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
         }
 
 //        if (!params.isEmpty()) {

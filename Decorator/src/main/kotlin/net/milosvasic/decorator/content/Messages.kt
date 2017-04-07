@@ -4,28 +4,18 @@ object Messages {
 
     val UNKNOWN_TEMPLATE_DATA_TYPE = "Unknown type passed."
 
-    fun UNKNOWN_OPERATION(what: String, who: String, where: Int): String {
-        return "Unknown operation ${describe(what, who, where)}"
-    }
-
-    fun UNKNOWN_TEMPLATE_MEMBER(what: String, who: String, where: Int): String {
-        return "Unknown template member ${describe(what, who, where)}"
-    }
-
-    fun NO_ARGUMENTS_PROVIDED_FOR(what: String, who: String, where: Int): String {
-        return "No arguments provided to ${describe(what, who, where)}"
-    }
-
-    fun INVALID_ARGUMENTS_PASSED(what: String, who: String, where: Int): String {
-        return "Invalid arguments passed to ${describe(what, who, where)}"
+    fun COULD_NOT_RESOLVE(line: String, template: String, position: Int): String {
+        return "Could not resolve '$line' ${where(template, position)}"
     }
 
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
-        return "Could no invoke '$what'\n\t\targuments: $args"
+        return "Could not invoke '$what'\n\t\targuments: $args"
     }
 
     private fun describe(what: String, who: String, where: Int): String {
-        return "'$what' from '$who.decorator' at line: ${where + 1}"
+        return "'$what' ${where(who, where)}"
     }
+
+    private fun where(who: String, where: Int) = "from '$who.decorator' at line: ${where + 1}"
 
 }
