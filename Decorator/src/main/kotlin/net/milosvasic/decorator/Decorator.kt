@@ -22,21 +22,25 @@ class Decorator : TemplateSystem {
         val rendered = StringBuilder()
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
         val content = templateFile.readText()
-        val rows = content.split("\n")
+        val rows = mutableListOf<String>()
+        rows.addAll(content.split("\n"))
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
 
-
+            // Include
             val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
             val mInclude = pInclude.matcher(line)
+            var row = line
             while (mInclude.find()) {
                 val include = mInclude.group(1)
                 logger.i("", "INCLUDE [ $include ]") // TODO: Remove this
                 val element = decorate(include, data)
                 logger.i("", "INCLUDE\n$element") // TODO: Remove this
+                row = row.replace(mInclude.group(0), element)
+                rows[index] = row
             }
-
+            // Include - END
 
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
             val m = p.matcher(line)
