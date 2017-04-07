@@ -11,7 +11,9 @@ fun main(args: Array<String>) {
     val storage = Data()
     val data = Data()
     data.content["storage"] = storage
+    data.content["credits"] = Value("Some guy...")
     data.content["mainTitle"] = Value("Trying out")
+    data.content["footer"] = Value("- - - - - - -")
     storage.content["header"] = Value("Main header")
     storage.content["body"] = Value("Body paragraph ...")
     try {
