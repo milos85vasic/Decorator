@@ -19,13 +19,17 @@
 
 <br />
 
-<dc> if chapters.third  </dc>
+<dc><if>chapters.third</if></dc>
     <p><dc>chapters.third</dc></p>
-<dc> else if chapters.third == "special" { </dc>
-    <p>Some nice string:<dc>chapters.special</dc></p>
-<dc> else </dc>
-    <p>- - -</p>
-<dc> endif </dc>
+<dc><endif/></dc>
+
+<dc>
+    <if>chapters.second</if>
+        <p><dc>chapters.second</dc></p>
+    <else>
+        <p>- - -</p>
+    </else>
+</dc>
 
 <dc><include>footer</include></dc>
 
