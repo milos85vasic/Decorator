@@ -27,9 +27,9 @@
     <p>- - -</p>
 <dc> endif </dc>
 
-<dc> decorator.include("footer") </dc>
+<dc><include>footer</include></dc>
 
-<dc> decorator.println(chapters.last) </dc>
+<dc>chapters.last</dc>
 
 <p>
     <dc>stuff[1]</dc> and <dc>stuff[2]</dc> and <dc>stuff[3]</dc>
