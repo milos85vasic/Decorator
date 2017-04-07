@@ -5,8 +5,7 @@ import net.milosvasic.decorator.data.Data
 
 interface TemplateSystem {
 
-    val openingTag: String
-    val closingTag: String
+    val tags: Tags
     val templateExtension: String
     val templateMainClass: TemplateClass
 

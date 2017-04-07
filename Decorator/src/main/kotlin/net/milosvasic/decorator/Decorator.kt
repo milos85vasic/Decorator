@@ -14,8 +14,7 @@ import java.util.regex.Pattern
 class Decorator : TemplateSystem {
 
     private val logger = SimpleLogger()
-    override val openingTag: String = "<dc>"
-    override val closingTag: String = "</dc>"
+    override val tags = DecoratorTags()
     override val templateExtension = "decorator"
     override val templateMainClass = DecoratorTemplateClass()
 
@@ -27,7 +26,7 @@ class Decorator : TemplateSystem {
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
-            val p = Pattern.compile("$openingTag(.+?)$closingTag")
+            val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
             val m = p.matcher(line)
             val commands = mutableListOf<String>()
             while (m.find()) {
@@ -51,8 +50,8 @@ class Decorator : TemplateSystem {
                 decoratedRows[index]?.forEach {
                     row ->
                     val decoration = row
-                            .replace(openingTag, "")
-                            .replace(closingTag, "")
+                            .replace(tags.open, "")
+                            .replace(tags.close, "")
                             .trim()
                     val evaluationResult = evaluate(template, data, decoration, index)
                     when (evaluationResult) {
