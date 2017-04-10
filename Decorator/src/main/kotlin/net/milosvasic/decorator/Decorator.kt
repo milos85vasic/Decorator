@@ -13,9 +13,9 @@ import java.util.regex.Pattern
 
 class Decorator : TemplateSystem {
 
-    private val logger = SimpleLogger()
     override val tags = DecoratorTags()
     override val templateExtension = "decorator"
+    private val logger = SimpleLogger(listOf("DEV"))
     override val templateMainClass = DecoratorTemplateClass()
 
     override fun decorate(template: String, data: Data): String {
