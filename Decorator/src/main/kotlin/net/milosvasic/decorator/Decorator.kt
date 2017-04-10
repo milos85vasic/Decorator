@@ -35,7 +35,10 @@ class Decorator : TemplateSystem {
             while (mInclude.find()) {
                 val include = mInclude.group(1)
                 logger.i("", "INCLUDE [ $include ]") // TODO: Remove this
-                val element = decorate(include, data)
+                var element = decorate(include, data)
+                if (element.endsWith("\n")) {
+                    element = element.substring(0, element.lastIndex)
+                }
                 logger.i("", "INCLUDE\n$element") // TODO: Remove this
                 row = row.replace(mInclude.group(0), element)
                 rows[index] = row
