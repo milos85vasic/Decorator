@@ -111,32 +111,31 @@ class Decorator : TemplateSystem {
     }
 
     fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
-        return false
-//        val params = line.trim().split(".")
-//        templateData.content.putAll(templateMainClass.data.content)
-//        val it = params.iterator()
-//        var data: TemplateData? = null
-//        if (it.hasNext()) {
-//            data = templateData.content[it.next()]
-//        }
-//        while (data != null && data !is Value && it.hasNext()) {
-//            when (data) {
-//                is Data -> {
-//                    val param = it.next()
-//                    data = data.content[param]
-//                }
-//                is Value -> {
-//                    return data.content
-//                }
-//                else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
-//            }
-//
-//        }
-//        if (data != null && data is Value) {
-//            return data.content
-//        } else {
-//            throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
-//        }
+        val params = line.trim().split(".")
+        templateData.content.putAll(templateMainClass.data.content)
+        val it = params.iterator()
+        var data: TemplateData? = null
+        if (it.hasNext()) {
+            data = templateData.content[it.next()]
+        }
+        while (data != null && data !is Value && it.hasNext()) {
+            when (data) {
+                is Data -> {
+                    val param = it.next()
+                    data = data.content[param]
+                }
+                is Value -> {
+                    return !data.content.isEmpty()
+                }
+                else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
+            }
+
+        }
+        if (data != null && data is Value) {
+            return !data.content.isEmpty()
+        } else {
+            throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
+        }
     }
 
 }
