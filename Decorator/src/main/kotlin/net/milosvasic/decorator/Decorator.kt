@@ -101,7 +101,6 @@ class Decorator : TemplateSystem {
                 }
                 else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }
-
         }
         if (data != null && data is Value) {
             return data.content
@@ -129,7 +128,6 @@ class Decorator : TemplateSystem {
                 }
                 else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }
-
         }
         if (data != null && data is Value) {
             return !data.content.isEmpty()
