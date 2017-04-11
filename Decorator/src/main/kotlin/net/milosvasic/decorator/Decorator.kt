@@ -48,7 +48,11 @@ class Decorator : TemplateSystem {
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition, index)
                 logger.d("", "IF: [ $ifCondition ][ $result ]")
+                // TODO: Use map with pairs - index -> if start-end.
             }
+
+            // Parse <endif/> tag
+            // TODO: Endif.
 
             // Parse <dc> tags
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")

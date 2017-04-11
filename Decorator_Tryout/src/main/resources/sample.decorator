@@ -20,5 +20,9 @@ After footer: <include>after1</include> AND <include>after2</include>
 <p>We have footer!</p>
 <endif/>
 
+<if>elements/credits</if>
+<p>We have credits!</p>
+<endif/>
+
 </body>
 </html>
