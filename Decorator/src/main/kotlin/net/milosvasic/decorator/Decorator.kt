@@ -4,8 +4,6 @@ import net.milosvasic.decorator.content.Messages
 import net.milosvasic.decorator.data.Data
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
-import net.milosvasic.decorator.evaluation.ContentResult
-import net.milosvasic.decorator.evaluation.EvaluationResult
 import net.milosvasic.decorator.template.TemplateSystem
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
@@ -48,7 +46,8 @@ class Decorator : TemplateSystem {
             val mIf = pIf.matcher(line)
             while (mIf.find()) {
                 val ifCondition = mIf.group(1)
-                logger.d("", "IF: $ifCondition")
+                val result = resolveIf(template, data, ifCondition, index)
+                logger.d("", "IF: [ $ifCondition ][ $result ]")
             }
 
             // Parse <dc> tags
@@ -73,12 +72,8 @@ class Decorator : TemplateSystem {
                             .replace(tags.open, "")
                             .replace(tags.close, "")
                             .trim()
-                    val evaluationResult = resolve(template, data, decoration, index)
-                    when (evaluationResult) {
-                        is ContentResult -> {
-                            renderedLine = renderedLine.replace(row, evaluationResult.content)
-                        }
-                    }
+                    val result = resolve(template, data, decoration, index)
+                    renderedLine = renderedLine.replace(row, result)
                 }
 
             }
@@ -87,7 +82,7 @@ class Decorator : TemplateSystem {
         return rendered.toString()
     }
 
-    fun resolve(template: String, templateData: Data, line: String, position: Int): EvaluationResult {
+    fun resolve(template: String, templateData: Data, line: String, position: Int): String {
         val params = line.trim().split(".")
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
@@ -102,17 +97,46 @@ class Decorator : TemplateSystem {
                     data = data.content[param]
                 }
                 is Value -> {
-                    return ContentResult(data.content)
+                    return data.content
                 }
                 else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }
 
         }
         if (data != null && data is Value) {
-            return ContentResult(data.content)
+            return data.content
         } else {
             throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
         }
+    }
+
+    fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
+        return false
+//        val params = line.trim().split(".")
+//        templateData.content.putAll(templateMainClass.data.content)
+//        val it = params.iterator()
+//        var data: TemplateData? = null
+//        if (it.hasNext()) {
+//            data = templateData.content[it.next()]
+//        }
+//        while (data != null && data !is Value && it.hasNext()) {
+//            when (data) {
+//                is Data -> {
+//                    val param = it.next()
+//                    data = data.content[param]
+//                }
+//                is Value -> {
+//                    return data.content
+//                }
+//                else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
+//            }
+//
+//        }
+//        if (data != null && data is Value) {
+//            return data.content
+//        } else {
+//            throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
+//        }
     }
 
 }
