@@ -8,5 +8,8 @@ class DecoratorTags : Tags(){
     override val close = "</dc>"
     override val includeOpen = "<include>"
     override val includeClose = "</include>"
+    override val ifOpen = "<if>"
+    override val ifClose = "</if>"
+    override val endif = "<endif/>"
 
 }

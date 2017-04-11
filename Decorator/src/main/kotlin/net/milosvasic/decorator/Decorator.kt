@@ -8,6 +8,7 @@ import net.milosvasic.decorator.evaluation.ContentResult
 import net.milosvasic.decorator.evaluation.EvaluationResult
 import net.milosvasic.decorator.template.TemplateSystem
 import net.milosvasic.logger.SimpleLogger
+import net.milosvasic.logger.VariantsConfiguration
 import java.lang.IllegalStateException
 import java.util.regex.Pattern
 
@@ -15,8 +16,8 @@ class Decorator : TemplateSystem {
 
     override val tags = DecoratorTags()
     override val templateExtension = "decorator"
-    private val logger = SimpleLogger(listOf("DEV"))
     override val templateMainClass = DecoratorTemplateClass()
+    private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     override fun decorate(template: String, data: Data): String {
         val rendered = StringBuilder()
@@ -28,7 +29,7 @@ class Decorator : TemplateSystem {
         rows.forEachIndexed {
             index, line ->
 
-            // Include
+            // Parse <include> tags
             val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
             val mInclude = pInclude.matcher(line)
             var row = line
@@ -40,6 +41,14 @@ class Decorator : TemplateSystem {
                 }
                 row = row.replace(mInclude.group(0), element)
                 rows[index] = row
+            }
+
+            // Parse <if> tags
+            val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
+            val mIf = pIf.matcher(line)
+            while (mIf.find()) {
+                val ifCondition = mIf.group(1)
+                logger.d("", "IF: $ifCondition")
             }
 
             // Parse <dc> tags
@@ -64,7 +73,7 @@ class Decorator : TemplateSystem {
                             .replace(tags.open, "")
                             .replace(tags.close, "")
                             .trim()
-                    val evaluationResult = evaluate(template, data, decoration, index)
+                    val evaluationResult = resolve(template, data, decoration, index)
                     when (evaluationResult) {
                         is ContentResult -> {
                             renderedLine = renderedLine.replace(row, evaluationResult.content)
@@ -78,7 +87,7 @@ class Decorator : TemplateSystem {
         return rendered.toString()
     }
 
-    fun evaluate(template: String, templateData: Data, line: String, position: Int): EvaluationResult {
+    fun resolve(template: String, templateData: Data, line: String, position: Int): EvaluationResult {
         val params = line.trim().split(".")
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
