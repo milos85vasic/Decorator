@@ -16,5 +16,9 @@
 <include>footer</include>
 After footer: <include>after1</include> AND <include>after2</include>
 
+<if>footer</if>
+<p>We have footer!</p>
+<endif/>
+
 </body>
 </html>

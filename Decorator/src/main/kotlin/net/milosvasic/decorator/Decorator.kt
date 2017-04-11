@@ -34,17 +34,15 @@ class Decorator : TemplateSystem {
             var row = line
             while (mInclude.find()) {
                 val include = mInclude.group(1)
-                logger.i("", "INCLUDE [ $include ]") // TODO: Remove this
                 var element = decorate(include, data)
                 if (element.endsWith("\n")) {
                     element = element.substring(0, element.lastIndex)
                 }
-                logger.i("", "INCLUDE\n$element") // TODO: Remove this
                 row = row.replace(mInclude.group(0), element)
                 rows[index] = row
             }
-            // Include - END
 
+            // Parse <dc> tags
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
             val m = p.matcher(line)
             val commands = mutableListOf<String>()
@@ -54,12 +52,6 @@ class Decorator : TemplateSystem {
             }
             if (!commands.isEmpty()) {
                 decoratedRows[index] = commands
-            }
-
-            // TODO: To be removed.
-            commands.forEach {
-                item ->
-                logger.v("", item)
             }
         }
         rows.forEachIndexed {
@@ -87,17 +79,7 @@ class Decorator : TemplateSystem {
     }
 
     fun evaluate(template: String, templateData: Data, line: String, position: Int): EvaluationResult {
-        logger.d("", line) // TODO: Remove this.
-
         val params = line.trim().split(".")
-
-        // TODO: Remove this logs.
-        params.forEach {
-            param ->
-            logger.c("", "PARAM: [ $param ]")
-        }
-        logger.c("", "- - - - - -")
-
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
         var data: TemplateData? = null
