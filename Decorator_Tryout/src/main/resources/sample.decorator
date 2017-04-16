@@ -16,10 +16,18 @@
 <include>footer</include>
 After footer: <include>after1</include> AND <include>after2</include>
 
+<!-- Basic If example -->
 <if>footer</if>
 <p>We have footer!</p>
 <endif/>
 
+<!-- Basic If example -->
+<if>elements/credits</if>
+<p>We have credits!</p>
+<endif/>
+
+<!-- If example with multiple conditions -->
+<if>footer</if>
 <if>elements/credits</if>
 <p>We have credits!</p>
 <endif/>
