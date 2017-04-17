@@ -83,6 +83,14 @@ class Decorator : TemplateSystem {
                 decoratedRows[index] = commands
             }
         }
+
+        // TODO: Remove if printing
+        ifStates.forEach {
+            item ->
+            logger.c("", "IF item [ ${item?.from} ][ ${item?.to} ][ ${item?.value} ]")
+        }
+        // TODO: Remove if printing - END
+
         rows.forEachIndexed {
             index, line ->
             var renderedLine = line
