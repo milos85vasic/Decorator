@@ -17,19 +17,19 @@
 After footer: <include>after1</include> AND <include>after2</include>
 
 <!-- Basic If example -->
+<if>mainTitle</if>
+<p>We have main title!</p>
+<endif/>
+
+<!-- Basic If example -->
 <if>footer</if>
 <p>We have footer!</p>
 <endif/>
 
-<!-- Basic If example -->
-<if>elements/credits</if>
-<p>We have credits!</p>
-<endif/>
-
 <!-- If example with multiple conditions -->
+<if>mainTitle</if>
 <if>footer</if>
-<if>elements/credits</if>
-<p>We have credits!</p>
+<p>We have main title and footer!</p>
 <endif/>
 
 </body>
