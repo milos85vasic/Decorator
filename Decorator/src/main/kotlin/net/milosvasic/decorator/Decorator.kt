@@ -23,6 +23,8 @@ class Decorator : TemplateSystem {
         val content = templateFile.readText()
         val rows = mutableListOf<String>()
         rows.addAll(content.split("\n"))
+        var ifState: Boolean? = null
+        val ifs = mutableMapOf<Pair<Int, Int>, Boolean>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
@@ -52,7 +54,17 @@ class Decorator : TemplateSystem {
             }
 
             // Parse <endif/> tag
-            // TODO: Endif.
+            val pEndIf = Pattern.compile(tags.endif)
+            val mEndIf = pEndIf.matcher(line)
+            while (mEndIf.find()) {
+                if (ifState == null) {
+                    throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
+                } else {
+                    // TODO: Close if state.
+                    ifState = null
+                    // ifs.put()
+                }
+            }
 
             // Parse <dc> tags
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")

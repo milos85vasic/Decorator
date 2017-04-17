@@ -8,6 +8,10 @@ object Messages {
         return "Could not resolve '$line' ${where(template, position)}"
     }
 
+    fun IF_NOT_OPENED(template: String, position: Int): String {
+        return "If not opened ${where(template, position)}"
+    }
+
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
         return "Could not invoke '$what'\n\t\targuments: $args"
     }
