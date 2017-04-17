@@ -22,7 +22,7 @@ After footer: <include>after1</include> AND <include>after2</include>
 <endif/>
 
 <!-- Basic If example -->
-<if>footer</if>
+<if>doesNotExist</if>
 <p>We have footer!</p>
 <endif/>
 
@@ -30,6 +30,12 @@ After footer: <include>after1</include> AND <include>after2</include>
 <if>mainTitle</if>
 <if>footer</if>
 <p>We have main title and footer!</p>
+<endif/>
+
+<!-- If example with multiple conditions -->
+<if>doesNotExist</if>
+<if>footer</if>
+<p>We have main title and doesNotExist field!</p>
 <endif/>
 
 </body>

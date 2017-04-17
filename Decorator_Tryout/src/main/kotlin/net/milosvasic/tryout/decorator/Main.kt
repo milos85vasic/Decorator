@@ -13,6 +13,7 @@ fun main(args: Array<String>) {
     val storage = Data()
     val data = Data()
     data.content["storage"] = storage
+    data.content["doesNotExist"] = Value("")
     data.content["credits"] = Value("Some guy...")
     data.content["mainTitle"] = Value("Trying out")
     data.content["footer"] = Value("- - - - - - -")
