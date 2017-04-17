@@ -27,17 +27,17 @@ After footer: <include>after1</include> AND <include>after2</include>
 <endif/>
 
 <!-- If example with multiple conditions -->
-<if>mainTitle && footer</if>
+<if>mainTitle</if> <!-- && footer -->
 <p>We have main title and footer!</p>
 <endif/>
 
 <!-- If example with multiple conditions -->
-<if>doesNotExist && footer</if>
+<if>doesNotExist </if> <!-- && footer -->
 <p>We have main title and doesNotExist field!</p>
 <endif/>
 
 <!-- If with negation -->
-<if>!doesNotExist</if>
+<if>doesNotExist</if> <!-- ! -->
 <p>Negation works.</p>
 <endif/>
 

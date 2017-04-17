@@ -2,6 +2,7 @@ package net.milosvasic.decorator
 
 import net.milosvasic.decorator.content.Messages
 import net.milosvasic.decorator.data.Data
+import net.milosvasic.decorator.data.IfState
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
 import net.milosvasic.decorator.template.TemplateSystem
@@ -23,8 +24,8 @@ class Decorator : TemplateSystem {
         val content = templateFile.readText()
         val rows = mutableListOf<String>()
         rows.addAll(content.split("\n"))
-        var ifState: Boolean? = null
-        val ifs = mutableMapOf<Pair<Int, Int>, Boolean>()
+        var ifState: IfState? = null
+        val ifStates = mutableListOf<IfState?>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
@@ -49,20 +50,24 @@ class Decorator : TemplateSystem {
             while (mIf.find()) {
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition, index)
-                logger.d("", "IF: [ $ifCondition ][ $result ]")
-                // TODO: Use map with pairs - index -> if start-end.
+                logger.d("", "IF: [ $ifCondition ][ $result ]") // TODO: Remove this.
+                if (ifState != null) {
+                    throw IllegalStateException(Messages.IF_NOT_CLOSED(template, index))
+                } else {
+                    ifState = IfState(index, -1, result)
+                }
             }
 
             // Parse <endif/> tag
             val pEndIf = Pattern.compile(tags.endif)
             val mEndIf = pEndIf.matcher(line)
             while (mEndIf.find()) {
-                if (ifState == null) {
-                    throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
-                } else {
-                    // TODO: Close if state.
+                if (ifState != null) {
+                    ifState?.to = index
+                    ifStates.add(ifState)
                     ifState = null
-                    // ifs.put()
+                } else {
+                    throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
                 }
             }
 

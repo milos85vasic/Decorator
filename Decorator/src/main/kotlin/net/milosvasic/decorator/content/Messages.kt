@@ -12,6 +12,10 @@ object Messages {
         return "If not opened ${where(template, position)}"
     }
 
+    fun IF_NOT_CLOSED(template: String, position: Int): String {
+        return "If not closed ${where(template, position)}"
+    }
+
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
         return "Could not invoke '$what'\n\t\targuments: $args"
     }
