@@ -9,11 +9,11 @@ object Messages {
     }
 
     fun IF_NOT_OPENED(template: String, position: Int): String {
-        return "If not opened ${where(template, position)}"
+        return "'If' statement not opened ${where(template, position)}"
     }
 
     fun IF_NOT_CLOSED(template: String, position: Int): String {
-        return "If not closed ${where(template, position)}"
+        return "'If' statement not closed ${where(template, position)}"
     }
 
     fun INVALID_INVOKE_ARGUMENTS(what: String, args: String): String {
