@@ -50,6 +50,8 @@ class Decorator : TemplateSystem {
             while (mIf.find()) {
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition, index)
+                row = row.replace(mIf.group(0), "")
+                rows[index] = row
                 logger.d("", "IF: [ $ifCondition ][ $result ]") // TODO: Remove this.
                 if (ifState != null) {
                     throw IllegalStateException(Messages.IF_NOT_CLOSED(template, index))
@@ -62,6 +64,8 @@ class Decorator : TemplateSystem {
             val pEndIf = Pattern.compile(tags.endif)
             val mEndIf = pEndIf.matcher(line)
             while (mEndIf.find()) {
+                row = row.replace(mEndIf.group(0), "")
+                rows[index] = row
                 if (ifState != null) {
                     ifState?.to = index
                     ifStates.add(ifState)
