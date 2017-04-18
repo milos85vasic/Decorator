@@ -93,20 +93,22 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            var renderedLine = line
-            if (decoratedRows.containsKey(index)) {
-                decoratedRows[index]?.forEach {
-                    row ->
-                    val decoration = row
-                            .replace(tags.open, "")
-                            .replace(tags.close, "")
-                            .trim()
-                    val result = resolve(template, data, decoration, index)
-                    renderedLine = renderedLine.replace(row, result)
-                }
+            if (!line.startsWith("//")) {
+                var renderedLine = line
+                if (decoratedRows.containsKey(index)) {
+                    decoratedRows[index]?.forEach {
+                        row ->
+                        val decoration = row
+                                .replace(tags.open, "")
+                                .replace(tags.close, "")
+                                .trim()
+                        val result = resolve(template, data, decoration, index)
+                        renderedLine = renderedLine.replace(row, result)
+                    }
 
+                }
+                rendered.append("$renderedLine\n")
             }
-            rendered.append("$renderedLine\n")
         }
         return rendered.toString()
     }
