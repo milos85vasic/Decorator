@@ -93,7 +93,8 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            if (!line.startsWith("//")) {
+            val isLineValid = !line.startsWith("//") && satisfiesIf(ifStates, index)
+            if (isLineValid) {
                 var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
                     decoratedRows[index]?.forEach {
@@ -105,7 +106,6 @@ class Decorator : TemplateSystem {
                         val result = resolve(template, data, decoration, index)
                         renderedLine = renderedLine.replace(row, result)
                     }
-
                 }
                 rendered.append("$renderedLine\n")
             }
@@ -113,7 +113,7 @@ class Decorator : TemplateSystem {
         return rendered.toString()
     }
 
-    fun resolve(template: String, templateData: Data, line: String, position: Int): String {
+    private fun resolve(template: String, templateData: Data, line: String, position: Int): String {
         val params = line.trim().split(".")
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
@@ -140,7 +140,7 @@ class Decorator : TemplateSystem {
         }
     }
 
-    fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
+    private fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
         val params = line.trim().split(".")
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
@@ -165,6 +165,18 @@ class Decorator : TemplateSystem {
         } else {
             throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
         }
+    }
+
+    private fun satisfiesIf(ifStates: List<IfState?>, index: Int): Boolean {
+        ifStates.forEach {
+            ifState ->
+            if (ifState != null) {
+                if (index >= ifState.from && index <= ifState.to) {
+                    return ifState.value
+                }
+            }
+        }
+        return true
     }
 
 }
