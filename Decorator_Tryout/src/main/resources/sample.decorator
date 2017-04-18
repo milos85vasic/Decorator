@@ -16,32 +16,27 @@
 <include>footer</include>
 After footer: <include>after1</include> AND <include>after2</include>
 
-// To be ignored
-<!-- Basic If example -->
+// Basic If example
 <if>mainTitle</if>
 <p>We have main title!</p>
 <endif/>
 
-// To be ignored
-<!-- Basic If example -->
-<if>doesNotExist</if>
-<p>We have footer!</p>
+// Basic If example
+<if>doesNotExist</if><p>We have doesNotExist field (1).</p>
+<p>We have doesNotExist field (2).</p>
 <endif/>
 
-// To be ignored
-<!-- If example with multiple conditions -->
+// If example with multiple conditions
 <if>mainTitle</if> <!-- && footer -->
 <p>We have main title and footer!</p>
 <endif/>
 
-// To be ignored
-<!-- If example with multiple conditions -->
+// If example with multiple conditions
 <if>doesNotExist </if> <!-- && footer -->
 <p>We have main title and doesNotExist field!</p>
 <endif/>
 
-// To be ignored
-<!-- If with negation -->
+// If with negation
 <if>doesNotExist</if> <!-- ! -->
 <p>Negation works.</p>
 <endif/>
