@@ -145,6 +145,7 @@ class Decorator : TemplateSystem {
     }
 
     private fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
+        // TODO: Split by operators.
         val params = line.trim().split(".")
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
