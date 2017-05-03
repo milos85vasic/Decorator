@@ -3,3 +3,7 @@
 - First working version
 - Defined template rules and structure
 - Basic mechanism to generate final html content
+
+# Version 1.0.0 Alpha 2
+
+- TBD.
