@@ -23,16 +23,7 @@ class Decorator : TemplateSystem {
     override val memberSeparator = Separator.MEMBER()
     override val templateMainClass = DecoratorTemplateClass()
 
-    private val tautologyParserDelegate = object : TautologyParserDelegate {
-        override fun getExpressionValue(key: String): ExpressionValue? {
-            // TODO: Implement this.
-
-            return null
-        }
-    }
-
     private val tautology = Tautology()
-    private val tautologyParser = TautologyParser(tautologyParserDelegate)
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     override fun decorate(template: String, data: Data): String {
@@ -165,31 +156,24 @@ class Decorator : TemplateSystem {
         // TODO: Remove this.
         logger.w("", ">>>> $line")
 
-        // TODO: Split by operators.
-        val params = line.trim().split(memberSeparator.value)
-        templateData.content.putAll(templateMainClass.data.content)
-        val it = params.iterator()
-        var data: TemplateData? = null
-        if (it.hasNext()) {
-            data = templateData.content[it.next()]
-        }
-        while (data != null && data !is Value && it.hasNext()) {
-            when (data) {
-                is Data -> {
-                    val param = it.next()
-                    data = data.content[param]
+        val delegate = object : TautologyParserDelegate {
+            override fun getExpressionValue(key: String): ExpressionValue? {
+                var resolve: String? = null
+                try {
+                    resolve = resolve(template, templateData, line, position)
+                } catch (e: Exception) {
+                    logger.w("", "$e")
                 }
-                is Value -> {
-                    return !data.content.isEmpty()
+                return object : ExpressionValue {
+                    override fun getValue(): Boolean {
+                        return resolve != null
+                    }
                 }
-                else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }
         }
-        if (data != null && data is Value) {
-            return !data.content.isEmpty()
-        } else {
-            throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
-        }
+        val parser = TautologyParser(delegate)
+        val expressions = parser.parse(line)
+        return tautology.evaluate(expressions)
     }
 
     private fun satisfiesIf(ifStates: List<IfState?>, index: Int): Boolean {
