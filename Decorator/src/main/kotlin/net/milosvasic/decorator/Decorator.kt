@@ -5,6 +5,7 @@ import net.milosvasic.decorator.data.Data
 import net.milosvasic.decorator.data.IfState
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
+import net.milosvasic.decorator.separator.Separator
 import net.milosvasic.decorator.template.TemplateSystem
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
@@ -15,6 +16,7 @@ class Decorator : TemplateSystem {
 
     override val tags = DecoratorTags()
     override val templateExtension = "decorator"
+    override val memberSeparator = Separator.MEMBER()
     override val templateMainClass = DecoratorTemplateClass()
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
@@ -118,7 +120,7 @@ class Decorator : TemplateSystem {
     }
 
     private fun resolve(template: String, templateData: Data, line: String, position: Int): String {
-        val params = line.trim().split(".")
+        val params = line.trim().split(memberSeparator.value)
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
         var data: TemplateData? = null
@@ -145,8 +147,10 @@ class Decorator : TemplateSystem {
     }
 
     private fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
+        logger.w("", ">>>> $line")
+
         // TODO: Split by operators.
-        val params = line.trim().split(".")
+        val params = line.trim().split(memberSeparator.value)
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
         var data: TemplateData? = null
