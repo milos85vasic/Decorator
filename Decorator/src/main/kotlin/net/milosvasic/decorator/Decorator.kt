@@ -158,17 +158,18 @@ class Decorator : TemplateSystem {
 
         val delegate = object : TautologyParserDelegate {
             override fun getExpressionValue(key: String): ExpressionValue? {
-                var resolve: String? = null
+                val resolve: String?
                 try {
-                    resolve = resolve(template, templateData, line, position)
+                    resolve = resolve(template, templateData, key, position)
+                    return object : ExpressionValue {
+                        override fun getValue(): Boolean {
+                            return !resolve.isEmpty()
+                        }
+                    }
                 } catch (e: Exception) {
                     logger.w("", "$e")
                 }
-                return object : ExpressionValue {
-                    override fun getValue(): Boolean {
-                        return resolve != null
-                    }
-                }
+                return null
             }
         }
         val parser = TautologyParser(delegate)
