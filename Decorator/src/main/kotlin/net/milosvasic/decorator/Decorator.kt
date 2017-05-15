@@ -23,9 +23,6 @@ class Decorator : TemplateSystem {
     override val memberSeparator = Separator.MEMBER()
     override val templateMainClass = DecoratorTemplateClass()
 
-    private val tautology = Tautology()
-    private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
-
     private val tautologyParserDelegate = object : TautologyParserDelegate {
         override fun getExpressionValue(key: String): ExpressionValue? {
             // TODO: Implement this.
@@ -34,7 +31,9 @@ class Decorator : TemplateSystem {
         }
     }
 
+    private val tautology = Tautology()
     private val tautologyParser = TautologyParser(tautologyParserDelegate)
+    private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     override fun decorate(template: String, data: Data): String {
         val rendered = StringBuilder()
