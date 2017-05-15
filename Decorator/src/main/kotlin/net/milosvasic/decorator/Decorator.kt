@@ -96,13 +96,6 @@ class Decorator : TemplateSystem {
             }
         }
 
-        // TODO: Remove if printing
-        ifStates.forEach {
-            item ->
-            logger.c("", "IF item [ ${item?.from} ][ ${item?.to} ][ ${item?.value} ]")
-        }
-        // TODO: Remove if printing - END
-
         rows.forEachIndexed {
             index, line ->
             val isLineValid = !line.startsWith("//") && satisfiesIf(ifStates, index)
@@ -153,9 +146,6 @@ class Decorator : TemplateSystem {
     }
 
     private fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
-        // TODO: Remove this.
-        logger.w("", ">>>> $line")
-
         val delegate = object : TautologyParserDelegate {
             override fun getExpressionValue(key: String): ExpressionValue? {
                 val resolve: String?
