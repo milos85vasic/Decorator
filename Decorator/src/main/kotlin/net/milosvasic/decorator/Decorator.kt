@@ -9,6 +9,10 @@ import net.milosvasic.decorator.separator.Separator
 import net.milosvasic.decorator.template.TemplateSystem
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
+import net.milosvasic.tautology.Tautology
+import net.milosvasic.tautology.expression.ExpressionValue
+import net.milosvasic.tautology.parser.TautologyParser
+import net.milosvasic.tautology.parser.TautologyParserDelegate
 import java.lang.IllegalStateException
 import java.util.regex.Pattern
 
@@ -18,7 +22,19 @@ class Decorator : TemplateSystem {
     override val templateExtension = "decorator"
     override val memberSeparator = Separator.MEMBER()
     override val templateMainClass = DecoratorTemplateClass()
+
+    private val tautology = Tautology()
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
+
+    private val tautologyParserDelegate = object : TautologyParserDelegate {
+        override fun getExpressionValue(key: String): ExpressionValue? {
+            // TODO: Implement this.
+
+            return null
+        }
+    }
+
+    private val tautologyParser = TautologyParser(tautologyParserDelegate)
 
     override fun decorate(template: String, data: Data): String {
         val rendered = StringBuilder()
@@ -147,6 +163,7 @@ class Decorator : TemplateSystem {
     }
 
     private fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
+        // TODO: Remove this.
         logger.w("", ">>>> $line")
 
         // TODO: Split by operators.
