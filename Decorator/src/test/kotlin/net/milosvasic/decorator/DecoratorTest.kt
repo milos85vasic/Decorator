@@ -39,8 +39,12 @@ class DecoratorTest {
     }
 
     fun assertHtml(html: String) {
-        val lines = html.split("\n")
+        val lines = mutableListOf<String>()
+        lines.addAll(html.split("\n"))
         Assert.assertFalse(lines.isEmpty())
+        lines.removeAt(lines.lastIndex)
+        Assert.assertFalse(lines.isEmpty())
+
         Assert.assertEquals("<!-- Template system: Decorator, https://github.com/milos85vasic/Decorator -->", lines[0])
         Assert.assertEquals("<!-- Template system version: ${BuildConfig.VERSION.replace("_", " ")} -->", lines[1])
         Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", lines[2])
@@ -48,6 +52,12 @@ class DecoratorTest {
         Assert.assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">", lines[4])
         Assert.assertEquals("<head>", lines[5])
         Assert.assertEquals("<title>This is decorator test</title>", lines[6])
+        Assert.assertEquals("</head>", lines[7])
+        Assert.assertEquals("<body>", lines[8])
+
+
+        Assert.assertEquals("</body>", lines[lines.lastIndex - 1])
+        Assert.assertEquals("</html>", lines.last())
     }
 
     @After
