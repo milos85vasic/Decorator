@@ -41,7 +41,8 @@ class DecoratorTest {
     fun assertHtml(html: String) {
         val lines = html.split("\n")
         Assert.assertFalse(lines.isEmpty())
-
+        Assert.assertEquals("<!-- Template system: Decorator, https://github.com/milos85vasic/Decorator -->", lines[0])
+        Assert.assertEquals("<!-- Template system version: ${BuildConfig.VERSION.replace("_", " ")} -->", lines[1])
     }
 
     @After
