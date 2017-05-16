@@ -2,9 +2,10 @@ package net.milosvasic.decorator
 
 import net.milosvasic.decorator.content.Messages
 import net.milosvasic.decorator.data.Data
-import net.milosvasic.decorator.data.IfState
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
+import net.milosvasic.decorator.data.state.ElseState
+import net.milosvasic.decorator.data.state.IfState
 import net.milosvasic.decorator.separator.Separator
 import net.milosvasic.decorator.template.TemplateSystem
 import net.milosvasic.logger.SimpleLogger
@@ -34,6 +35,8 @@ class Decorator : TemplateSystem {
         rows.addAll(content.split("\n"))
         var ifState: IfState? = null
         val ifStates = mutableListOf<IfState?>()
+        var elseState: ElseState? = null
+        val elseStates = mutableListOf<ElseState?>()
         val rowsToBeIgnored = mutableListOf<Int>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
