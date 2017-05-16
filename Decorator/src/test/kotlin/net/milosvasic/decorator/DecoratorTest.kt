@@ -20,7 +20,7 @@ class DecoratorTest {
         val data = DataBuilder()
                 .append("doesNotExist", "")
                 .append("credits", "Some guy...")
-                .append("mainTitle", "Trying out")
+                .append("mainTitle", "This is decorator test")
                 .append("footer", "- - - - - - -")
                 .append(
                         "storage",
@@ -43,6 +43,11 @@ class DecoratorTest {
         Assert.assertFalse(lines.isEmpty())
         Assert.assertEquals("<!-- Template system: Decorator, https://github.com/milos85vasic/Decorator -->", lines[0])
         Assert.assertEquals("<!-- Template system version: ${BuildConfig.VERSION.replace("_", " ")} -->", lines[1])
+        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", lines[2])
+        Assert.assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">", lines[3])
+        Assert.assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">", lines[4])
+        Assert.assertEquals("<head>", lines[5])
+        Assert.assertEquals("<title>This is decorator test</title>", lines[6])
     }
 
     @After
