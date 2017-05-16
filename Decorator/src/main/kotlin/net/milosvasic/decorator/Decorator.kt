@@ -131,7 +131,10 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            val isLineValid = !line.startsWith("//") && satisfiesIf(ifStates, index)
+            var isLineValid = !line.startsWith("//")
+            if (isLineValid && !satisfiesIf(ifStates, index)) {
+                isLineValid = satisfiesElse(elseStates, index)
+            }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
                 var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
@@ -210,6 +213,18 @@ class Decorator : TemplateSystem {
             }
         }
         return true
+    }
+
+    private fun satisfiesElse(elseStates: List<ElseState?>, index: Int): Boolean {
+        elseStates.forEach {
+            ifState ->
+            if (ifState != null) {
+                if (index >= ifState.from && index <= ifState.to) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }
