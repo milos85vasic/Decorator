@@ -63,9 +63,6 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
-
-                logger.d("", "IF: [ $ifCondition ][ $result ]") // TODO: Remove this.
-
                 if (ifState != null) {
                     throw IllegalStateException(Messages.IF_NOT_CLOSED(template, index))
                 } else {
