@@ -35,6 +35,7 @@ class Decorator : TemplateSystem {
         var ifState: IfState? = null
         val ifStates = mutableListOf<IfState?>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
+        val rowsToBeRemoved = mutableListOf<Int>()
         rows.forEachIndexed {
             index, line ->
 
@@ -59,6 +60,9 @@ class Decorator : TemplateSystem {
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition, index)
                 row = row.replace(mIf.group(0), "")
+                if (row.isEmpty()) {
+                    rowsToBeRemoved.add(index)
+                }
                 rows[index] = row
                 logger.d("", "IF: [ $ifCondition ][ $result ]") // TODO: Remove this.
                 if (ifState != null) {
@@ -94,6 +98,11 @@ class Decorator : TemplateSystem {
             if (!commands.isEmpty()) {
                 decoratedRows[index] = commands
             }
+        }
+
+        rowsToBeRemoved.forEach {
+            index ->
+            rows.removeAt(index)
         }
 
         rows.forEachIndexed {
