@@ -19,6 +19,11 @@ class DataBuilder {
         return this
     }
 
+    fun append(key: String, builder: DataBuilder): DataBuilder {
+        data.content[key] = builder.build()
+        return this
+    }
+
     fun build(): Data {
         return data
     }
