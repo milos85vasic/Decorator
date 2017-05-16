@@ -93,7 +93,6 @@ class Decorator : TemplateSystem {
                 }
             }
 
-
             // Parse <endif/> tag
             val pEndIf = Pattern.compile(tags.endif)
             val mEndIf = pEndIf.matcher(line)
@@ -109,6 +108,11 @@ class Decorator : TemplateSystem {
                     ifState = null
                 } else {
                     throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
+                }
+                if (elseState != null) {
+                    elseState?.to = index
+                    elseStates.add(elseState)
+                    elseState = null
                 }
             }
 
