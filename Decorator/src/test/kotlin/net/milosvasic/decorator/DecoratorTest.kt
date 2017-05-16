@@ -21,7 +21,7 @@ class DecoratorTest {
                 .append("doesNotExist", "")
                 .append("credits", "Some guy...")
                 .append("mainTitle", "This is decorator test")
-                .append("footer", "- - - - - - -")
+                .append("footer", "- f o o t e r -")
                 .append(
                         "storage",
                         DataBuilder()
@@ -62,8 +62,20 @@ class DecoratorTest {
         Assert.assertEquals("<h2>Credits:</h2>", lines[14])
         Assert.assertEquals("<p>Some guy...</p>", lines[15])
         Assert.assertTrue(lines[16].isEmpty())
-
-
+        Assert.assertEquals("<p>Footer text: - f o o t e r -</p>", lines[17])
+        Assert.assertEquals("After footer: XXX1 AND XXX2", lines[18])
+        Assert.assertTrue(lines[19].isEmpty())
+        Assert.assertEquals("<p>We have main title!</p>", lines[20])
+        Assert.assertTrue(lines[21].isEmpty())
+        Assert.assertTrue(lines[22].isEmpty())
+        Assert.assertEquals("<p>We have main title and footer!</p>", lines[23])
+        Assert.assertEquals("<p>We have main title and footer!</p>", lines[24])
+        Assert.assertEquals("<p>We have main title and footer!</p>", lines[25])
+        Assert.assertTrue(lines[26].isEmpty())
+        Assert.assertTrue(lines[27].isEmpty())
+        Assert.assertEquals("<p>Negation works.</p>", lines[28])
+        Assert.assertTrue(lines[29].isEmpty())
+        Assert.assertEquals(32, lines.size)
         Assert.assertEquals("</body>", lines[lines.lastIndex - 1])
         Assert.assertEquals("</html>", lines.last())
     }
