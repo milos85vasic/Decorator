@@ -77,8 +77,20 @@ class Decorator : TemplateSystem {
             val pElse = Pattern.compile(tags.elseTag)
             val mElse = pElse.matcher(line)
             while (mElse.find()) {
-                val elseCondition = mElse.group(1)
-
+                row = row.replace(mIf.group(0), "")
+                if (row.isEmpty()) {
+                    rowsToBeIgnored.add(index)
+                }
+                rows[index] = row
+                if (ifState == null) {
+                    throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
+                } else {
+                    if (elseState != null) {
+                        throw IllegalStateException(Messages.ELSE_NOT_CLOSED(template, index))
+                    } else {
+                        elseState = ElseState(index, -1)
+                    }
+                }
             }
 
 

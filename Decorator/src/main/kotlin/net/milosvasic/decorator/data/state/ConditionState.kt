@@ -1,3 +1,3 @@
 package net.milosvasic.decorator.data.state
 
-abstract class ConditionState(var from: Int, var to: Int = -1, var value: Boolean = true)
+abstract class ConditionState(var from: Int, var to: Int = -1)
