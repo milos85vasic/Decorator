@@ -44,5 +44,11 @@ After footer: <include>after1</include> AND <include>after2</include>
 <p>Negation works.</p>
 <endif/>
 
+<if>doesNotExist</if>
+<p>Will not show</p>
+<else>
+<p>Will show - else</p>
+<endif/>
+
 </body>
 </html>
