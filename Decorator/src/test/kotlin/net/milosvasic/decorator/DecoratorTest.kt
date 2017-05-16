@@ -4,6 +4,7 @@ import net.milosvasic.decorator.data.DataBuilder
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
 import org.junit.After
+import org.junit.Assert
 import org.junit.Test
 
 class DecoratorTest {
@@ -34,6 +35,12 @@ class DecoratorTest {
         end = System.currentTimeMillis() - start
         logger.v("", html)
 
+        assertHtml(html)
+    }
+
+    fun assertHtml(html: String) {
+        val lines = html.split("\n")
+        Assert.assertFalse(lines.isEmpty())
 
     }
 
