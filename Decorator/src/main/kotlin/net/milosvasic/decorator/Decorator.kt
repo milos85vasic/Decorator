@@ -34,11 +34,10 @@ class Decorator : TemplateSystem {
         rows.addAll(content.split("\n"))
         var ifState: IfState? = null
         val ifStates = mutableListOf<IfState?>()
+        val rowsToBeIgnored = mutableListOf<Int>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
-        val rowsToBeRemoved = mutableListOf<Int>()
         rows.forEachIndexed {
             index, line ->
-
             // Parse <include> tags
             val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
             val mInclude = pInclude.matcher(line)
@@ -61,10 +60,12 @@ class Decorator : TemplateSystem {
                 val result = resolveIf(template, data, ifCondition, index)
                 row = row.replace(mIf.group(0), "")
                 if (row.isEmpty()) {
-                    rowsToBeRemoved.add(index)
+                    rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
+
                 logger.d("", "IF: [ $ifCondition ][ $result ]") // TODO: Remove this.
+
                 if (ifState != null) {
                     throw IllegalStateException(Messages.IF_NOT_CLOSED(template, index))
                 } else {
@@ -77,6 +78,9 @@ class Decorator : TemplateSystem {
             val mEndIf = pEndIf.matcher(line)
             while (mEndIf.find()) {
                 row = row.replace(mEndIf.group(0), "")
+                if (row.isEmpty()) {
+                    rowsToBeIgnored.add(index)
+                }
                 rows[index] = row
                 if (ifState != null) {
                     ifState?.to = index
@@ -100,15 +104,10 @@ class Decorator : TemplateSystem {
             }
         }
 
-        rowsToBeRemoved.forEach {
-            index ->
-            rows.removeAt(index)
-        }
-
         rows.forEachIndexed {
             index, line ->
             val isLineValid = !line.startsWith("//") && satisfiesIf(ifStates, index)
-            if (isLineValid) {
+            if (!rowsToBeIgnored.contains(index) && isLineValid) {
                 var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
                     decoratedRows[index]?.forEach {

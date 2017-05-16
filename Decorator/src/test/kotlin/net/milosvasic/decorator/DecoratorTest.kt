@@ -33,6 +33,8 @@ class DecoratorTest {
         val html = decorator.decorate("sample", data)
         end = System.currentTimeMillis() - start
         logger.v("", html)
+
+
     }
 
     @After
