@@ -77,7 +77,7 @@ class Decorator : TemplateSystem {
             val pElse = Pattern.compile(tags.elseTag)
             val mElse = pElse.matcher(line)
             while (mElse.find()) {
-                row = row.replace(mIf.group(0), "")
+                row = row.replace(mElse.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
