@@ -9,6 +9,7 @@ abstract class Tags {
     abstract val ifOpen: String
     abstract val ifClose: String
     abstract val endif: String
+    abstract val elseTag: String
 
 
 }
