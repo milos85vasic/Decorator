@@ -23,13 +23,9 @@ class DecoratorTest {
                                 .append("body", "Body paragraph ...")
                 )
                 .build()
-        try {
-            val html = decorator.decorate("sample", data)
-            logger.v("", html)
-        } catch (e: Exception) {
-            logger.e("", "Error: $e")
-            e.printStackTrace()
-        }
+
+        val html = decorator.decorate("sample", data)
+        logger.v("", html)
     }
 
 }
