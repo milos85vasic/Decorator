@@ -44,7 +44,6 @@ class DecoratorTest {
         Assert.assertFalse(lines.isEmpty())
         lines.removeAt(lines.lastIndex)
         Assert.assertFalse(lines.isEmpty())
-
         Assert.assertEquals("<!-- Template system: Decorator, https://github.com/milos85vasic/Decorator -->", lines[0])
         Assert.assertEquals("<!-- Template system version: ${BuildConfig.VERSION.replace("_", " ")} -->", lines[1])
         Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", lines[2])
