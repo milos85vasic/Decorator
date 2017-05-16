@@ -54,6 +54,14 @@ class DecoratorTest {
         Assert.assertEquals("<title>This is decorator test</title>", lines[6])
         Assert.assertEquals("</head>", lines[7])
         Assert.assertEquals("<body>", lines[8])
+        Assert.assertTrue(lines[9].isEmpty())
+        Assert.assertEquals("<h1>This is: Main header</h1>", lines[10])
+        Assert.assertEquals("<h2>This is: Main header with title assigned: This is decorator test</h2>", lines[11])
+        Assert.assertEquals("<p>Body paragraph ...</p>", lines[12])
+        Assert.assertTrue(lines[13].isEmpty())
+        Assert.assertEquals("<h2>Credits:</h2>", lines[14])
+        Assert.assertEquals("<p>Some guy...</p>", lines[15])
+        Assert.assertTrue(lines[16].isEmpty())
 
 
         Assert.assertEquals("</body>", lines[lines.lastIndex - 1])

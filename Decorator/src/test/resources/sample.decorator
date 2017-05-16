@@ -12,6 +12,7 @@
 <p><dc>storage.body</dc></p>
 
 <include>elements/credits</include>
+
 <include>footer</include>
 After footer: <include>after1</include> AND <include>after2</include>
 
