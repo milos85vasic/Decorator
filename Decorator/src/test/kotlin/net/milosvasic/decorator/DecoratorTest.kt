@@ -3,9 +3,14 @@ package net.milosvasic.decorator
 import net.milosvasic.decorator.data.DataBuilder
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
+import org.junit.After
 import org.junit.Test
 
 class DecoratorTest {
+
+    private var end = 0L
+    private val tag = ""
+    private val logger = SimpleLogger()
 
     @Test
     fun testDecorator() {
@@ -24,8 +29,15 @@ class DecoratorTest {
                 )
                 .build()
 
+        val start = System.currentTimeMillis()
         val html = decorator.decorate("sample", data)
+        end = System.currentTimeMillis() - start
         logger.v("", html)
+    }
+
+    @After
+    fun afterTest() {
+        logger.i(tag, "Template generated in $end ms.")
     }
 
 }
