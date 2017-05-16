@@ -70,6 +70,15 @@ class Decorator : TemplateSystem {
                 }
             }
 
+            // Parse <else> tags
+            val pElse = Pattern.compile(tags.elseTag)
+            val mElse = pElse.matcher(line)
+            while (mElse.find()) {
+                val elseCondition = mElse.group(1)
+
+            }
+
+
             // Parse <endif/> tag
             val pEndIf = Pattern.compile(tags.endif)
             val mEndIf = pEndIf.matcher(line)
