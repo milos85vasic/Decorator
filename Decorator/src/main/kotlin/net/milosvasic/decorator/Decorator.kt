@@ -117,6 +117,16 @@ class Decorator : TemplateSystem {
             }
 
             // Parse for
+            val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
+            val mFor = pFor.matcher(line)
+            while(mFor.find()){
+                val forCondition = mFor.group(1)
+                row = row.replace(mFor.group(0), "")
+                if (row.isEmpty()) {
+                    rowsToBeIgnored.add(index)
+                }
+                logger.i("", "FOR: $forCondition")
+            }
 
 
             // Parse <dc> tags
@@ -173,6 +183,10 @@ class Decorator : TemplateSystem {
                 }
                 is Value -> {
                     return data.content
+                }
+                is Collection<*> -> {
+                    logger.e("", "Collection ...")
+                    throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
                 }
                 else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }

@@ -8,21 +8,17 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Test
 
-class DecoratorTest {
+class ForeachTest {
 
     private var end = 0L
     private val tag = ""
     private val logger = SimpleLogger()
 
     @Test
-    fun testDecorator() {
+    fun testForeach() {
         val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
         val decorator = Decorator()
         val data = DataBuilder()
-                .append("doesNotExist", "")
-                .append("credits", "Some guy...")
-                .append("mainTitle", "This is decorator test")
-                .append("footer", "- f o o t e r -")
                 .append(
                         "storage",
                         DataBuilder()
@@ -51,7 +47,7 @@ class DecoratorTest {
                 .build()
 
         val start = System.currentTimeMillis()
-        val html = decorator.decorate("sample", data)
+        val html = decorator.decorate("foreach", data)
         end = System.currentTimeMillis() - start
         logger.v("", html)
 
@@ -96,7 +92,9 @@ class DecoratorTest {
         Assert.assertTrue(lines[29].isEmpty())
         Assert.assertEquals("<p>Will show - else</p>", lines[30])
         Assert.assertTrue(lines[31].isEmpty())
-        Assert.assertEquals(34, lines.size)
+
+
+        // Assert.assertEquals(34, lines.size)
         Assert.assertEquals("</body>", lines[lines.lastIndex - 1])
         Assert.assertEquals("</html>", lines.last())
     }
