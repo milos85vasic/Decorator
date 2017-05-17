@@ -1,6 +1,7 @@
 package net.milosvasic.decorator
 
 import net.milosvasic.decorator.data.DataBuilder
+import net.milosvasic.decorator.data.data
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
 import org.junit.After
@@ -27,6 +28,17 @@ class DecoratorTest {
                         DataBuilder()
                                 .append("header", "Main header")
                                 .append("body", "Body paragraph ...")
+                )
+                .append(
+                        "names",
+                        listOf("Milos", "Maja")
+                )
+                .append(
+                        "cars",
+                        listOf(
+                                data().append("name", "Fiat"),
+                                data().append("name", "BMW")
+                        )
                 )
                 .build()
 
