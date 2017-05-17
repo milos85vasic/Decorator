@@ -28,6 +28,7 @@ class DecoratorTest {
                         DataBuilder()
                                 .append("header", "Main header")
                                 .append("body", "Body paragraph ...")
+                                .append("stuff", listOf("Xxx", "Yyy", "Zzz"))
                 )
                 .append(
                         "names",

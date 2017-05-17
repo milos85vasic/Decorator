@@ -50,17 +50,19 @@ After footer: <include>after1</include> AND <include>after2</include>
 <p>Will show - else</p>
 <endif/>
 
-<ul>
-<foreach>names</foreach>
-    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
-<endfor/>
-</ul>
+<dc></dc>
 
-<ul>
-<foreach>cars</foreach>
-    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
-<endfor/>
-</ul>
+//<ul>
+//<foreach>names</foreach>
+//    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>cars</foreach>
+//    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
+//<endfor/>
+//</ul>
 
 </body>
 </html>
