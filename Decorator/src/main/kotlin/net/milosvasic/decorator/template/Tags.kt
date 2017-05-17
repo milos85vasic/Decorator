@@ -12,7 +12,7 @@ abstract class Tags {
     abstract val elseTag: String
     abstract val foreachOpen: String
     abstract val foreachClose: String
-    abstract val endForeach: String
+    abstract val endFor: String
     abstract val lineComment: String
 
 }
