@@ -6,6 +6,7 @@ import net.milosvasic.decorator.data.Data
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
 import net.milosvasic.decorator.data.state.ElseState
+import net.milosvasic.decorator.data.state.ForeachState
 import net.milosvasic.decorator.data.state.IfState
 import net.milosvasic.decorator.separator.Separator
 import net.milosvasic.decorator.template.TemplateSystem
@@ -38,6 +39,8 @@ class Decorator : TemplateSystem {
         val ifStates = mutableListOf<IfState?>()
         var elseState: ElseState? = null
         val elseStates = mutableListOf<ElseState?>()
+        var foreachState: ForeachState? = null
+        val foreachStates = mutableListOf<ForeachState?>()
         val rowsToBeIgnored = mutableListOf<Int>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
@@ -126,7 +129,7 @@ class Decorator : TemplateSystem {
                 }
             }
 
-            // Parse for
+            // Parse <foreach>
             val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
             val mFor = pFor.matcher(line)
             while (mFor.find()) {
@@ -135,9 +138,13 @@ class Decorator : TemplateSystem {
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
-                logger.i("", "FOR: $forCondition")
+                rows[index] = row
+                if (foreachState != null) {
+                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template, index))
+                } else {
+                    foreachState = ForeachState(index, -1, forCondition)
+                }
             }
-
 
             // Parse <dc> tags
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")

@@ -24,6 +24,10 @@ object Messages {
         return "'Else' statement not closed ${where(template, position)}"
     }
 
+    fun FOR_NOT_CLOSED(template: String, position: Int): String {
+        return "'Foreach' statement not closed ${where(template, position)}"
+    }
+
     private fun where(who: String, where: Int) = "from '$who.decorator' at line: ${where + 1}"
 
 }
