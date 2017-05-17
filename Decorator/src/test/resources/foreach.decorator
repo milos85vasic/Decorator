@@ -7,19 +7,17 @@
 </head>
 <body>
 
-<dc>storage.stuff</dc>
+<ul>
+<foreach>names</foreach>
+    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
+<endfor/>
+</ul>
 
-//<ul>
-//<foreach>names</foreach>
-//    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>cars</foreach>
-//    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
-//<endfor/>
-//</ul>
+<ul>
+<foreach>cars</foreach>
+    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
+<endfor/>
+</ul>
 
 </body>
 </html>
