@@ -43,6 +43,7 @@ class Decorator : TemplateSystem {
         val foreachStates = mutableListOf<ForeachState?>()
         val rowsToBeIgnored = mutableListOf<Int>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
+        val foreachTemplates = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
             // Trim comments that are not at the line start
@@ -164,18 +165,27 @@ class Decorator : TemplateSystem {
                 }
             }
 
-
             // Parse <dc> tags
-            val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
-            val m = p.matcher(line)
-            val commands = mutableListOf<String>()
-            while (m.find()) {
-                val result = m.group()
-                commands.add(result)
+            val state = getForeachState(foreachStates, index)
+            if (state != null) {
+                logger.e("", "STATE AT LINE: $index")
+            } else {
+                val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
+                val m = p.matcher(line)
+                val commands = mutableListOf<String>()
+                while (m.find()) {
+                    val result = m.group()
+                    commands.add(result)
+                }
+                if (!commands.isEmpty()) {
+                    decoratedRows[index] = commands
+                }
             }
-            if (!commands.isEmpty()) {
-                decoratedRows[index] = commands
-            }
+        }
+
+        foreachStates.forEachIndexed {
+            index, item ->
+            logger.e("", ">>>> ${item?.value}")
         }
 
         rows.forEachIndexed {
@@ -278,6 +288,18 @@ class Decorator : TemplateSystem {
             }
         }
         return false
+    }
+
+    private fun getForeachState(foreachStates: List<ForeachState?>, index: Int): ForeachState? {
+        foreachStates.forEach {
+            foreachState ->
+            if (foreachState != null) {
+                if (index >= foreachState.from && index <= foreachState.to) {
+                    return foreachState
+                }
+            }
+        }
+        return null
     }
 
 }
