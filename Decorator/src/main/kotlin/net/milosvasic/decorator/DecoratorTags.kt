@@ -11,6 +11,9 @@ class DecoratorTags : Tags(){
     override val ifOpen = "<if>"
     override val ifClose = "</if>"
     override val elseTag = "<else>"
-    override val endif = "<endif/>"
+    override val endIf = "<endif/>"
+    override val foreachOpen = "<foreach>"
+    override val foreachClose = "</foreach>"
+    override val endForeach = "<endfor/>"
 
 }

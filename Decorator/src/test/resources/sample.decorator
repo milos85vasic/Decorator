@@ -51,8 +51,14 @@ After footer: <include>after1</include> AND <include>after2</include>
 <endif/>
 
 <ul>
-<foreach>items</foreach>
-    <li>Item [ <dc>item</dc> ]</li>
+<foreach>names</foreach>
+    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
+<endfor/>
+</ul>
+
+<ul>
+<foreach>cars</foreach>
+    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
 <endfor/>
 </ul>
 

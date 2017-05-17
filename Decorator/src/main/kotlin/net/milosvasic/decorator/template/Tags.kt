@@ -8,8 +8,11 @@ abstract class Tags {
     abstract val includeClose: String
     abstract val ifOpen: String
     abstract val ifClose: String
-    abstract val endif: String
+    abstract val endIf: String
     abstract val elseTag: String
+    abstract val foreachOpen: String
+    abstract val foreachClose: String
+    abstract val endForeach: String
 
 
 }

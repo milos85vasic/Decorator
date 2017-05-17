@@ -94,7 +94,7 @@ class Decorator : TemplateSystem {
             }
 
             // Parse <endif/> tag
-            val pEndIf = Pattern.compile(tags.endif)
+            val pEndIf = Pattern.compile(tags.endIf)
             val mEndIf = pEndIf.matcher(line)
             while (mEndIf.find()) {
                 row = row.replace(mEndIf.group(0), "")
