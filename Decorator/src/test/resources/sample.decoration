@@ -41,13 +41,13 @@ After footer: <include>after1</include> AND <include>after2</include>
 
 // If with negation
 <if>!doesNotExist</if>
-<p>Negation works.</p>
+<t/><p>Negation works.</p>
 <endif/>
 
 <if>doesNotExist</if>
-<p>Will not show</p>
+<t/><p>Will not show</p>
 <else>
-<p>Will show - else</p>
+<t/><p>Will show - else</p>
 <endif/>
 // Ignore me 1
 Some text 1 // Ignore me 2
