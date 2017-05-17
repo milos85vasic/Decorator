@@ -116,6 +116,9 @@ class Decorator : TemplateSystem {
                 }
             }
 
+            // Parse for
+
+
             // Parse <dc> tags
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
             val m = p.matcher(line)
