@@ -148,9 +148,9 @@ class Decorator : TemplateSystem {
 
             // Parse <endfor/>
             val pEndfor = Pattern.compile(tags.endFor)
-            val mEnfor = pEndfor.matcher(line)
-            while (mEnfor.find()) {
-                row = row.replace(mEnfor.group(0), "")
+            val mEndfor = pEndfor.matcher(line)
+            while (mEndfor.find()) {
+                row = row.replace(mEndfor.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
