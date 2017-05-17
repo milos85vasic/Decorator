@@ -1,8 +1,8 @@
 package net.milosvasic.decorator
 
 import net.milosvasic.decorator.content.Messages
-import net.milosvasic.decorator.data.Data
 import net.milosvasic.decorator.data.Collection
+import net.milosvasic.decorator.data.Data
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
 import net.milosvasic.decorator.data.state.ElseState
@@ -21,7 +21,7 @@ import java.util.regex.Pattern
 class Decorator : TemplateSystem {
 
     override val tags = DecoratorTags()
-    override val templateExtension = "decorator"
+    override val templateExtension = "decoration"
     override val memberSeparator = Separator.MEMBER()
     override val templateMainClass = DecoratorTemplateClass()
 
@@ -42,10 +42,19 @@ class Decorator : TemplateSystem {
         val decoratedRows = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
+            // Trim comments that are not at the line start
+            var row = line
+            val lineCommentIndex = row.indexOf(tags.lineComment)
+            if (!row.startsWith(tags.lineComment) && lineCommentIndex > 0) {
+                row = row.substring(0, lineCommentIndex)
+            }
+            // Trim tab placeholder
+            row = row.replace(tags.tabPlacegolder, "")
+            rows[index] = row
+
             // Parse <include> tags
             val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
             val mInclude = pInclude.matcher(line)
-            var row = line
             while (mInclude.find()) {
                 val include = mInclude.group(1)
                 var element = decorate(include, data)
@@ -145,7 +154,7 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            var isLineValid = !line.startsWith("//")
+            var isLineValid = !line.startsWith(tags.lineComment)
             if (isLineValid && !satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }

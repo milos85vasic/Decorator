@@ -1,7 +1,7 @@
 <dc>decorator.describe</dc>
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC <dc>decorator.doctype</dc>>
+<html <dc>decorator.xmlns</dc> xml:lang="en" lang="en">
 <head>
 <title><dc>mainTitle</dc></title>
 </head>
@@ -49,6 +49,17 @@ After footer: <include>after1</include> AND <include>after2</include>
 <else>
 <p>Will show - else</p>
 <endif/>
+// Ignore me 1
+Some text 1 // Ignore me 2
+Some text 2// Ignore me 2
+Some text 3 //Ignore me 3
+Some text 4//Ignore me 4
+Some text 5 // // Ignore me 5
+Some text 6// // Ignore me 6
+Some text 7//// Ignore me 7 //
+//Some text 8//// Ignore me 7 //
+ // Some text 9
+<t/><t/><t/>Tab placeholder trimmed<t/>
 
 //<ul>
 //<foreach>names</foreach>

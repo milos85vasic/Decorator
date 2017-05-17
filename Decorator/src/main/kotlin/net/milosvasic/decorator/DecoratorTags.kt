@@ -15,5 +15,8 @@ class DecoratorTags : Tags(){
     override val foreachOpen = "<foreach>"
     override val foreachClose = "</foreach>"
     override val endForeach = "<endfor/>"
+    override val lineComment = "//"
+
+    val tabPlacegolder = "<t/>"
 
 }
