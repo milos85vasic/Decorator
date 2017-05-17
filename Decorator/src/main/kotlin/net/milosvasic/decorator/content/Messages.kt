@@ -13,19 +13,23 @@ object Messages {
     }
 
     fun IF_NOT_OPENED(template: String, position: Int): String {
-        return "'If' statement not opened ${where(template, position)}"
+        return "'If' not opened ${where(template, position)}"
+    }
+
+    fun FOR_NOT_OPENED(template: String, position: Int): String {
+        return "'For' not opened ${where(template, position)}"
     }
 
     fun IF_NOT_CLOSED(template: String, position: Int): String {
-        return "'If' statement not closed ${where(template, position)}"
+        return "'If' not closed ${where(template, position)}"
     }
 
     fun ELSE_NOT_CLOSED(template: String, position: Int): String {
-        return "'Else' statement not closed ${where(template, position)}"
+        return "'Else' not closed ${where(template, position)}"
     }
 
     fun FOR_NOT_CLOSED(template: String, position: Int): String {
-        return "'Foreach' statement not closed ${where(template, position)}"
+        return "'Foreach' not closed ${where(template, position)}"
     }
 
     private fun where(who: String, where: Int) = "from '$who.decorator' at line: ${where + 1}"
