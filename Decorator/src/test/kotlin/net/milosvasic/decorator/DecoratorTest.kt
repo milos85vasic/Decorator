@@ -36,8 +36,8 @@ class DecoratorTest {
                 .append(
                         "cars",
                         listOf(
-                                data().append("name", "Fiat"),
-                                data().append("name", "BMW")
+                                data().get("name", "Fiat"),
+                                data().get("name", "BMW")
                         )
                 )
                 .build()

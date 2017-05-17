@@ -40,6 +40,38 @@ class DataBuilderWrapper : DataBuilderAbstract() {
         return builder.build()
     }
 
+    fun get(key: String, value: String): Data {
+        return DataBuilder().append(key, value).build()
+    }
+
+    fun get(key: String, value: Value): Data {
+        return DataBuilder().append(key, value).build()
+    }
+
+    fun get(key: String, data: Data): Data {
+        return DataBuilder().append(key, data).build()
+    }
+
+    fun get(key: String, builder: DataBuilder): Data {
+        return DataBuilder().append(key, builder).build()
+    }
+
+    fun get(key: String, collection: Collection): Data {
+        return DataBuilder().append(key, collection).build()
+    }
+
+    fun get(key: String, iterable: Iterable<TemplateData>): Data {
+        return DataBuilder().append(key, iterable).build()
+    }
+
+    fun get(key: String, iterable: List<String>): Data {
+        return DataBuilder().append(key, iterable).build()
+    }
+
+    fun get(key: String, iterable: Set<String>): Data {
+        return DataBuilder().append(key, iterable).build()
+    }
+
 }
 
 fun data(): DataBuilderWrapper {
