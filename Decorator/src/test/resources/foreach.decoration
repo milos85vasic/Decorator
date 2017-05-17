@@ -15,6 +15,7 @@
 <ul>
 <foreach>cars</foreach>
     <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
+
 <endfor/>
 </ul>
 
@@ -23,6 +24,8 @@
 <foreach>storage.stuff</foreach>
     <li>
         <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</a>
+
+
     </li>
 <endfor/>
 </ul>
