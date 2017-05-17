@@ -38,7 +38,14 @@ class DecoratorTest {
                         "cars",
                         listOf(
                                 data().get("name", "Fiat"),
-                                data().get("name", "BMW")
+                                data().get("name", "BMW"),
+                                data().get("name", "Mercedes"),
+                                data().get("name", "Ford"),
+                                data().get("name", "Golf"),
+                                data().get("name", "Audi"),
+                                data().get("name", "Citroen"),
+                                data().get("name", "Zastava"),
+                                data().get("name", "Kia")
                         )
                 )
                 .build()
