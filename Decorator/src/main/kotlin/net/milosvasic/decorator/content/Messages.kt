@@ -8,6 +8,10 @@ object Messages {
         return "Could not resolve '$line' ${where(template, position)}"
     }
 
+    fun COLLECTION_NOT_ALLOWED(line: String, template: String, position: Int): String {
+        return "Collection not allowed here. '$line' ${where(template, position)}. Use 'foreach' iteration."
+    }
+
     fun IF_NOT_OPENED(template: String, position: Int): String {
         return "'If' statement not opened ${where(template, position)}"
     }

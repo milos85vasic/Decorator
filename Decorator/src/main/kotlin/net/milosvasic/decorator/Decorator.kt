@@ -2,6 +2,7 @@ package net.milosvasic.decorator
 
 import net.milosvasic.decorator.content.Messages
 import net.milosvasic.decorator.data.Data
+import net.milosvasic.decorator.data.Collection
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
 import net.milosvasic.decorator.data.state.ElseState
@@ -119,7 +120,7 @@ class Decorator : TemplateSystem {
             // Parse for
             val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
             val mFor = pFor.matcher(line)
-            while(mFor.find()){
+            while (mFor.find()) {
                 val forCondition = mFor.group(1)
                 row = row.replace(mFor.group(0), "")
                 if (row.isEmpty()) {
@@ -184,17 +185,17 @@ class Decorator : TemplateSystem {
                 is Value -> {
                     return data.content
                 }
-                is Collection<*> -> {
-                    logger.e("", "Collection ...")
-                    throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
-                }
                 else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
             }
         }
         if (data != null && data is Value) {
             return data.content
         } else {
-            throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
+            if (data is Collection) {
+                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(line, template, position))
+            } else {
+                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
+            }
         }
     }
 
