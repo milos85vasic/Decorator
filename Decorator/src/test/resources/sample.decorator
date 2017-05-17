@@ -50,5 +50,11 @@ After footer: <include>after1</include> AND <include>after2</include>
 <p>Will show - else</p>
 <endif/>
 
+<ul>
+<foreach>items</foreach>
+    <li>Item [ <dc>item</dc> ]</li>
+<endfor/>
+</ul>
+
 </body>
 </html>
