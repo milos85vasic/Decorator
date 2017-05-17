@@ -30,8 +30,8 @@ class Decorator : TemplateSystem {
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     override fun decorate(template: String, data: Data): String {
-        val rendered = StringBuilder()
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
+        val rendered = StringBuilder()
         val content = templateFile.readText()
         val rows = mutableListOf<String>()
         rows.addAll(content.split("\n"))
@@ -42,8 +42,8 @@ class Decorator : TemplateSystem {
         var foreachState: ForeachState? = null
         val foreachStates = mutableListOf<ForeachState?>()
         val rowsToBeIgnored = mutableListOf<Int>()
+        val foreachTemplates = mutableMapOf<Int, String>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
-        val foreachTemplates = mutableMapOf<Int, List<String>>()
         rows.forEachIndexed {
             index, line ->
             // Trim comments that are not at the line start
@@ -166,9 +166,14 @@ class Decorator : TemplateSystem {
             }
 
             // Parse <dc> tags
-            val state = getForeachState(foreachStates, index)
-            if (state != null) {
-                logger.e("", "STATE AT LINE: $index")
+            var foreachStateInProgress = false
+            if (foreachState != null) {
+                val currentState: ForeachState = foreachState as ForeachState
+                foreachStateInProgress = index > currentState.from
+            }
+            if (foreachStateInProgress) {
+                foreachTemplates[index] = line
+                rowsToBeIgnored.add(index)
             } else {
                 val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
                 val m = p.matcher(line)
@@ -183,8 +188,8 @@ class Decorator : TemplateSystem {
             }
         }
 
-        foreachStates.forEachIndexed {
-            index, item ->
+        foreachStates.forEach {
+            item ->
             logger.e("", ">>>> ${item?.value}")
         }
 

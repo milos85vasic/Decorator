@@ -6,6 +6,7 @@
   <title>Foreach test</title>
 </head>
 <body>
+
 <ul>
 <foreach>names</foreach>
     <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
@@ -18,7 +19,6 @@
 
 <endfor/>
 </ul>
-
 
 <ul>
 <foreach>storage.stuff</foreach>
