@@ -136,8 +136,8 @@ class Decorator : TemplateSystem {
             while (mFor.find()) {
                 val forCondition = mFor.group(1)
                 row = row.replace(mFor.group(0), "")
-                if (row.isEmpty()) {
-                    rowsToBeIgnored.add(index)
+                if (!row.isEmpty()) {
+                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
                 }
                 rows[index] = row
                 if (foreachState != null) {
@@ -195,20 +195,19 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
+
+            val state = getForeachState(foreachStates, index)
+            state?.let {
+                if(state.from == index) {
+                    logger.e("", "[ ${rowsToBeIgnored.contains(index)} ] >>> $line")
+                }
+            }
+
             var isLineValid = !line.startsWith(tags.lineComment)
             if (isLineValid && !satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
-
-                val foreachTemplate = foreachTemplates[index]
-                val foreachCondition = getForeachState(foreachStates, index)
-                foreachCondition?.let {
-                    if (foreachCondition.from == index) {
-                        logger.e("", "> > > > ${foreachCondition.value} -> [] -> $foreachTemplate -> $line")
-                    }
-                }
-
                 var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
                     decoratedRows[index]?.forEach {

@@ -32,6 +32,10 @@ object Messages {
         return "'Foreach' not closed ${where(template, position)}"
     }
 
+    fun CONTENT_AFTER_FOR_OPENING(template: String, position: Int): String {
+        return "Decoration content not allowed on the same line where foreach is opened ${where(template, position)}"
+    }
+
     private fun where(who: String, where: Int) = "from '$who.decorator' at line: ${where + 1}"
 
 }
