@@ -188,27 +188,24 @@ class Decorator : TemplateSystem {
             }
         }
 
-        foreachStates.forEach {
-            item ->
-            logger.e("", ">>>> ${item?.value}")
-        }
-
         rows.forEachIndexed {
             index, line ->
+            var row = line
 
             val state = getForeachState(foreachStates, index)
             state?.let {
-                if(state.from == index) {
-                    logger.e("", "[ ${rowsToBeIgnored.contains(index)} ] >>> $line")
+                if (state.from == index) {
+                    row = "foreEach_${foreachStates.indexOf(state)}"
+                    logger.e("", "[ ${rowsToBeIgnored.contains(index)} ][ ${state.value} ]")
                 }
             }
 
-            var isLineValid = !line.startsWith(tags.lineComment)
+            var isLineValid = !row.startsWith(tags.lineComment)
             if (isLineValid && !satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
-                var renderedLine = line
+                var renderedLine = row
                 if (decoratedRows.containsKey(index)) {
                     decoratedRows[index]?.forEach {
                         row ->
