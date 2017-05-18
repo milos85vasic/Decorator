@@ -167,8 +167,8 @@ class Decorator : TemplateSystem {
 
             // Parse <dc> tags
             var foreachStateInProgress = false
-            if (foreachState != null) {
-                val currentState: ForeachState = foreachState as ForeachState
+            val currentState = foreachState
+            currentState?.let {
                 foreachStateInProgress = index > currentState.from
             }
             if (foreachStateInProgress) {
@@ -199,12 +199,16 @@ class Decorator : TemplateSystem {
             if (isLineValid && !satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }
-            val foreachCondition = getForeachState(foreachStates, index)
-            val foreachTemplate = foreachTemplates[index]
-            foreachCondition?.let {
-                logger.e("", "> > > > ${foreachCondition.value} -> $foreachTemplate")
-            }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
+
+                val foreachTemplate = foreachTemplates[index]
+                val foreachCondition = getForeachState(foreachStates, index)
+                foreachCondition?.let {
+                    if (foreachCondition.from == index) {
+                        logger.e("", "> > > > ${foreachCondition.value} -> [] -> $foreachTemplate -> $line")
+                    }
+                }
+
                 var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
                     decoratedRows[index]?.forEach {
