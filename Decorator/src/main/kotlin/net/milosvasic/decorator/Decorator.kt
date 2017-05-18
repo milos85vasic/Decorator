@@ -284,7 +284,11 @@ class Decorator : TemplateSystem {
             }
             return builder.toString()
         } else {
-            throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
+            if (data != null) {
+                throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
+            } else {
+                throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template, position))
+            }
         }
     }
 
