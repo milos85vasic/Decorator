@@ -262,10 +262,6 @@ class Decorator : TemplateSystem {
                 index, tData ->
                 templateRows.forEach {
                     item ->
-                    //                    builder.append(
-//                            resolve(template, templateData, )
-//                    )
-
                     when (tData) {
                         is Value -> {
                             builder.append(
