@@ -53,7 +53,7 @@ class Decorator : TemplateSystem {
                 row = row.substring(0, lineCommentIndex)
             }
             // Trim tab placeholder
-            row = row.replace(tags.tabPlacegolder, "")
+            row = row.replace(tags.tabPlaceholder, "")
             rows[index] = row
 
             // Parse <include> tags
@@ -271,7 +271,7 @@ class Decorator : TemplateSystem {
                             builder.append(
                                     item
                                             .replace("${tags.open}index${tags.close}", index.toString())
-                                            .replace("item", tData.content)
+                                            .replace(Regex("${tags.open}item.(.+?)${tags.close}"), tData.content)
                             )
                             if (templateRows.indexOf(item) < templateRows.lastIndex) {
                                 builder.append("\n")

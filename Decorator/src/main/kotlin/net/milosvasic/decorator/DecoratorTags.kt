@@ -17,6 +17,6 @@ class DecoratorTags : Tags(){
     override val endFor = "<endfor/>"
     override val lineComment = "//"
 
-    val tabPlacegolder = "<t/>"
+    val tabPlaceholder = "<t/>"
 
 }
