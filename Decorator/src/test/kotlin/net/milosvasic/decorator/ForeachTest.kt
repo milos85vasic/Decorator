@@ -28,6 +28,19 @@ class ForeachTest {
                                 .append("stuff", listOf("Xxx", "Yyy", "Zzz"))
                 )
                 .append(
+                        "workers",
+                        listOf(
+                                data()
+                                        .append("firstName", "John")
+                                        .append("lastName", "Smith")
+                                        .build(),
+                                data()
+                                        .append("firstName", "Unknown")
+                                        .append("lastName", "Person")
+                                        .build()
+                        )
+                )
+                .append(
                         "names",
                         listOf("Milos", "Maja")
                 )
