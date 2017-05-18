@@ -199,6 +199,11 @@ class Decorator : TemplateSystem {
             if (isLineValid && !satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }
+            val foreachCondition = getForeachState(foreachStates, index)
+            val foreachTemplate = foreachTemplates[index]
+            foreachCondition?.let {
+                logger.e("", "> > > > ${foreachCondition.value} -> $foreachTemplate")
+            }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
                 var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
