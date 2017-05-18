@@ -19,6 +19,7 @@ class ForeachTest {
         val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
         val decorator = Decorator()
         val data = DataBuilder()
+                .append("something", "nice!")
                 .append(
                         "storage",
                         DataBuilder()
