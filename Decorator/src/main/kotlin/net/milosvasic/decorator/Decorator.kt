@@ -270,7 +270,7 @@ class Decorator : TemplateSystem {
                         is Value -> {
                             builder.append(
                                     item
-                                            .replace("index", index.toString())
+                                            .replace("${tags.open}index${tags.close}", index.toString())
                                             .replace("item", tData.content)
                             )
                             if (templateRows.indexOf(item) < templateRows.lastIndex) {
