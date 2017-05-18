@@ -229,7 +229,13 @@ class Decorator : TemplateSystem {
         return rendered.toString()
     }
 
-    private fun resolveForeach(template: String, position: Int, templateRows: List<String>, templateData: Data, templateDataKey: String): String {
+    private fun resolveForeach(
+            template: String,
+            position: Int,
+            templateRows: List<String>,
+            templateData: Data,
+            templateDataKey: String
+    ): String {
         val params = templateDataKey.trim().split(memberSeparator.value)
         var data: TemplateData? = null
         val it = params.iterator()
@@ -251,12 +257,36 @@ class Decorator : TemplateSystem {
 
         if (data is Collection) {
             val builder = StringBuilder()
-            data.items.forEachIndexed {
+            val items = data.items
+            items.forEachIndexed {
                 index, tData ->
                 templateRows.forEach {
                     item ->
+                    //                    builder.append(
+//                            resolve(template, templateData, )
+//                    )
 
+                    when (tData) {
+                        is Value -> {
+                            builder.append(
+                                    item
+                                            .replace("index", index.toString())
+                                            .replace("item", tData.content)
+                            )
+                            if (templateRows.indexOf(item) < templateRows.lastIndex) {
+                                builder.append("\n")
+                            }
+                        }
+                        else -> {
+                            builder.append("- - -\n")
+                        }
+                    }
+
+                    logger.e("", "_____| $tData")
                     logger.e("", "_____ $item")
+                }
+                if (tData != items.last()) {
+                    builder.append("\n")
                 }
             }
             return builder.toString()
