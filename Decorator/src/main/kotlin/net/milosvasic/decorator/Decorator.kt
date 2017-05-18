@@ -277,9 +277,6 @@ class Decorator : TemplateSystem {
                             builder.append("- - -\n")
                         }
                     }
-
-                    logger.e("", "_____| $tData")
-                    logger.e("", "_____ $item")
                 }
                 if (tData != items.last()) {
                     builder.append("\n")
