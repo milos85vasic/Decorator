@@ -230,12 +230,6 @@ class Decorator : TemplateSystem {
     }
 
     private fun resolveForeach(template: String, position: Int, templateRows: List<String>, templateData: Data, templateDataKey: String): String {
-
-        templateRows.forEach {
-            item ->
-            logger.e("", "_____ $item")
-        }
-
         val params = templateDataKey.trim().split(memberSeparator.value)
         var data: TemplateData? = null
         val it = params.iterator()
@@ -254,14 +248,16 @@ class Decorator : TemplateSystem {
                 else -> throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
             }
         }
-        val builder = StringBuilder()
+
         if (data is Collection) {
+            val builder = StringBuilder()
             data.items.forEachIndexed {
-                index, templateData ->
+                index, tData ->
+                templateRows.forEach {
+                    item ->
 
-
-                builder.append("- - -")
-                        .append("\n")
+                    logger.e("", "_____ $item")
+                }
             }
             return builder.toString()
         } else {
