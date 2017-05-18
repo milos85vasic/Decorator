@@ -195,7 +195,14 @@ class Decorator : TemplateSystem {
             val state = getForeachState(foreachStates, index)
             state?.let {
                 if (state.from == index) {
-                    row = resolveForeach(template, data, state.value, index)
+                    val templateRows = mutableListOf<String>()
+                    for (x in state.from..state.to) {
+                        foreachTemplates[x]?.let {
+                            item ->
+                            templateRows.add(item)
+                        }
+                    }
+                    row = resolveForeach(template, index, templateRows, data, state.value)
                 }
             }
 
@@ -222,8 +229,14 @@ class Decorator : TemplateSystem {
         return rendered.toString()
     }
 
-    private fun resolveForeach(template: String, templateData: Data, key: String, position: Int): String {
-        val params = key.trim().split(memberSeparator.value)
+    private fun resolveForeach(template: String, position: Int, templateRows: List<String>, templateData: Data, templateDataKey: String): String {
+
+        templateRows.forEach {
+            item ->
+            logger.e("", "_____ $item")
+        }
+
+        val params = templateDataKey.trim().split(memberSeparator.value)
         var data: TemplateData? = null
         val it = params.iterator()
         if (it.hasNext()) {
@@ -245,6 +258,8 @@ class Decorator : TemplateSystem {
         if (data is Collection) {
             data.items.forEachIndexed {
                 index, templateData ->
+
+
                 builder.append("- - -")
                         .append("\n")
             }
