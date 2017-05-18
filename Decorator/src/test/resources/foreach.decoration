@@ -39,7 +39,7 @@
 </ul>
 
 <ul>
-<foreach>storage.stuff</foreach>
+<foreach>storage.workers</foreach>
     <li>
         <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item.firstName</dc> ][ <dc>item.lastName</dc> ][ <dc>something</dc> ]</a>
     </li>
