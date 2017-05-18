@@ -195,8 +195,7 @@ class Decorator : TemplateSystem {
             val state = getForeachState(foreachStates, index)
             state?.let {
                 if (state.from == index) {
-                    row = "foreEach_${foreachStates.indexOf(state)}"
-                    logger.e("", "[ ${rowsToBeIgnored.contains(index)} ][ ${state.value} ]")
+                    row = resolveForeach(template, data, state.value, index)
                 }
             }
 
@@ -221,6 +220,38 @@ class Decorator : TemplateSystem {
             }
         }
         return rendered.toString()
+    }
+
+    private fun resolveForeach(template: String, templateData: Data, key: String, position: Int): String {
+        val params = key.trim().split(memberSeparator.value)
+        var data: TemplateData? = null
+        val it = params.iterator()
+        if (it.hasNext()) {
+            data = templateData.content[it.next()]
+        }
+        loop@ while (data != null && data !is Collection && it.hasNext()) {
+            when (data) {
+                is Data -> {
+                    val param = it.next()
+                    data = data.content[param]
+                }
+                is Collection -> {
+                    break@loop
+                }
+                else -> throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
+            }
+        }
+        val builder = StringBuilder()
+        if (data is Collection) {
+            data.items.forEachIndexed {
+                index, templateData ->
+                builder.append("- - -")
+                        .append("\n")
+            }
+            return builder.toString()
+        } else {
+            throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
+        }
     }
 
     private fun resolve(template: String, templateData: Data, line: String, position: Int): String {

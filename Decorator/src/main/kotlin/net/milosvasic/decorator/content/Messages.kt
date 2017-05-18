@@ -36,6 +36,10 @@ object Messages {
         return "Decoration content not allowed on the same line where foreach is opened ${where(template, position)}"
     }
 
+    fun ONLY_COLLECTION_ALLOWED(template: String, position: Int): String {
+        return "Only collection data type allowed in foreach ${where(template, position)}"
+    }
+
     private fun where(who: String, where: Int) = "from '$who.decorator' at line: ${where + 1}"
 
 }
