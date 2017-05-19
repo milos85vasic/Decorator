@@ -274,7 +274,12 @@ class Decorator : TemplateSystem {
                             }
                         }
                         is Data -> {
-                            builder.append("- - -\n")
+                            // val params = templateDataKey.trim().split(memberSeparator.value)
+                            logger.e("", "-> $item")
+                            builder.append(
+                                    item
+                                            .replace("${tags.open}index${tags.close}", index.toString())
+                            )
                         }
                         else -> {
                             throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template, position))
