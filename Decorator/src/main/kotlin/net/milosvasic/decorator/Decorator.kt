@@ -269,9 +269,6 @@ class Decorator : TemplateSystem {
                                             .replace("${tags.open}index${tags.close}", index.toString())
                                             .replace(Regex("${tags.open}item.(.+?)${tags.close}"), tData.content)
                             )
-                            if (templateRows.indexOf(item) < templateRows.lastIndex) {
-                                builder.append("\n")
-                            }
                         }
                         is Data -> {
                             var row = item.replace("${tags.open}index${tags.close}", index.toString())
@@ -284,18 +281,20 @@ class Decorator : TemplateSystem {
                             }
                             parsedParts.forEach {
                                 part ->
+
                                 logger.e("", "-> $part")
                             }
 
 
 
-                            builder.append(
-                                    ". . .\n"
-                            )
+                            builder.append(row)
                         }
                         else -> {
                             throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template, position))
                         }
+                    }
+                    if (templateRows.indexOf(item) < templateRows.lastIndex) {
+                        builder.append("\n")
                     }
                 }
                 if (tData != items.last()) {
