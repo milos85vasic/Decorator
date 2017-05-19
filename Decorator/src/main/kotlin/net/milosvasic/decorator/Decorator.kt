@@ -287,12 +287,15 @@ class Decorator : TemplateSystem {
                                 var partData: TemplateData? = null
                                 val partIt = partParams.iterator()
                                 if (partIt.hasNext()) {
-                                    partData = tData.content[partIt.next()]
+                                    val param = partIt.next()
+                                    partData = tData.content[param]
+                                    logger.c("", "-> $param $partData")
                                 }
                                 while (partData != null && partData !is Value && it.hasNext()) {
                                     when (partData) {
                                         is Data -> {
-                                            val param = it.next()
+                                            val param = partIt.next()
+                                            logger.c("", "-> -> $param")
                                             partData = partData.content[param]
                                         }
                                         is Value -> {
