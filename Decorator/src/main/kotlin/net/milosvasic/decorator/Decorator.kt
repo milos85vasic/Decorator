@@ -281,7 +281,9 @@ class Decorator : TemplateSystem {
                             }
                             parsedParts.forEach {
                                 part ->
-                                val partParams = part.replace("item.", "").split(memberSeparator.value)
+                                val partParams = part
+                                        .replace("item${memberSeparator.value}", "")
+                                        .split(memberSeparator.value)
                                 var partData: TemplateData? = null
                                 val partIt = partParams.iterator()
                                 if (partIt.hasNext()) {
@@ -300,7 +302,7 @@ class Decorator : TemplateSystem {
                                     }
                                 }
                                 if (partData != null) {
-                                    if(partData is Value){
+                                    if (partData is Value) {
                                         row = row.replace("${tags.open}$part${tags.close}", partData.content)
                                         logger.i("", "-> $row")
                                     } else {
