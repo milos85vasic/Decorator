@@ -33,10 +33,19 @@ class ForeachTest {
                                 data()
                                         .append("firstName", "John")
                                         .append("lastName", "Smith")
+                                        .append(
+                                                "skills",
+                                                data().append(
+                                                        "social", "excellent"
+                                                )
+                                        )
+                                        .build(),
+                                data()
+                                        .append("firstName", "Pera")
+                                        .append("lastName", "Peric")
                                         .build(),
                                 data()
                                         .append("firstName", "Unknown")
-                                        .append("lastName", "Person")
                                         .build()
                         )
                 )

@@ -276,7 +276,7 @@ class Decorator : TemplateSystem {
                             val m = p.matcher(row)
                             val parsedParts = mutableListOf<String>()
                             while (m.find()) {
-                                val result = m.group()
+                                val result = m.group(1)
                                 parsedParts.add(result)
                             }
                             parsedParts.forEach {
