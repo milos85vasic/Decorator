@@ -273,8 +273,11 @@ class Decorator : TemplateSystem {
                                 builder.append("\n")
                             }
                         }
-                        else -> {
+                        is Data -> {
                             builder.append("- - -\n")
+                        }
+                        else -> {
+                            throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template, position))
                         }
                     }
                 }
