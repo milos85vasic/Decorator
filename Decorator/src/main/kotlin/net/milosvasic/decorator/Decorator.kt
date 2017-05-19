@@ -291,7 +291,7 @@ class Decorator : TemplateSystem {
                                     partData = tData.content[param]
                                     logger.c("", "-> $param $partData")
                                 }
-                                while (partData != null && partData !is Value && it.hasNext()) {
+                                while (partData != null && partData !is Value && partIt.hasNext()) {
                                     when (partData) {
                                         is Data -> {
                                             val param = partIt.next()
