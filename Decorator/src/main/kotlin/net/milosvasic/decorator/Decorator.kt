@@ -317,11 +317,7 @@ class Decorator : TemplateSystem {
                                 }
 
                                 logger.e("", "-> $part")
-                                builder.append(row)
                             }
-
-
-
                             builder.append(row)
                         }
                         else -> {
