@@ -304,10 +304,11 @@ class Decorator : TemplateSystem {
                                         row = row.replace("${tags.open}$part${tags.close}", partData.content)
                                         logger.i("", "-> $row")
                                     } else {
-
+                                        throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template, position))
                                     }
                                 } else {
-
+                                    row = row.replace("${tags.open}$part${tags.close}", "")
+                                    logger.i("", "-> $row")
                                 }
 
                                 logger.e("", "-> $part")
