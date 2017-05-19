@@ -281,8 +281,37 @@ class Decorator : TemplateSystem {
                             }
                             parsedParts.forEach {
                                 part ->
+                                val partParams = part.replace("item.", "").split(memberSeparator.value)
+                                var partData: TemplateData? = null
+                                val partIt = partParams.iterator()
+                                if (partIt.hasNext()) {
+                                    partData = tData.content[partIt.next()]
+                                }
+                                while (partData != null && partData !is Value && it.hasNext()) {
+                                    when (partData) {
+                                        is Data -> {
+                                            val param = it.next()
+                                            partData = partData.content[param]
+                                        }
+                                        is Value -> {
+                                            logger.i("", "-> ${partData.content}")
+                                        }
+                                        else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template, position))
+                                    }
+                                }
+                                if (partData != null) {
+                                    if(partData is Value){
+                                        row = row.replace("${tags.open}$part${tags.close}", partData.content)
+                                        logger.i("", "-> $row")
+                                    } else {
+
+                                    }
+                                } else {
+
+                                }
 
                                 logger.e("", "-> $part")
+                                builder.append(row)
                             }
 
 

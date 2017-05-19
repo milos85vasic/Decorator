@@ -40,6 +40,10 @@ object Messages {
         return "Only collection data type allowed in foreach ${where(template, position)}"
     }
 
+    fun COLLECTION_NOT_ALLOWED(template: String, position: Int): String {
+        return "Collection data type not allowed here ${where(template, position)}"
+    }
+
     private fun where(who: String, where: Int) = "from '$who.decorator' at line: ${where + 1}"
 
 }

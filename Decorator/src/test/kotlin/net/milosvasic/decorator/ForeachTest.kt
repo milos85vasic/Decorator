@@ -56,15 +56,15 @@ class ForeachTest {
                 .append(
                         "cars",
                         listOf(
-                                data().get("name", "Fiat"),
-                                data().get("name", "BMW"),
-                                data().get("name", "Mercedes"),
-                                data().get("name", "Ford"),
-                                data().get("name", "Golf"),
-                                data().get("name", "Audi"),
-                                data().get("name", "Citroen"),
-                                data().get("name", "Zastava"),
-                                data().get("name", "Kia")
+                                data().get("model", "Fiat"),
+                                data().get("model", "BMW"),
+                                data().get("model", "Mercedes"),
+                                data().get("model", "Ford"),
+                                data().get("model", "Golf"),
+                                data().get("model", "Audi"),
+                                data().get("model", "Citroen"),
+                                data().get("model", "Zastava"),
+                                data().get("model", "Kia")
                         )
                 )
                 .build()

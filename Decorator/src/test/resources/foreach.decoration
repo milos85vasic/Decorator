@@ -15,7 +15,7 @@
 
 <ul>
 <foreach>cars</foreach>
-    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
+    <li>Item [ <dc>index</dc> ][ <dc>item.model</dc> ]</li>
 
 <endfor/>
 </ul>
