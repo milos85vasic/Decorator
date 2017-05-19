@@ -274,11 +274,23 @@ class Decorator : TemplateSystem {
                             }
                         }
                         is Data -> {
-                            // val params = templateDataKey.trim().split(memberSeparator.value)
-                            logger.e("", "-> $item")
+                            var row = item.replace("${tags.open}index${tags.close}", index.toString())
+                            val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
+                            val m = p.matcher(row)
+                            val parsedParts = mutableListOf<String>()
+                            while (m.find()) {
+                                val result = m.group()
+                                parsedParts.add(result)
+                            }
+                            parsedParts.forEach {
+                                part ->
+                                logger.e("", "-> $part")
+                            }
+
+
+
                             builder.append(
-                                    item
-                                            .replace("${tags.open}index${tags.close}", index.toString())
+                                    ". . .\n"
                             )
                         }
                         else -> {
