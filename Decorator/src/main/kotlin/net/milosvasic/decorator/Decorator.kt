@@ -385,9 +385,9 @@ class Decorator : TemplateSystem {
             return data.content
         } else {
             if (data is Collection) {
-                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(line, template, position))
+                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(line, template, position + 1))
             } else {
-                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
+                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position + 1))
             }
         }
     }
