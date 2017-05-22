@@ -91,7 +91,11 @@ class Decorator : TemplateSystem {
                 logger.c("", "-> ${mFor.group(0)} | ${mFor.group(1)}")
 
                 val forCondition = mFor.group(1)
+
+                logger.c("", "-> -> $row")
                 row = row.replace(mFor.group(0), "")
+                logger.c("", "-> -> $row")
+
                 rows[index] = row
                 if (!row.isEmpty()) {
                     throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
