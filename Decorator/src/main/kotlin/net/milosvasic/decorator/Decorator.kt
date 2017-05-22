@@ -88,12 +88,14 @@ class Decorator : TemplateSystem {
             val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
             val mFor = pFor.matcher(line)
             while (mFor.find()) {
+                logger.c("", "-> ${mFor.group(0)} | ${mFor.group(1)}")
+
                 val forCondition = mFor.group(1)
                 row = row.replace(mFor.group(0), "")
+                rows[index] = row
                 if (!row.isEmpty()) {
                     throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
                 }
-                rows[index] = row
                 if (foreachState != null) {
                     throw IllegalStateException(Messages.FOR_NOT_CLOSED(template, index))
                 } else {
