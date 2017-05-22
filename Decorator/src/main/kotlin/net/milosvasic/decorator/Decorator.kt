@@ -44,6 +44,75 @@ class Decorator : TemplateSystem {
         val rowsToBeIgnored = mutableListOf<Int>()
         val foreachTemplates = mutableMapOf<Int, String>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
+
+        rows.forEachIndexed {
+            index, line ->
+            var row = line
+            // Parse <foreach>
+            val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
+            val mFor = pFor.matcher(line)
+            while (mFor.find()) {
+                val forCondition = mFor.group(1)
+                row = row.replace(mFor.group(0), "")
+                if (!row.isEmpty()) {
+                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
+                }
+                rows[index] = row
+                if (foreachState != null) {
+                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template, index))
+                } else {
+                    foreachState = ForeachState(index, -1, forCondition)
+                }
+            }
+
+            // Parse <endfor/>
+            val pEndfor = Pattern.compile(tags.endFor)
+            val mEndfor = pEndfor.matcher(line)
+            while (mEndfor.find()) {
+                row = row.replace(mEndfor.group(0), "")
+                if (row.isEmpty()) {
+                    rowsToBeIgnored.add(index)
+                }
+                rows[index] = row
+                if (foreachState == null) {
+                    throw IllegalStateException(Messages.FOR_NOT_OPENED(template, index))
+                } else {
+                    foreachState?.to = index
+                    foreachStates.add(foreachState)
+                    foreachState = null
+                }
+            }
+
+            var foreachStateInProgress = false
+            val currentState = foreachState
+            currentState?.let {
+                foreachStateInProgress = index > currentState.from
+            }
+            if (foreachStateInProgress) {
+                foreachTemplates[index] = line
+                rowsToBeIgnored.add(index)
+            }
+        }
+
+        rows.forEachIndexed {
+            index, line ->
+            var row = line
+            val state = getForeachState(foreachStates, index)
+            state?.let {
+                if (state.from == index) {
+                    val templateRows = mutableListOf<String>()
+                    for (x in state.from..state.to) {
+                        foreachTemplates[x]?.let {
+                            item ->
+                            templateRows.add(item)
+                        }
+                    }
+                    row = resolveForeach(template, index, templateRows, data, state.value)
+                }
+            }
+            rows[index] = row
+        }
+
         rows.forEachIndexed {
             index, line ->
             // Trim comments that are not at the line start
@@ -130,88 +199,27 @@ class Decorator : TemplateSystem {
                 }
             }
 
-            // Parse <foreach>
-            val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
-            val mFor = pFor.matcher(line)
-            while (mFor.find()) {
-                val forCondition = mFor.group(1)
-                row = row.replace(mFor.group(0), "")
-                if (!row.isEmpty()) {
-                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
-                }
-                rows[index] = row
-                if (foreachState != null) {
-                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template, index))
-                } else {
-                    foreachState = ForeachState(index, -1, forCondition)
-                }
-            }
-
-            // Parse <endfor/>
-            val pEndfor = Pattern.compile(tags.endFor)
-            val mEndfor = pEndfor.matcher(line)
-            while (mEndfor.find()) {
-                row = row.replace(mEndfor.group(0), "")
-                if (row.isEmpty()) {
-                    rowsToBeIgnored.add(index)
-                }
-                rows[index] = row
-                if (foreachState == null) {
-                    throw IllegalStateException(Messages.FOR_NOT_OPENED(template, index))
-                } else {
-                    foreachState?.to = index
-                    foreachStates.add(foreachState)
-                    foreachState = null
-                }
-            }
-
             // Parse <dc> tags
-            var foreachStateInProgress = false
-            val currentState = foreachState
-            currentState?.let {
-                foreachStateInProgress = index > currentState.from
+            val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
+            val m = p.matcher(line)
+            val commands = mutableListOf<String>()
+            while (m.find()) {
+                val result = m.group()
+                commands.add(result)
             }
-            if (foreachStateInProgress) {
-                foreachTemplates[index] = line
-                rowsToBeIgnored.add(index)
-            } else {
-                val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
-                val m = p.matcher(line)
-                val commands = mutableListOf<String>()
-                while (m.find()) {
-                    val result = m.group()
-                    commands.add(result)
-                }
-                if (!commands.isEmpty()) {
-                    decoratedRows[index] = commands
-                }
+            if (!commands.isEmpty()) {
+                decoratedRows[index] = commands
             }
         }
 
         rows.forEachIndexed {
             index, line ->
-            var row = line
-
-            val state = getForeachState(foreachStates, index)
-            state?.let {
-                if (state.from == index) {
-                    val templateRows = mutableListOf<String>()
-                    for (x in state.from..state.to) {
-                        foreachTemplates[x]?.let {
-                            item ->
-                            templateRows.add(item)
-                        }
-                    }
-                    row = resolveForeach(template, index, templateRows, data, state.value)
-                }
-            }
-
-            var isLineValid = !row.startsWith(tags.lineComment)
+            var isLineValid = !line.startsWith(tags.lineComment)
             if (isLineValid && !satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
-                var renderedLine = row
+                var renderedLine = line
                 if (decoratedRows.containsKey(index)) {
                     decoratedRows[index]?.forEach {
                         row ->
@@ -289,17 +297,15 @@ class Decorator : TemplateSystem {
                                 if (partIt.hasNext()) {
                                     val param = partIt.next()
                                     partData = tData.content[param]
-                                    logger.c("", "-> $param $partData")
                                 }
                                 while (partData != null && partData !is Value && partIt.hasNext()) {
                                     when (partData) {
                                         is Data -> {
                                             val param = partIt.next()
-                                            logger.c("", "-> -> $param")
                                             partData = partData.content[param]
                                         }
                                         is Value -> {
-                                            logger.i("", "-> ${partData.content}")
+                                            // Ignore
                                         }
                                         else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template, position))
                                     }
@@ -307,17 +313,15 @@ class Decorator : TemplateSystem {
                                 if (partData != null) {
                                     if (partData is Value) {
                                         row = row.replace("${tags.open}$part${tags.close}", partData.content)
-                                        logger.i("", "-> $row")
                                     } else {
                                         throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template, position))
                                     }
                                 } else {
                                     row = row.replace("${tags.open}$part${tags.close}", "")
-                                    logger.i("", "-> $row")
                                 }
-
-                                logger.e("", "-> $part")
                             }
+
+                            logger.i("", "-> $row")
                             builder.append(row)
                         }
                         else -> {
