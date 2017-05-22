@@ -56,6 +56,13 @@ class Decorator : TemplateSystem {
             }
             rows[index] = row
 
+            // Trim comments that are at line start:
+            if (row.startsWith(tags.lineComment)) {
+                row = ""
+                rows[index] = row
+                rowsToBeIgnored.add(index)
+            }
+
             // Trim tab placeholder
             row = row.replace(tags.tabPlaceholder, "")
             rows[index] = row
@@ -222,8 +229,8 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            var isLineValid = !line.startsWith(tags.lineComment)
-            if (isLineValid && !satisfiesIf(ifStates, index)) {
+            var isLineValid = true
+            if (!satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse(elseStates, index)
             }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
