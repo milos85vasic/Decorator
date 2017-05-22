@@ -335,8 +335,6 @@ class Decorator : TemplateSystem {
                                     row = row.replace("${tags.open}$part${tags.close}", "")
                                 }
                             }
-
-                            logger.i("", "-> $row")
                             builder.append(row)
                         }
                         else -> {
