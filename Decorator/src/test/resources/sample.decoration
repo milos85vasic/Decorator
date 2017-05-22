@@ -61,16 +61,5 @@ Some text 7//// Ignore me 7 //
  // Some text 9
 <t/><t/><t/>Tab placeholder trimmed<t/>
 
-//<ul>
-//<foreach>names</foreach>
-//    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>cars</foreach>
-//    <li>Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</li>
-//<endfor/>
-//</ul>
 </body>
 </html>

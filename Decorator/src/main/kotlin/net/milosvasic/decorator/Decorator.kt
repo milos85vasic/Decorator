@@ -48,6 +48,35 @@ class Decorator : TemplateSystem {
         rows.forEachIndexed {
             index, line ->
             var row = line
+
+            // Trim comments that are not at the line start
+            val lineCommentIndex = row.indexOf(tags.lineComment)
+            if (!row.startsWith(tags.lineComment) && lineCommentIndex > 0) {
+                row = row.substring(0, lineCommentIndex)
+            }
+            rows[index] = row
+
+            // Trim tab placeholder
+            row = row.replace(tags.tabPlaceholder, "")
+            rows[index] = row
+
+            // Parse <include> tags
+            val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
+            val mInclude = pInclude.matcher(line)
+            while (mInclude.find()) {
+                val include = mInclude.group(1)
+                var element = decorate(include, data)
+                if (element.endsWith("\n")) {
+                    element = element.substring(0, element.lastIndex)
+                }
+                row = row.replace(mInclude.group(0), element)
+                rows[index] = row
+            }
+        }
+
+        rows.forEachIndexed {
+            index, line ->
+            var row = line
             // Parse <foreach>
             val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
             val mFor = pFor.matcher(line)
@@ -115,28 +144,7 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            // Trim comments that are not at the line start
             var row = line
-            val lineCommentIndex = row.indexOf(tags.lineComment)
-            if (!row.startsWith(tags.lineComment) && lineCommentIndex > 0) {
-                row = row.substring(0, lineCommentIndex)
-            }
-            // Trim tab placeholder
-            row = row.replace(tags.tabPlaceholder, "")
-            rows[index] = row
-
-            // Parse <include> tags
-            val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
-            val mInclude = pInclude.matcher(line)
-            while (mInclude.find()) {
-                val include = mInclude.group(1)
-                var element = decorate(include, data)
-                if (element.endsWith("\n")) {
-                    element = element.substring(0, element.lastIndex)
-                }
-                row = row.replace(mInclude.group(0), element)
-                rows[index] = row
-            }
 
             // Parse <if> tags
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
