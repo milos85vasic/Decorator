@@ -44,6 +44,6 @@ object Messages {
         return "Collection data type not allowed here ${where(template)}"
     }
 
-    private fun where(who: String) = "from '$who.decoration'"
+    private fun where(who: String) = "from '$who' template."
 
 }

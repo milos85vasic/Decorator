@@ -23,7 +23,7 @@
 <ul>
 <foreach>storage.stuff</foreach>
     <li>
-        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item.name</dc> ]</a>
+        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ]</a>
 
 
     </li>
@@ -33,7 +33,7 @@
 <ul>
 <foreach>storage.stuff</foreach>
     <li>
-        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item.name</dc> ][ <dc>something</dc> ]</a>
+        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ][ <dc>something</dc> ]</a>
     </li>
 <endfor/>
 </ul>
