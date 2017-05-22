@@ -88,14 +88,8 @@ class Decorator : TemplateSystem {
             val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
             val mFor = pFor.matcher(line)
             while (mFor.find()) {
-                logger.c("", "-> ${mFor.group(0)} | ${mFor.group(1)}")
-
                 val forCondition = mFor.group(1)
-
-                logger.c("", "-> -> $row")
                 row = row.replace(mFor.group(0), "")
-                logger.c("", "-> -> $row")
-
                 rows[index] = row
                 if (!row.isEmpty()) {
                     throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
@@ -296,7 +290,7 @@ class Decorator : TemplateSystem {
                             builder.append(
                                     item
                                             .replace("${tags.open}index${tags.close}", index.toString())
-                                            .replace(Regex("${tags.open}item.(.+?)${tags.close}"), tData.content)
+                                            .replace(Regex("${tags.open}item${tags.close}"), tData.content)
                             )
                         }
                         is Data -> {
