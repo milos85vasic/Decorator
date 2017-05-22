@@ -92,10 +92,10 @@ class Decorator : TemplateSystem {
                 row = row.replace(mFor.group(0), "")
                 rows[index] = row
                 if (!row.isEmpty()) {
-                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template, index))
+                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template))
                 }
                 if (foreachState != null) {
-                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template, index))
+                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template))
                 } else {
                     foreachState = ForeachState(index, -1, forCondition)
                 }
@@ -111,7 +111,7 @@ class Decorator : TemplateSystem {
                 }
                 rows[index] = row
                 if (foreachState == null) {
-                    throw IllegalStateException(Messages.FOR_NOT_OPENED(template, index))
+                    throw IllegalStateException(Messages.FOR_NOT_OPENED(template))
                 } else {
                     foreachState?.to = index
                     foreachStates.add(foreachState)
@@ -143,7 +143,7 @@ class Decorator : TemplateSystem {
                             templateRows.add(item)
                         }
                     }
-                    row = resolveForeach(template, index, templateRows, data, state.value)
+                    row = resolveForeach(template, templateRows, data, state.value)
                 }
             }
             rows[index] = row
@@ -158,14 +158,14 @@ class Decorator : TemplateSystem {
             val mIf = pIf.matcher(line)
             while (mIf.find()) {
                 val ifCondition = mIf.group(1)
-                val result = resolveIf(template, data, ifCondition, index)
+                val result = resolveIf(template, data, ifCondition)
                 row = row.replace(mIf.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
                 if (ifState != null) {
-                    throw IllegalStateException(Messages.IF_NOT_CLOSED(template, index))
+                    throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
                 } else {
                     ifState = IfState(index, -1, result)
                 }
@@ -181,10 +181,10 @@ class Decorator : TemplateSystem {
                 }
                 rows[index] = row
                 if (ifState == null) {
-                    throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
+                    throw IllegalStateException(Messages.IF_NOT_OPENED(template))
                 } else {
                     if (elseState != null) {
-                        throw IllegalStateException(Messages.ELSE_NOT_CLOSED(template, index))
+                        throw IllegalStateException(Messages.ELSE_NOT_CLOSED(template))
                     } else {
                         elseState = ElseState(index, -1)
                     }
@@ -205,7 +205,7 @@ class Decorator : TemplateSystem {
                     ifStates.add(ifState)
                     ifState = null
                 } else {
-                    throw IllegalStateException(Messages.IF_NOT_OPENED(template, index))
+                    throw IllegalStateException(Messages.IF_NOT_OPENED(template))
                 }
                 if (elseState != null) {
                     elseState?.to = index
@@ -242,7 +242,7 @@ class Decorator : TemplateSystem {
                                 .replace(tags.open, "")
                                 .replace(tags.close, "")
                                 .trim()
-                        val result = resolve(template, data, decoration, index)
+                        val result = resolve(template, data, decoration)
                         renderedLine = renderedLine.replace(row, result)
                     }
                 }
@@ -254,7 +254,6 @@ class Decorator : TemplateSystem {
 
     private fun resolveForeach(
             template: String,
-            position: Int,
             templateRows: List<String>,
             templateData: Data,
             templateDataKey: String
@@ -274,7 +273,7 @@ class Decorator : TemplateSystem {
                 is Collection -> {
                     break@loop
                 }
-                else -> throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
+                else -> throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
             }
         }
 
@@ -322,14 +321,14 @@ class Decorator : TemplateSystem {
                                         is Value -> {
                                             // Ignore
                                         }
-                                        else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template, position))
+                                        else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template))
                                     }
                                 }
                                 if (partData != null) {
                                     if (partData is Value) {
                                         row = row.replace("${tags.open}$part${tags.close}", partData.content)
                                     } else {
-                                        throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template, position))
+                                        throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
                                     }
                                 } else {
                                     row = row.replace("${tags.open}$part${tags.close}", "")
@@ -338,7 +337,7 @@ class Decorator : TemplateSystem {
                             builder.append(row)
                         }
                         else -> {
-                            throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template, position))
+                            throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template))
                         }
                     }
                     if (templateRows.indexOf(item) < templateRows.lastIndex) {
@@ -352,14 +351,14 @@ class Decorator : TemplateSystem {
             return builder.toString()
         } else {
             if (data != null) {
-                throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template, position))
+                throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
             } else {
-                throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template, position))
+                throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template))
             }
         }
     }
 
-    private fun resolve(template: String, templateData: Data, line: String, position: Int): String {
+    private fun resolve(template: String, templateData: Data, line: String): String {
         val params = line.trim().split(memberSeparator.value)
         templateData.content.putAll(templateMainClass.data.content)
         val it = params.iterator()
@@ -383,19 +382,19 @@ class Decorator : TemplateSystem {
             return data.content
         } else {
             if (data is Collection) {
-                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(line, template, position))
+                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(line, template))
             } else {
-                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template, position))
+                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template))
             }
         }
     }
 
-    private fun resolveIf(template: String, templateData: Data, line: String, position: Int): Boolean {
+    private fun resolveIf(template: String, templateData: Data, line: String): Boolean {
         val delegate = object : TautologyParserDelegate {
             override fun getExpressionValue(key: String): ExpressionValue? {
                 val resolve: String?
                 try {
-                    resolve = resolve(template, templateData, key, position)
+                    resolve = resolve(template, templateData, key)
                     return object : ExpressionValue {
                         override fun getValue(): Boolean {
                             return !resolve.isEmpty()
