@@ -20,6 +20,7 @@ class DecoratorTest {
         val decorator = Decorator()
         val data = DataBuilder()
                 .append("doesNotExist", "")
+                .append("doesExist", "exist!")
                 .append("credits", "Some guy...")
                 .append("mainTitle", "This is decorator test")
                 .append("footer", "- f o o t e r -")
@@ -105,7 +106,8 @@ class DecoratorTest {
         Assert.assertEquals(" ", lines[38])
         Assert.assertEquals("Tab placeholder trimmed", lines[39])
         Assert.assertTrue(lines[40].isEmpty())
-        Assert.assertEquals(43, lines.size)
+        Assert.assertEquals("<p>Will show</p>", lines[41])
+        Assert.assertEquals(44, lines.size)
         Assert.assertEquals("</body>", lines[lines.lastIndex - 1])
         Assert.assertEquals("</html>", lines.last())
     }

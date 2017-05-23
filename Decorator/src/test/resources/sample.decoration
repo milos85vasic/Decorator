@@ -61,5 +61,10 @@ Some text 7//// Ignore me 7 //
  // Some text 9
 <t/><t/><t/>Tab placeholder trimmed<t/>
 
+<if>doesExist</if>
+<t/><p>Will show</p>
+<else>
+<t/><p>Will show - else</p>
+<endif/>
 </body>
 </html>

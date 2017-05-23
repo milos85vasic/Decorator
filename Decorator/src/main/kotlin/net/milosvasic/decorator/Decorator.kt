@@ -230,8 +230,11 @@ class Decorator : TemplateSystem {
         rows.forEachIndexed {
             index, line ->
             var isLineValid = true
+            val satisfiesElse = satisfiesElse(elseStates, index)
             if (!satisfiesIf(ifStates, index)) {
-                isLineValid = satisfiesElse(elseStates, index)
+                isLineValid = satisfiesElse
+            } else {
+                isLineValid = !satisfiesElse
             }
             if (!rowsToBeIgnored.contains(index) && isLineValid) {
                 var renderedLine = line
