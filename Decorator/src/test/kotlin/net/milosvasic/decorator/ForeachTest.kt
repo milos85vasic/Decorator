@@ -70,7 +70,7 @@ class ForeachTest {
                 .build()
 
         val start = System.currentTimeMillis()
-        val html = decorator.decorate("foreach", data)
+        val html = decorator.decorate("if_horizontal", data)
         end = System.currentTimeMillis() - start
         logger.v("", html)
 

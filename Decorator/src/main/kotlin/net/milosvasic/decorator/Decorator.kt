@@ -35,9 +35,9 @@ class Decorator : TemplateSystem {
         val content = templateFile.readText()
         val rows = mutableListOf<String>()
         rows.addAll(content.split("\n"))
-        var ifState: IfState? = null
+        var ifStatesOpened = 0
         val ifStates = mutableListOf<IfState?>()
-        var elseState: ElseState? = null
+        var elseStatesOpened = 0
         val elseStates = mutableListOf<ElseState?>()
         var foreachState: ForeachState? = null
         val foreachStates = mutableListOf<ForeachState?>()
@@ -153,7 +153,6 @@ class Decorator : TemplateSystem {
             index, line ->
             var row = line
 
-            // TODO: Look for else and enif horizontally!
             // Parse <if> tags
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
             val mIf = pIf.matcher(line)
@@ -165,11 +164,9 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
-                if (ifState != null) {
-                    throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
-                } else {
-                    ifState = IfState(index, -1, result)
-                }
+                val ifState = IfState(index, -1, result)
+                ifStates.add(ifState)
+                ifStatesOpened++
             }
 
             // Parse <else> tags
@@ -181,14 +178,13 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
+                val ifState = ifStates[ifStates.size - ifStatesOpened]
                 if (ifState == null) {
                     throw IllegalStateException(Messages.IF_NOT_OPENED(template))
                 } else {
-                    if (elseState != null) {
-                        throw IllegalStateException(Messages.ELSE_NOT_CLOSED(template))
-                    } else {
-                        elseState = ElseState(index, -1)
-                    }
+                    val elseState = ElseState(index, -1)
+                    elseStates.add(elseState)
+                    elseStatesOpened++
                 }
             }
 
@@ -201,17 +197,19 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
+                val ifState = ifStates[ifStates.size - ifStatesOpened]
                 if (ifState != null) {
-                    ifState?.to = index
-                    ifStates.add(ifState)
-                    ifState = null
+                    ifState.to = index
+                    ifStatesOpened--
                 } else {
                     throw IllegalStateException(Messages.IF_NOT_OPENED(template))
                 }
-                if (elseState != null) {
-                    elseState?.to = index
-                    elseStates.add(elseState)
-                    elseState = null
+                if (!elseStates.isEmpty() && elseStatesOpened > 0) {
+                    val elseState = elseStates[elseStates.size - elseStatesOpened]
+                    if (elseState != null) {
+                        elseState.to = index
+                        elseStatesOpened--
+                    }
                 }
             }
 
@@ -230,7 +228,7 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            val isLineValid : Boolean
+            val isLineValid: Boolean
             val satisfiesElse = satisfiesElse(elseStates, index)
             if (!satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse
