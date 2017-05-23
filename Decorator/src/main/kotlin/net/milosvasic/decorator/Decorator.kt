@@ -331,7 +331,13 @@ class Decorator : TemplateSystem {
                                         throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
                                     }
                                 } else {
-                                    row = row.replace("${tags.open}$part${tags.close}", "")
+                                    try {
+                                        row = row.replace(
+                                                "${tags.open}$part${tags.close}", resolve(template, templateData, part)
+                                        )
+                                    } catch (e: Exception) {
+                                        row = row.replace("${tags.open}$part${tags.close}", "")
+                                    }
                                 }
                             }
                             builder.append(row)
