@@ -229,7 +229,7 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            var isLineValid = true
+            val isLineValid : Boolean
             val satisfiesElse = satisfiesElse(elseStates, index)
             if (!satisfiesIf(ifStates, index)) {
                 isLineValid = satisfiesElse

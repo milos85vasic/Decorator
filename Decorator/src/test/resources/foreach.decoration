@@ -54,17 +54,17 @@
 <endfor/>
 </ul>
 
-//<ul>
-//<foreach>workers</foreach>
-//    <if>something</if>
-//    <li>
-//        <a href="/<dc>index</dc>">Worker [ <dc>index</dc> ][ <dc>item.firstName</dc> ][ <dc>item.lastName</dc> ][ <dc>something</dc> ][ <dc>item.skills.social</dc> ]</a>
-//    </li>
-//    <else>
-//    <t/><a href="/home">Home</a>
-//    <endif/>
-//<endfor/>
-//</ul>
+<ul>
+<foreach>workers</foreach>
+    <if>something</if>
+    <li>
+        <a href="/<dc>index</dc>">Worker [ <dc>index</dc> ][ <dc>item.firstName</dc> ][ <dc>item.lastName</dc> ][ <dc>something</dc> ][ <dc>item.skills.social</dc> ]</a>
+    </li>
+    <else>
+    <t/><a href="/home">Home</a>
+    <endif/>
+<endfor/>
+</ul>
 
 </body>
 </html>
