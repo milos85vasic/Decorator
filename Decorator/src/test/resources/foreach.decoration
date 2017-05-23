@@ -7,55 +7,53 @@
 </head>
 <body>
 
-<if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
+<ul>
+<foreach>names</foreach>
+    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
+<endfor/>
+</ul>
 
-//<ul>
-//<foreach>names</foreach>
-//    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>cars</foreach>
-//    <li>Item [ <dc>index</dc> ][ <dc>item.model</dc> ]</li>
-//
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>storage.stuff</foreach>
-//    <li>
-//        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ]</a>
-//
-//
-//    </li>
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>storage.stuff</foreach>
-//    <li>
-//        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ][ <dc>something</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>workers</foreach>
-//    <li>
-//        <a href="/<dc>index</dc>">Worker [ <dc>something</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//<ul>
-//<foreach>workers</foreach>
-//    <li>
-//        <a href="/<dc>index</dc>">Worker [ <dc>index</dc> ][ <dc>item.firstName</dc> ][ <dc>item.lastName</dc> ][ <dc>something</dc> ][ <dc>item.skills.social</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
+<ul>
+<foreach>cars</foreach>
+    <li>Item [ <dc>index</dc> ][ <dc>item.model</dc> ]</li>
+
+<endfor/>
+</ul>
+
+<ul>
+<foreach>storage.stuff</foreach>
+    <li>
+        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ]</a>
+
+
+    </li>
+<endfor/>
+</ul>
+
+<ul>
+<foreach>storage.stuff</foreach>
+    <li>
+        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ][ <dc>something</dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+<ul>
+<foreach>workers</foreach>
+    <li>
+        <a href="/<dc>index</dc>">Worker [ <dc>something</dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+<ul>
+<foreach>workers</foreach>
+    <li>
+        <a href="/<dc>index</dc>">Worker [ <dc>index</dc> ][ <dc>item.firstName</dc> ][ <dc>item.lastName</dc> ][ <dc>something</dc> ][ <dc>item.skills.social</dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
 //<ul>
 //<foreach>workers</foreach>
 //    <if>something</if>
@@ -67,6 +65,8 @@
 //    <endif/>
 //<endfor/>
 //</ul>
+
+// <if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
 
 </body>
 </html>

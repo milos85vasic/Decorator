@@ -153,6 +153,7 @@ class Decorator : TemplateSystem {
             index, line ->
             var row = line
 
+            // TODO: Look for else and enif horizontally!
             // Parse <if> tags
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
             val mIf = pIf.matcher(line)
