@@ -1,4 +1,5 @@
 //<if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
+
 <if>something</if>
 sss
 <else>
