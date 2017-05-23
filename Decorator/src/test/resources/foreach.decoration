@@ -66,11 +66,5 @@
 //<endfor/>
 //</ul>
 
-<if>something</if>
-    [ <dc>something</dc> ]
-<else>
-    <a href="/home">Home</a>
-<endif/>
-
 </body>
 </html>
