@@ -200,6 +200,10 @@ class Decorator : TemplateSystem {
                 val pEndIf = Pattern.compile(tags.endIf)
                 val mEndIf = pEndIf.matcher(row)
                 if (mEndIf.find()) {
+                    val endIfStart = mEndIf.start()
+                    if (!result) {
+                        row = row.replace(row.substring(0, endIfStart), "")
+                    }
                     row = row.replace(mEndIf.group(0), "")
                     if (row.isEmpty()) {
                         rowsToBeIgnored.remove(index)
