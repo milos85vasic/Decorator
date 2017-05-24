@@ -1,17 +1,17 @@
 // <if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
 
-<if>something</if>mmm<else>ttt<endif/>
-//<if>does_not_exist</if>mmm<else>ttt<endif/>
-//<if>!does_not_exist</if>mmm<else>ttt<endif/>
+<if>something</if>m 1<else>t 1<endif/>
+//<if>does_not_exist</if>m 2<else>t 2<endif/>
+//<if>!does_not_exist</if>m 3<else>t 3<endif/>
 
-<if>something</if>sss<endif/>
-<if>!does_not_exist</if>sss<endif/>
+// <if>something</if>x 1<endif/>
+// <if>!does_not_exist</if>x 2<endif/>
 
-<if>something</if>
-s 1
-<else>
-x 1
-<endif/>
+//<if>something</if>
+//s 1
+//<else>
+//x 1
+//<endif/>
 
 //<if>something</if>
 //s 2
