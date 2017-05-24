@@ -15,7 +15,7 @@ s 1
 s 2
 <endif/>
 
-<if>!does_not_exist</if>
+<if>!does_not_exist</if> // FIXME: Should be printed!
 s 3
 <endif/>
 
