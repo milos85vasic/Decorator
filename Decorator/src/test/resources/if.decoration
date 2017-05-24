@@ -1,19 +1,36 @@
-//<if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
+// <if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
 
-<if>something</if>
-sss
-<else>
-xzz
-<endif/>
+// <if>something</if>mmm<else>ttt<endif/>
 
-<if>something</if>
-sss
-<endif/>
+<if>something</if>sss<endif/>
+<if>!does_not_exist</if>sss<endif/>
 
-<if>!something</if>
-sss
-<else>
-xzz
-<endif/>
+//<if>something</if>
+//sss
+//<else>
+//xzz
+//<endif/>
+//
+//<if>something</if>
+//sss
+//<endif/>
+//
+//<if>!something</if>
+//sss
+//<else>
+//xzz
+//<endif/>
+//
+//<if>exist</if>
+//1 sss
+//<else>
+//1 xzz
+//<endif/>
+//
+//<if>does_not_exist</if>
+//2 sss
+//<else>
+//2 xzz
+//<endif/>
 
 

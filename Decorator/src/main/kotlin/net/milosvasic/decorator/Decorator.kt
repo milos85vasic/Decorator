@@ -97,7 +97,8 @@ class Decorator : TemplateSystem {
                 if (foreachState != null) {
                     throw IllegalStateException(Messages.FOR_NOT_CLOSED(template))
                 } else {
-                    foreachState = ForeachState(index, -1, forCondition)
+                    val start = mFor.start()
+                    foreachState = ForeachState(Pair(index, start), Pair(-1, -1), forCondition)
                 }
             }
 
@@ -113,7 +114,8 @@ class Decorator : TemplateSystem {
                 if (foreachState == null) {
                     throw IllegalStateException(Messages.FOR_NOT_OPENED(template))
                 } else {
-                    foreachState?.to = index
+                    val end = mEndfor.start()
+                    foreachState?.to = Pair(index, end)
                     foreachStates.add(foreachState)
                     foreachState = null
                 }
@@ -122,7 +124,7 @@ class Decorator : TemplateSystem {
             var foreachStateInProgress = false
             val currentState = foreachState
             currentState?.let {
-                foreachStateInProgress = index > currentState.from
+                foreachStateInProgress = index > currentState.from.first
             }
             if (foreachStateInProgress) {
                 foreachTemplates[index] = line
@@ -135,9 +137,9 @@ class Decorator : TemplateSystem {
             var row = line
             val state = getForeachState(foreachStates, index)
             state?.let {
-                if (state.from == index) {
+                if (state.from.first == index) {
                     val templateRows = mutableListOf<String>()
-                    for (x in state.from..state.to) {
+                    for (x in state.from.first..state.to.first) {
                         foreachTemplates[x]?.let {
                             item ->
                             templateRows.add(item)
@@ -164,9 +166,60 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
-                val ifState = IfState(index, -1, result)
+                val start = mIf.start()
+                val ifState = IfState(Pair(index, start), Pair(-1, -1), result)
                 ifStates.add(ifState)
                 ifStatesOpened++
+
+
+                val pElse = Pattern.compile(tags.elseTag)
+                val mElse = pElse.matcher(line)
+                while (mElse.find()) {
+                    row = row.replace(mElse.group(0), "")
+                    if (row.isEmpty()) {
+                        rowsToBeIgnored.add(index)
+                    }
+                    rows[index] = row
+                    val eStart = mElse.start()
+                    val elseState = ElseState(Pair(index, eStart), Pair(-1, -1))
+                    elseStates.add(elseState)
+                    elseStatesOpened++
+
+
+                    val pEndIf = Pattern.compile(tags.endIf)
+                    val mEndIf = pEndIf.matcher(line)
+                    while (mEndIf.find()) {
+                        row = row.replace(mEndIf.group(0), "")
+                        if (row.isEmpty()) {
+                            rowsToBeIgnored.add(index)
+                        }
+                        rows[index] = row
+                        ifState.to = Pair(index, mEndIf.start())
+                        ifStatesOpened--
+                        elseState.to = Pair(index, mEndIf.start())
+                        elseStatesOpened--
+                    }
+                }
+
+                val pEndIf = Pattern.compile(tags.endIf)
+                val mEndIf = pEndIf.matcher(line)
+                while (mEndIf.find()) {
+                    row = row.replace(mEndIf.group(0), "")
+                    if (row.isEmpty()) {
+                        rowsToBeIgnored.add(index)
+                    }
+                    rows[index] = row
+                    ifState.to = Pair(index, mEndIf.start())
+                    ifStatesOpened--
+                    if (!elseStates.isEmpty() && elseStatesOpened > 0) {
+                        val elseState = elseStates[elseStates.size - elseStatesOpened]
+                        if (elseState != null) {
+                            elseState.to = Pair(index, mEndIf.start())
+                            elseStatesOpened--
+                        }
+                    }
+                }
+
             }
 
             // Parse <else> tags
@@ -178,11 +231,13 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
-                val ifState = ifStates[ifStates.size - ifStatesOpened]
-                if (ifState == null) {
-                    throw IllegalStateException(Messages.IF_NOT_OPENED(template))
-                } else {
-                    val elseState = ElseState(index, -1)
+                var ifState: IfState? = null
+                if (!ifStates.isEmpty() && ifStatesOpened > 0) {
+                    ifState = ifStates[ifStates.size - ifStatesOpened]
+                }
+                if (ifState != null) {
+                    val end = mElse.start()
+                    val elseState = ElseState(Pair(index, end), Pair(-1, -1))
                     elseStates.add(elseState)
                     elseStatesOpened++
                 }
@@ -197,17 +252,19 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
-                val ifState = ifStates[ifStates.size - ifStatesOpened]
+                var ifState: IfState? = null
+                if (!ifStates.isEmpty() && ifStatesOpened > 0) {
+                    ifState = ifStates[ifStates.size - ifStatesOpened]
+                }
+                val end = mEndIf.start()
                 if (ifState != null) {
-                    ifState.to = index
+                    ifState.to = Pair(index, end)
                     ifStatesOpened--
-                } else {
-                    throw IllegalStateException(Messages.IF_NOT_OPENED(template))
                 }
                 if (!elseStates.isEmpty() && elseStatesOpened > 0) {
                     val elseState = elseStates[elseStates.size - elseStatesOpened]
                     if (elseState != null) {
-                        elseState.to = index
+                        elseState.to = Pair(index, end)
                         elseStatesOpened--
                     }
                 }
@@ -421,10 +478,10 @@ class Decorator : TemplateSystem {
 
     private fun satisfiesIf(ifStates: List<IfState?>, index: Int): Boolean {
         ifStates.forEach {
-            ifState ->
-            if (ifState != null) {
-                if (index >= ifState.from && index <= ifState.to) {
-                    return ifState.value
+            state ->
+            if (state != null) {
+                if (index >= state.from.first && index <= state.to.first) {
+                    return state.value
                 }
             }
         }
@@ -433,9 +490,9 @@ class Decorator : TemplateSystem {
 
     private fun satisfiesElse(elseStates: List<ElseState?>, index: Int): Boolean {
         elseStates.forEach {
-            ifState ->
-            if (ifState != null) {
-                if (index >= ifState.from && index <= ifState.to) {
+            state ->
+            if (state != null) {
+                if (index >= state.from.first && index <= state.to.first) {
                     return true
                 }
             }
@@ -447,7 +504,7 @@ class Decorator : TemplateSystem {
         foreachStates.forEach {
             foreachState ->
             if (foreachState != null) {
-                if (index >= foreachState.from && index <= foreachState.to) {
+                if (index >= foreachState.from.first && index <= foreachState.to.first) {
                     return foreachState
                 }
             }
