@@ -157,7 +157,7 @@ class Decorator : TemplateSystem {
 
             // Parse <if> tags
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
-            val mIf = pIf.matcher(line)
+            val mIf = pIf.matcher(row)
             while (mIf.find()) {
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition)
@@ -173,36 +173,43 @@ class Decorator : TemplateSystem {
 
 
                 val pElse = Pattern.compile(tags.elseTag)
-                val mElse = pElse.matcher(line)
-                while (mElse.find()) {
+                val mElse = pElse.matcher(row)
+                if (mElse.find()) {
+                    val eStart = mElse.start()
+                    var elseState: ElseState? = null
+                    if (!result) {
+                        elseState = ElseState(Pair(index, eStart), Pair(-1, -1))
+                        elseStates.add(elseState)
+                        elseStatesOpened++
+                    }
                     row = row.replace(mElse.group(0), "")
                     if (row.isEmpty()) {
-                        rowsToBeIgnored.add(index)
+                        rowsToBeIgnored.remove(index)
                     }
                     rows[index] = row
-                    val eStart = mElse.start()
-                    val elseState = ElseState(Pair(index, eStart), Pair(-1, -1))
-                    elseStates.add(elseState)
-                    elseStatesOpened++
 
 
                     val pEndIf = Pattern.compile(tags.endIf)
-                    val mEndIf = pEndIf.matcher(line)
-                    while (mEndIf.find()) {
+                    val mEndIf = pEndIf.matcher(row)
+                    if (mEndIf.find()) {
+                        val endIfStart = mEndIf.start()
+                        if (result) {
+                            row = row.replace(row.substring(eStart, endIfStart), "")
+                        }
                         row = row.replace(mEndIf.group(0), "")
                         if (row.isEmpty()) {
-                            rowsToBeIgnored.add(index)
+                            rowsToBeIgnored.remove(index)
                         }
                         rows[index] = row
                         ifState.to = Pair(index, mEndIf.start())
                         ifStatesOpened--
-                        elseState.to = Pair(index, mEndIf.start())
+                        elseState?.to = Pair(index, mEndIf.start())
                         elseStatesOpened--
                     }
                 }
 
                 val pEndIf = Pattern.compile(tags.endIf)
-                val mEndIf = pEndIf.matcher(line)
+                val mEndIf = pEndIf.matcher(row)
                 while (mEndIf.find()) {
                     row = row.replace(mEndIf.group(0), "")
                     if (row.isEmpty()) {
@@ -224,7 +231,7 @@ class Decorator : TemplateSystem {
 
             // Parse <else> tags
             val pElse = Pattern.compile(tags.elseTag)
-            val mElse = pElse.matcher(line)
+            val mElse = pElse.matcher(row)
             while (mElse.find()) {
                 row = row.replace(mElse.group(0), "")
                 if (row.isEmpty()) {
@@ -245,7 +252,7 @@ class Decorator : TemplateSystem {
 
             // Parse <endif/> tag
             val pEndIf = Pattern.compile(tags.endIf)
-            val mEndIf = pEndIf.matcher(line)
+            val mEndIf = pEndIf.matcher(row)
             while (mEndIf.find()) {
                 row = row.replace(mEndIf.group(0), "")
                 if (row.isEmpty()) {
@@ -272,7 +279,7 @@ class Decorator : TemplateSystem {
 
             // Parse <dc> tags
             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
-            val m = p.matcher(line)
+            val m = p.matcher(row)
             val commands = mutableListOf<String>()
             while (m.find()) {
                 val result = m.group()
