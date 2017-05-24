@@ -168,19 +168,16 @@ class Decorator : TemplateSystem {
                 rows[index] = row
                 val start = mIf.start()
                 val ifState = IfState(Pair(index, start), Pair(-1, -1), result)
-                ifStates.add(ifState)
-                ifStatesOpened++
-
 
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
                 if (mElse.find()) {
                     val eStart = mElse.start()
-                    var elseState: ElseState? = null
-                    if (!result) {
-                        elseState = ElseState(Pair(index, eStart), Pair(-1, -1))
-                        elseStates.add(elseState)
-                        elseStatesOpened++
+
+                    if (result) {
+
+                    } else {
+
                     }
                     row = row.replace(mElse.group(0), "")
                     if (row.isEmpty()) {
@@ -201,32 +198,21 @@ class Decorator : TemplateSystem {
                             rowsToBeIgnored.remove(index)
                         }
                         rows[index] = row
-                        ifState.to = Pair(index, mEndIf.start())
-                        ifStatesOpened--
-                        elseState?.to = Pair(index, mEndIf.start())
-                        elseStatesOpened--
                     }
+                } else {
+                    ifStates.add(ifState)
+                    ifStatesOpened++
                 }
 
                 val pEndIf = Pattern.compile(tags.endIf)
                 val mEndIf = pEndIf.matcher(row)
-                while (mEndIf.find()) {
+                if (mEndIf.find()) {
                     row = row.replace(mEndIf.group(0), "")
                     if (row.isEmpty()) {
-                        rowsToBeIgnored.add(index)
+                        rowsToBeIgnored.remove(index)
                     }
                     rows[index] = row
-                    ifState.to = Pair(index, mEndIf.start())
-                    ifStatesOpened--
-                    if (!elseStates.isEmpty() && elseStatesOpened > 0) {
-                        val elseState = elseStates[elseStates.size - elseStatesOpened]
-                        if (elseState != null) {
-                            elseState.to = Pair(index, mEndIf.start())
-                            elseStatesOpened--
-                        }
-                    }
                 }
-
             }
 
             // Parse <else> tags
