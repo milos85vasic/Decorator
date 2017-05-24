@@ -172,26 +172,19 @@ class Decorator : TemplateSystem {
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
                 if (mElse.find()) {
-                    val eStart = mElse.start()
-
-                    if (result) {
-
-                    } else {
-
-                    }
                     row = row.replace(mElse.group(0), "")
                     if (row.isEmpty()) {
                         rowsToBeIgnored.remove(index)
                     }
                     rows[index] = row
-
-
                     val pEndIf = Pattern.compile(tags.endIf)
                     val mEndIf = pEndIf.matcher(row)
                     if (mEndIf.find()) {
                         val endIfStart = mEndIf.start()
                         if (result) {
-                            row = row.replace(row.substring(eStart, endIfStart), "")
+                            row = row.replace(row.substring(mElse.start(), endIfStart), "")
+                        } else {
+                            row = row.replace(row.substring(0, mElse.start()), "")
                         }
                         row = row.replace(mEndIf.group(0), "")
                         if (row.isEmpty()) {
