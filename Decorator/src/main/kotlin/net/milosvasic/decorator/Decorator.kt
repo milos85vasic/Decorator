@@ -97,8 +97,7 @@ class Decorator : TemplateSystem {
                 if (foreachState != null) {
                     throw IllegalStateException(Messages.FOR_NOT_CLOSED(template))
                 } else {
-                    val start = mFor.start()
-                    foreachState = ForeachState(Pair(index, start), Pair(-1, -1), forCondition)
+                    foreachState = ForeachState(index, -1, forCondition)
                 }
             }
 
@@ -114,8 +113,7 @@ class Decorator : TemplateSystem {
                 if (foreachState == null) {
                     throw IllegalStateException(Messages.FOR_NOT_OPENED(template))
                 } else {
-                    val end = mEndfor.start()
-                    foreachState?.to = Pair(index, end)
+                    foreachState?.to = index
                     foreachStates.add(foreachState)
                     foreachState = null
                 }
@@ -124,7 +122,7 @@ class Decorator : TemplateSystem {
             var foreachStateInProgress = false
             val currentState = foreachState
             currentState?.let {
-                foreachStateInProgress = index > currentState.from.first
+                foreachStateInProgress = index > currentState.from
             }
             if (foreachStateInProgress) {
                 foreachTemplates[index] = line
@@ -137,9 +135,9 @@ class Decorator : TemplateSystem {
             var row = line
             val state = getForeachState(foreachStates, index)
             state?.let {
-                if (state.from.first == index) {
+                if (state.from == index) {
                     val templateRows = mutableListOf<String>()
-                    for (x in state.from.first..state.to.first) {
+                    for (x in state.from..state.to) {
                         foreachTemplates[x]?.let {
                             item ->
                             templateRows.add(item)
@@ -166,8 +164,7 @@ class Decorator : TemplateSystem {
                     rowsToBeIgnored.add(index)
                 }
                 rows[index] = row
-                val start = mIf.start()
-                val ifState = IfState(Pair(index, start), Pair(-1, -1), result)
+                val ifState = IfState(index, -1, result)
 
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
@@ -192,9 +189,6 @@ class Decorator : TemplateSystem {
                         }
                         rows[index] = row
                     }
-                } else {
-                    ifStates.add(ifState)
-                    ifStatesOpened++
                 }
 
                 val pEndIf = Pattern.compile(tags.endIf)
@@ -209,6 +203,9 @@ class Decorator : TemplateSystem {
                         rowsToBeIgnored.remove(index)
                     }
                     rows[index] = row
+                } else {
+                    ifStates.add(ifState)
+                    ifStatesOpened++
                 }
             }
 
@@ -226,8 +223,7 @@ class Decorator : TemplateSystem {
                     ifState = ifStates[ifStates.size - ifStatesOpened]
                 }
                 if (ifState != null) {
-                    val end = mElse.start()
-                    val elseState = ElseState(Pair(index, end), Pair(-1, -1))
+                    val elseState = ElseState(index, -1)
                     elseStates.add(elseState)
                     elseStatesOpened++
                 }
@@ -246,15 +242,14 @@ class Decorator : TemplateSystem {
                 if (!ifStates.isEmpty() && ifStatesOpened > 0) {
                     ifState = ifStates[ifStates.size - ifStatesOpened]
                 }
-                val end = mEndIf.start()
                 if (ifState != null) {
-                    ifState.to = Pair(index, end)
+                    ifState.to = index
                     ifStatesOpened--
                 }
                 if (!elseStates.isEmpty() && elseStatesOpened > 0) {
                     val elseState = elseStates[elseStates.size - elseStatesOpened]
                     if (elseState != null) {
-                        elseState.to = Pair(index, end)
+                        elseState.to = index
                         elseStatesOpened--
                     }
                 }
@@ -470,7 +465,7 @@ class Decorator : TemplateSystem {
         ifStates.forEach {
             state ->
             if (state != null) {
-                if (index >= state.from.first && index <= state.to.first) {
+                if (index >= state.from && index <= state.to) {
                     return state.value
                 }
             }
@@ -482,7 +477,7 @@ class Decorator : TemplateSystem {
         elseStates.forEach {
             state ->
             if (state != null) {
-                if (index >= state.from.first && index <= state.to.first) {
+                if (index >= state.from && index <= state.to) {
                     return true
                 }
             }
@@ -494,7 +489,7 @@ class Decorator : TemplateSystem {
         foreachStates.forEach {
             foreachState ->
             if (foreachState != null) {
-                if (index >= foreachState.from.first && index <= foreachState.to.first) {
+                if (index >= foreachState.from && index <= foreachState.to) {
                     return foreachState
                 }
             }

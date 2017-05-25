@@ -15,8 +15,24 @@ s 1
 s 2
 <endif/>
 
-<if>!does_not_exist</if> // FIXME: Should be printed!
+<if>!does_not_exist</if>
 s 3
+<endif/>
+
+<if>does_not_exist</if>
+s 4
+<endif/>
+
+<if>exist</if>
+s 5
+<endif/>
+
+<if>!exist</if>
+s 6
+<endif/>
+
+<if>!exist || !does_not_exist</if>
+s 7
 <endif/>
 
 // <if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
@@ -30,7 +46,6 @@ s 3
 //<else>
 //x 1
 //<endif/>
-
 
 //
 //<if>!something</if>
@@ -50,5 +65,3 @@ s 3
 //<else>
 //x 5
 //<endif/>
-
-

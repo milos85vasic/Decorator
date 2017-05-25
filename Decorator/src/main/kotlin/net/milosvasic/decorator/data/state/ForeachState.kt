@@ -1,3 +1,3 @@
 package net.milosvasic.decorator.data.state
 
-class ForeachState(from: Pair<Int, Int>, to: Pair<Int, Int>, var value: String) : ConditionState(from, to)
+class ForeachState(from: Int, to: Int, var value: String) : ConditionState(from, to)
