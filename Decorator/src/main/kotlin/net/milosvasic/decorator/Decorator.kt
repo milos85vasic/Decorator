@@ -165,6 +165,8 @@ class Decorator : TemplateSystem {
                 }
                 rows[index] = row
                 val ifState = IfState(index, -1, result)
+                ifStates.add(ifState)
+                ifStatesOpened++
 
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
@@ -177,6 +179,11 @@ class Decorator : TemplateSystem {
                     val pEndIf = Pattern.compile(tags.endIf)
                     val mEndIf = pEndIf.matcher(row)
                     if (mEndIf.find()) {
+                        if(ifStates.contains(ifState)) {
+                            ifStates.remove(ifState)
+                            ifStatesOpened--
+                        }
+
                         val endIfStart = mEndIf.start()
                         if (result) {
                             row = row.replace(row.substring(mElse.start(), endIfStart), "")
@@ -194,6 +201,11 @@ class Decorator : TemplateSystem {
                 val pEndIf = Pattern.compile(tags.endIf)
                 val mEndIf = pEndIf.matcher(row)
                 if (mEndIf.find()) {
+                    if(ifStates.contains(ifState)) {
+                        ifStates.remove(ifState)
+                        ifStatesOpened--
+                    }
+
                     val endIfStart = mEndIf.start()
                     if (!result) {
                         row = row.replace(row.substring(0, endIfStart), "")
@@ -203,9 +215,6 @@ class Decorator : TemplateSystem {
                         rowsToBeIgnored.remove(index)
                     }
                     rows[index] = row
-                } else {
-                    ifStates.add(ifState)
-                    ifStatesOpened++
                 }
             }
 
