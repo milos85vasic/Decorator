@@ -56,4 +56,5 @@ k 3
 k 4
 <endif/>
 
-// <if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
+<if>something</if>aaa<else>bbb<endif/><if>something</if>ccc<else>ddd<endif/>
+//<if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/><if>something</if>sss<else>xzz<endif/>
