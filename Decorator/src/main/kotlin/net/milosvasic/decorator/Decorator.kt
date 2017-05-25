@@ -154,7 +154,7 @@ class Decorator : TemplateSystem {
             var row = line
 
             // Parse <if> tags
-            var endIfDetected = false
+            var endIfDetected : Boolean
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
             val mIf = pIf.matcher(row)
             while (mIf.find()) {
@@ -174,6 +174,7 @@ class Decorator : TemplateSystem {
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
                 if (mElse.find()) {
+                    val elseStart = row.indexOf(tags.elseTag)
                     row = row.replaceFirst(mElse.group(0), "")
                     if (row.isEmpty()) {
                         rowsToBeIgnored.remove(index)
@@ -190,7 +191,7 @@ class Decorator : TemplateSystem {
 
                         val endIfStart = mEndIf.start()
                         if (result) {
-                            row = row.replace(row.substring(mElse.start(), endIfStart), "")
+                            row = row.replace(row.substring(elseStart, endIfStart), "")
                         } else {
                             row = row.replace(row.substring(ifStart, mElse.start()), "")
                         }
