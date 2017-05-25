@@ -159,7 +159,7 @@ class Decorator : TemplateSystem {
             val mIf = pIf.matcher(row)
             while (mIf.find()) {
                 endIfDetected = false
-                val ifStart = mIf.start()
+                val ifStart = row.indexOf(tags.ifOpen)
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition)
                 row = row.replaceFirst(mIf.group(0), "")
