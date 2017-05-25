@@ -154,12 +154,15 @@ class Decorator : TemplateSystem {
             var row = line
 
             // Parse <if> tags
-            var endIfDetected : Boolean
+            var endIfDetected: Boolean
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
             val mIf = pIf.matcher(row)
             while (mIf.find()) {
                 endIfDetected = false
-                val ifStart = row.indexOf(tags.ifOpen)
+                val ifStartPos = row.indexOf(tags.ifOpen)
+                var elseStartPos = row.indexOf(tags.elseTag)
+                var endIfStartPos = row.indexOf(tags.endIf)
+
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition)
                 row = row.replaceFirst(mIf.group(0), "")
@@ -173,13 +176,14 @@ class Decorator : TemplateSystem {
 
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
-                if (mElse.find()) {
-                    val elseStart = row.indexOf(tags.elseTag)
+                if (elseStartPos < endIfStartPos && mElse.find()) {
+                    elseStartPos = row.indexOf(tags.elseTag)
                     row = row.replaceFirst(mElse.group(0), "")
                     if (row.isEmpty()) {
                         rowsToBeIgnored.remove(index)
                     }
                     rows[index] = row
+                    endIfStartPos = row.indexOf(tags.endIf)
                     val pEndIf = Pattern.compile(tags.endIf)
                     val mEndIf = pEndIf.matcher(row)
                     if (mEndIf.find()) {
@@ -189,11 +193,10 @@ class Decorator : TemplateSystem {
                             ifStatesOpened--
                         }
 
-                        val endIfStart = mEndIf.start()
                         if (result) {
-                            row = row.replace(row.substring(elseStart, endIfStart), "")
+                            row = row.replace(row.substring(elseStartPos, endIfStartPos), "")
                         } else {
-                            row = row.replace(row.substring(ifStart, mElse.start()), "")
+                            row = row.replace(row.substring(ifStartPos, mElse.start()), "")
                         }
                         row = row.replaceFirst(mEndIf.group(0), "")
                         if (row.isEmpty()) {
