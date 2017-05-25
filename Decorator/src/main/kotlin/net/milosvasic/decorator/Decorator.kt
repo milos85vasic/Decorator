@@ -154,12 +154,15 @@ class Decorator : TemplateSystem {
             var row = line
 
             // Parse <if> tags
+            var endIfDetected = false
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
             val mIf = pIf.matcher(row)
             while (mIf.find()) {
+                endIfDetected = false
+                val ifStart = mIf.start()
                 val ifCondition = mIf.group(1)
                 val result = resolveIf(template, data, ifCondition)
-                row = row.replace(mIf.group(0), "")
+                row = row.replaceFirst(mIf.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
@@ -171,7 +174,7 @@ class Decorator : TemplateSystem {
                 val pElse = Pattern.compile(tags.elseTag)
                 val mElse = pElse.matcher(row)
                 if (mElse.find()) {
-                    row = row.replace(mElse.group(0), "")
+                    row = row.replaceFirst(mElse.group(0), "")
                     if (row.isEmpty()) {
                         rowsToBeIgnored.remove(index)
                     }
@@ -179,7 +182,8 @@ class Decorator : TemplateSystem {
                     val pEndIf = Pattern.compile(tags.endIf)
                     val mEndIf = pEndIf.matcher(row)
                     if (mEndIf.find()) {
-                        if(ifStates.contains(ifState)) {
+                        endIfDetected = true
+                        if (ifStates.contains(ifState)) {
                             ifStates.remove(ifState)
                             ifStatesOpened--
                         }
@@ -188,9 +192,9 @@ class Decorator : TemplateSystem {
                         if (result) {
                             row = row.replace(row.substring(mElse.start(), endIfStart), "")
                         } else {
-                            row = row.replace(row.substring(0, mElse.start()), "")
+                            row = row.replace(row.substring(ifStart, mElse.start()), "")
                         }
-                        row = row.replace(mEndIf.group(0), "")
+                        row = row.replaceFirst(mEndIf.group(0), "")
                         if (row.isEmpty()) {
                             rowsToBeIgnored.remove(index)
                         }
@@ -198,23 +202,25 @@ class Decorator : TemplateSystem {
                     }
                 }
 
-                val pEndIf = Pattern.compile(tags.endIf)
-                val mEndIf = pEndIf.matcher(row)
-                if (mEndIf.find()) {
-                    if(ifStates.contains(ifState)) {
-                        ifStates.remove(ifState)
-                        ifStatesOpened--
-                    }
+                if (!endIfDetected) {
+                    val pEndIf = Pattern.compile(tags.endIf)
+                    val mEndIf = pEndIf.matcher(row)
+                    if (mEndIf.find()) {
+                        if (ifStates.contains(ifState)) {
+                            ifStates.remove(ifState)
+                            ifStatesOpened--
+                        }
 
-                    val endIfStart = mEndIf.start()
-                    if (!result) {
-                        row = row.replace(row.substring(0, endIfStart), "")
+                        val endIfStart = mEndIf.start()
+                        if (!result) {
+                            row = row.replace(row.substring(0, endIfStart), "")
+                        }
+                        row = row.replace(mEndIf.group(0), "")
+                        if (row.isEmpty()) {
+                            rowsToBeIgnored.remove(index)
+                        }
+                        rows[index] = row
                     }
-                    row = row.replace(mEndIf.group(0), "")
-                    if (row.isEmpty()) {
-                        rowsToBeIgnored.remove(index)
-                    }
-                    rows[index] = row
                 }
             }
 
