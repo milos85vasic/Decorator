@@ -63,4 +63,6 @@ k 4
 
 <if>exist</if>--> <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
 
-//<if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/>
+<if>!exist</if>--> <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+
+<if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/>

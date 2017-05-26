@@ -219,7 +219,7 @@ class Decorator : TemplateSystem {
                         if (!result) {
                             row = row.replace(row.substring(0, endIfStart), "")
                         }
-                        row = row.replace(mEndIf.group(0), "")
+                        row = row.replaceFirst(mEndIf.group(0), "")
                         if (row.isEmpty()) {
                             rowsToBeIgnored.remove(index)
                         }
