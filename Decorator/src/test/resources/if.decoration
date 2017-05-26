@@ -76,3 +76,40 @@ k 4
 <dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <if>!exist</if>Run<else>Do not run<endif/> now!
 <dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <if>!does_not_exist</if>Run<else>Do not run<endif/> now!
 <dc>person</dc><if>exist</if> is <else> is not <endif/>right! <if>does_not_exist</if>Run<else>Do not run<endif/> now!
+
+<dc>person</dc><if>exist</if> is <else> is not <endif/>right! <dc>person</dc><if>!does_not_exist</if> knows<else> does not know<endif/> all!
+<dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <dc>person</dc><if>does_not_exist</if> knows<else> does not know<endif/> all!
+<dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <dc>person</dc><if>!does_not_exist</if> knows<else> does not know<endif/> all!
+<dc>person</dc><if>exist</if> is <else> is not <endif/>right! <dc>person</dc><if>does_not_exist</if> knows<else> does not know<endif/> all!
+
+--- repeating stuff
+<if>something</if>
+k 1
+<endif/>
+
+<if>!something</if>
+k 2
+<endif/>
+
+<if>!does_not_exist</if>
+k 3
+<endif/>
+
+<if>does_not_exist</if>
+k 4
+<endif/>
+
+<if>something</if>aaa<else>bbb<endif/><if>something</if>ccc<else>ddd<endif/>
+<if>something</if>aaa<else>bbb<endif/><if>!something</if>ccc<else>ddd<endif/>
+<if>!something</if>aaa<else>bbb<endif/><if>something</if>ccc<else>ddd<endif/>
+<if>!something</if>aaa<else>bbb<endif/><if>!something</if>ccc<else>ddd<endif/>
+
+<if>exist</if>--> <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+<if>exist</if>--> <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+--- repeating stuff - END
