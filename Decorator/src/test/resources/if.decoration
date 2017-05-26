@@ -71,3 +71,6 @@ k 4
 <if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
 
 <if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/>
+
+<dc>person</dc><if>exist</if> is <else> is not <endif/>right! <if>!does_not_exist</if>Run<else>Do not run<endif/> now!
+<dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <if>!exist</if>Run<else>Do not run<endif/> now!

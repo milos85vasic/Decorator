@@ -21,6 +21,7 @@ class IfTest {
                 .append("exist", "exist")
                 .append("does_not_exist", "")
                 .append("something", "nice!")
+                .append("person", "John")
                 .build()
 
         val start = System.currentTimeMillis()

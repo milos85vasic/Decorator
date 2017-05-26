@@ -194,9 +194,9 @@ class Decorator : TemplateSystem {
                         }
 
                         if (result) {
-                            row = row.replace(row.substring(elseStartPos, endIfStartPos), "")
+                            row = row.replaceFirst(row.substring(elseStartPos, endIfStartPos), "")
                         } else {
-                            row = row.replace(row.substring(ifStartPos, mElse.start()), "")
+                            row = row.replaceFirst(row.substring(ifStartPos, mElse.start()), "")
                         }
                         row = row.replaceFirst(mEndIf.group(0), "")
                         if (row.isEmpty()) {
@@ -217,7 +217,7 @@ class Decorator : TemplateSystem {
 
                         val endIfStart = mEndIf.start()
                         if (!result) {
-                            row = row.replace(row.substring(0, endIfStart), "")
+                            row = row.replaceFirst(row.substring(0, endIfStart), "")
                         }
                         row = row.replaceFirst(mEndIf.group(0), "")
                         if (row.isEmpty()) {
@@ -232,7 +232,7 @@ class Decorator : TemplateSystem {
             val pElse = Pattern.compile(tags.elseTag)
             val mElse = pElse.matcher(row)
             while (mElse.find()) {
-                row = row.replace(mElse.group(0), "")
+                row = row.replaceFirst(mElse.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
@@ -252,7 +252,7 @@ class Decorator : TemplateSystem {
             val pEndIf = Pattern.compile(tags.endIf)
             val mEndIf = pEndIf.matcher(row)
             while (mEndIf.find()) {
-                row = row.replace(mEndIf.group(0), "")
+                row = row.replaceFirst(mEndIf.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
                 }
