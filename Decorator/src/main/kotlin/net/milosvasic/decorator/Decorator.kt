@@ -237,6 +237,8 @@ class Decorator : TemplateSystem {
                 row = row.replaceFirst(mElse.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)
+                } else {
+                    throw IllegalStateException(Messages.ELSE_VERTICAL_INVALID(template))
                 }
                 rows[index] = row
                 var ifState: IfState? = null

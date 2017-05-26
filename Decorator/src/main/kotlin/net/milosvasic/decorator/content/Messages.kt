@@ -25,11 +25,19 @@ object Messages {
     }
 
     fun IF_NOT_CLOSED(template: String): String {
-        return "'${tags.ifOpen}...${tags.ifClose}...' not closed ${where(template)} Use ${tags.endIf} to close it."
+        return "'${tags.ifOpen}...${tags.ifClose}...' not closed ${where(template)} Use ${tags.endIf} to close."
     }
 
     fun ELSE_NOT_CLOSED(template: String): String {
         return "'Else' not closed ${where(template)}"
+    }
+
+    fun ELSE_VERTICAL_INVALID(template: String): String {
+        return StringBuilder()
+                .append("Vertical ${tags.elseTag} is not used correctly ${where(template)}")
+                .append("\n")
+                .append("When using ${tags.ifOpen}...${tags.ifClose}...${tags.elseTag} vertically ${tags.elseTag} must stand alone in row.")
+                .toString()
     }
 
     fun FOR_NOT_CLOSED(template: String): String {
