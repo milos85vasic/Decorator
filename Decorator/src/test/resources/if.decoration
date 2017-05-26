@@ -62,7 +62,12 @@ k 4
 <if>!something</if>aaa<else>bbb<endif/><if>!something</if>ccc<else>ddd<endif/>
 
 <if>exist</if>--> <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
-
 <if>!exist</if>--> <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+<if>exist</if>--> <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>does_not_exist</if>!!!<else> <--<endif/>
+<if>exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
+<if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
 
 <if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/><if>something</if>sss <else>xzz <endif/>
