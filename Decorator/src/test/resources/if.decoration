@@ -74,3 +74,5 @@ k 4
 
 <dc>person</dc><if>exist</if> is <else> is not <endif/>right! <if>!does_not_exist</if>Run<else>Do not run<endif/> now!
 <dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <if>!exist</if>Run<else>Do not run<endif/> now!
+<dc>person</dc><if>!exist</if> is <else> is not <endif/>right! <if>!does_not_exist</if>Run<else>Do not run<endif/> now!
+<dc>person</dc><if>exist</if> is <else> is not <endif/>right! <if>does_not_exist</if>Run<else>Do not run<endif/> now!
