@@ -28,6 +28,10 @@ object Messages {
         return "'${tags.ifOpen}...${tags.ifClose}...' not closed ${where(template)} Use ${tags.endIf} to close."
     }
 
+    fun IF_CONDITION_NOT_CLOSED(template: String): String {
+        return "'${tags.ifOpen}' opened but not not closed ${where(template)} Use ${tags.ifClose} to close. Both must stand in the same row."
+    }
+
     fun ELSE_NOT_CLOSED(template: String): String {
         return "'Else' not closed ${where(template)}"
     }
