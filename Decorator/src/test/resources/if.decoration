@@ -113,3 +113,6 @@ k 4
 <if>exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
 <if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
 --- repeating stuff - END
+
+//<if>exist</if>ok it exist<else>
+// it does not exist<endif/>

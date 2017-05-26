@@ -1,6 +1,10 @@
 package net.milosvasic.decorator.content
 
+import net.milosvasic.decorator.DecoratorTags
+
 object Messages {
+
+    private val tags = DecoratorTags()
 
     val UNKNOWN_TEMPLATE_DATA_TYPE = "Unknown type passed."
 
@@ -21,7 +25,7 @@ object Messages {
     }
 
     fun IF_NOT_CLOSED(template: String): String {
-        return "'If' not closed ${where(template)}"
+        return "'${tags.ifOpen}...${tags.ifClose}...' not closed ${where(template)} Use ${tags.endIf} to close it."
     }
 
     fun ELSE_NOT_CLOSED(template: String): String {

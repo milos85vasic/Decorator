@@ -224,6 +224,8 @@ class Decorator : TemplateSystem {
                             rowsToBeIgnored.remove(index)
                         }
                         rows[index] = row
+                    } else if (elseStartPos >= 0) {
+                        throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
                     }
                 }
             }
