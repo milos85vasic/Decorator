@@ -157,6 +157,10 @@ class Decorator : TemplateSystem {
                 throw IllegalStateException(Messages.IF_CONDITION_NOT_CLOSED(template))
             }
 
+            if (row.indexOf(tags.ifClose) >= 0 && row.indexOf(tags.ifOpen) < 0) {
+                throw IllegalStateException(Messages.IF_CONDITION_NOT_OPENED(template))
+            }
+
             // Parse <if> tags
             var endIfDetected: Boolean
             val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")

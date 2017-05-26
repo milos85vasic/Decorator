@@ -127,6 +127,10 @@ k 4
 //ok it exist
 //<endif/>
 
+//exist</if>
+//ok it exist
+//<endif/>
+
 //<if>exist
 //</if>
 //ok it exist<else>
