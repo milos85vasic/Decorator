@@ -264,6 +264,10 @@ class Decorator : TemplateSystem {
             val pEndIf = Pattern.compile(tags.endIf)
             val mEndIf = pEndIf.matcher(row)
             while (mEndIf.find()) {
+                if(ifStatesOpened == 0){
+                    throw IllegalStateException(Messages.IF_NOT_OPENED(template))
+                }
+
                 row = row.replaceFirst(mEndIf.group(0), "")
                 if (row.isEmpty()) {
                     rowsToBeIgnored.add(index)

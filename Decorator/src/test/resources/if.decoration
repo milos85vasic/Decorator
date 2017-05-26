@@ -117,6 +117,8 @@ k 4
 //<if>exist</if>ok it exist<else>
 // it does not exist<endif/>
 
+//it does not exist<endif/>
+
 //<if>exist</if>
 //ok it exist<else>
 // it does not exist

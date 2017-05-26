@@ -17,7 +17,7 @@ object Messages {
     }
 
     fun IF_NOT_OPENED(template: String): String {
-        return "'If' not opened ${where(template)}"
+        return "'If' not opened ${where(template)} Use ${tags.ifOpen}...${tags.ifClose} to open."
     }
 
     fun FOR_NOT_OPENED(template: String): String {
