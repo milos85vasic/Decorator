@@ -31,10 +31,6 @@ s 5
 s 6
 <endif/>
 
-<if>!exist || !does_not_exist</if>
-s 7
-<endif/>
-
 <if>!does_not_exist</if>x 1<else>y 1<endif/>
 <if>does_not_exist</if>x 2<else>y 2<endif/>
 <if>!does_not_exist</if>x 3<endif/>
@@ -196,10 +192,6 @@ s 5
 s 6
 <endif/>
 
-<if>!exist || !does_not_exist</if>
-s 7
-<endif/>
-
 <if>!does_not_exist</if>x 1<else>y 1<endif/>
 <if>does_not_exist</if>x 2<else>y 2<endif/>
 <if>!does_not_exist</if>x 3<endif/>
@@ -236,3 +228,8 @@ k 4
 <if>!exist</if>--> <else>~ ~ ~ <endif/><dc>something</dc><if>!does_not_exist</if>!!!<else> <--<endif/>
 ---
 Repeating - END
+
+<if>!exist || !does_not_exist</if>
+s 7
+<endif/>
+---
