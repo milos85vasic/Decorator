@@ -243,7 +243,7 @@ class Decorator : TemplateSystem {
             val mElse = pElse.matcher(row)
             while (mElse.find()) {
                 row = row.replaceFirst(mElse.group(0), "")
-                if (row.isEmpty()) {
+                if (row.trim().isEmpty()) {
                     rowsToBeIgnored.add(index)
                 } else {
                     throw IllegalStateException(Messages.ELSE_VERTICAL_INVALID(template))
