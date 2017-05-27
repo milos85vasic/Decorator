@@ -37,7 +37,7 @@ object Messages {
     }
 
     fun ELSE_NOT_CLOSED(template: String): String {
-        return "'Else' not closed ${where(template)}"
+        return "'${tags.elseTag}' not closed ${where(template)} Use '${tags.endIf}' to close."
     }
 
     fun ELSE_VERTICAL_INVALID(template: String): String {

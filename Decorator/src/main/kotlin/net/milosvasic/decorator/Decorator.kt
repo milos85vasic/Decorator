@@ -264,7 +264,7 @@ class Decorator : TemplateSystem {
             val pEndIf = Pattern.compile(tags.endIf)
             val mEndIf = pEndIf.matcher(row)
             while (mEndIf.find()) {
-                if(ifStatesOpened == 0){
+                if (ifStatesOpened == 0) {
                     throw IllegalStateException(Messages.IF_NOT_OPENED(template))
                 }
 
@@ -306,8 +306,8 @@ class Decorator : TemplateSystem {
         rows.forEachIndexed {
             index, line ->
             val isLineValid: Boolean
-            val satisfiesElse = satisfiesElse(elseStates, index)
-            if (!satisfiesIf(ifStates, index)) {
+            val satisfiesElse = satisfiesElse(elseStates, index, template)
+            if (!satisfiesIf(ifStates, index, template)) {
                 isLineValid = satisfiesElse
             } else {
                 isLineValid = !satisfiesElse
@@ -496,10 +496,13 @@ class Decorator : TemplateSystem {
         return tautology.evaluate(expressions)
     }
 
-    private fun satisfiesIf(ifStates: List<IfState?>, index: Int): Boolean {
+    private fun satisfiesIf(ifStates: List<IfState?>, index: Int, template: String): Boolean {
         ifStates.forEach {
             state ->
             if (state != null) {
+                if (state.to == -1) {
+                    throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
+                }
                 if (index >= state.from && index <= state.to) {
                     return state.value
                 }
@@ -508,10 +511,13 @@ class Decorator : TemplateSystem {
         return true
     }
 
-    private fun satisfiesElse(elseStates: List<ElseState?>, index: Int): Boolean {
+    private fun satisfiesElse(elseStates: List<ElseState?>, index: Int, template: String): Boolean {
         elseStates.forEach {
             state ->
             if (state != null) {
+                if (state.to == -1) {
+                    throw IllegalStateException(Messages.ELSE_NOT_CLOSED(template))
+                }
                 if (index >= state.from && index <= state.to) {
                     return true
                 }
