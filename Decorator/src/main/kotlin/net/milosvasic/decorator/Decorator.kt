@@ -486,9 +486,8 @@ class Decorator : TemplateSystem {
                         }
                     }
                 } catch (e: Exception) {
-                    logger.w("", "$e")
+                    return null
                 }
-                return null
             }
         }
         val parser = TautologyParser(delegate)
