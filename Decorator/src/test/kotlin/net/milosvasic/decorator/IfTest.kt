@@ -54,6 +54,16 @@ class IfTest {
         Assert.assertTrue(lines[13].isEmpty())
         Assert.assertTrue(lines[14].isEmpty())
         Assert.assertEquals("s 5", lines[15])
+        Assert.assertTrue(lines[16].isEmpty())
+        Assert.assertTrue(lines[17].isEmpty())
+        Assert.assertEquals("x 1", lines[18])
+        Assert.assertEquals("y 2", lines[19])
+        Assert.assertEquals("x 3", lines[20])
+        Assert.assertEquals("x 4", lines[21])
+        Assert.assertTrue(lines[22].isEmpty())
+
+
+
         Assert.assertEquals(134, lines.size)
     }
 
