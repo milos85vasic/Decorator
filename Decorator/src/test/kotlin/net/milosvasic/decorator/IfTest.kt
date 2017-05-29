@@ -38,7 +38,16 @@ class IfTest {
         Assert.assertFalse(lines.isEmpty())
         lines.removeAt(lines.lastIndex)
         Assert.assertFalse(lines.isEmpty())
-
+        Assert.assertEquals("m 1", lines[0])
+        Assert.assertEquals("t 2", lines[1])
+        Assert.assertEquals("m 3", lines[2])
+        Assert.assertEquals("t 4", lines[3])
+        Assert.assertEquals("m 5", lines[4])
+        Assert.assertTrue(lines[5].isEmpty())
+        Assert.assertTrue(lines[6].isEmpty())
+        Assert.assertEquals("m 8", lines[7])
+        Assert.assertTrue(lines[8].isEmpty())
+        Assert.assertEquals("s 1", lines[9])
         Assert.assertEquals(134, lines.size)
     }
 
