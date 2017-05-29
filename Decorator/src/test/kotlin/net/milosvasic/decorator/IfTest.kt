@@ -81,6 +81,8 @@ class IfTest {
         Assert.assertEquals("--> nice!!!!", lines[40])
         Assert.assertEquals("~ ~ ~ nice!!!!", lines[41])
         Assert.assertTrue(lines[42].isEmpty())
+        Assert.assertEquals("sss sss sss ", lines[43])
+
 
         Assert.assertEquals(134, lines.size)
     }
