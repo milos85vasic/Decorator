@@ -67,9 +67,11 @@ class IfTest {
         Assert.assertEquals("k 3", lines[26])
         Assert.assertTrue(lines[27].isEmpty())
         Assert.assertTrue(lines[28].isEmpty())
-
-
-
+        Assert.assertEquals("aaaccc", lines[29])
+        Assert.assertEquals("aaaddd", lines[30])
+        Assert.assertEquals("bbbccc", lines[31])
+        Assert.assertEquals("bbbddd", lines[32])
+        Assert.assertTrue(lines[33].isEmpty())
 
         Assert.assertEquals(134, lines.size)
     }
