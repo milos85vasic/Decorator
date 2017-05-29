@@ -67,7 +67,9 @@
         </a>
     </li>
     <else>
-    <t/><a href="/home">Home</a>
+    <li>
+        <a href="/home">Home</a>
+    </li>
     <endif/>
 <endfor/>
 </ul>
