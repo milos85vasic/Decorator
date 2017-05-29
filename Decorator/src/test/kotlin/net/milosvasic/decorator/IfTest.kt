@@ -72,6 +72,15 @@ class IfTest {
         Assert.assertEquals("bbbccc", lines[31])
         Assert.assertEquals("bbbddd", lines[32])
         Assert.assertTrue(lines[33].isEmpty())
+        Assert.assertEquals("--> nice! <--", lines[34])
+        Assert.assertEquals("nice!!!!", lines[35])
+        Assert.assertEquals("--> nice!!!!", lines[36])
+        Assert.assertEquals("nice! <--", lines[37])
+        Assert.assertEquals("--> nice! <--", lines[38])
+        Assert.assertEquals("~ ~ ~ nice! <--", lines[39])
+        Assert.assertEquals("--> nice!!!!", lines[40])
+        Assert.assertEquals("~ ~ ~ nice!!!!", lines[41])
+        Assert.assertTrue(lines[42].isEmpty())
 
         Assert.assertEquals(134, lines.size)
     }
