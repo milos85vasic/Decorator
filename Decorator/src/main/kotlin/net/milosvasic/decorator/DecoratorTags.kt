@@ -1,8 +1,9 @@
 package net.milosvasic.decorator
 
+import net.milosvasic.decorator.item.IterationItem
 import net.milosvasic.decorator.template.Tags
 
-class DecoratorTags : Tags(){
+class DecoratorTags : Tags(), IterationItem {
 
     override val open = "<dc>"
     override val close = "</dc>"
@@ -16,6 +17,8 @@ class DecoratorTags : Tags(){
     override val foreachClose = "</foreach>"
     override val endFor = "<endfor/>"
     override val lineComment = "//"
+    override val itemTag: String = "<item>"
+    override val indexTag: String = "<index>"
 
     val tabPlaceholder = "<t/>"
 

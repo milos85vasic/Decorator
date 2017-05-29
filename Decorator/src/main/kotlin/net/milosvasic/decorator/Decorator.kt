@@ -367,12 +367,12 @@ class Decorator : TemplateSystem {
                         is Value -> {
                             builder.append(
                                     item
-                                            .replace("${tags.open}index${tags.close}", index.toString())
-                                            .replace(Regex("${tags.open}item${tags.close}"), tData.content)
+                                            .replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
+                                            .replace(Regex("${tags.open}${tags.itemTag}${tags.close}"), tData.content)
                             )
                         }
                         is Data -> {
-                            var row = item.replace("${tags.open}index${tags.close}", index.toString())
+                            var row = item.replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
                             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
                             val m = p.matcher(row)
                             val parsedParts = mutableListOf<String>()
@@ -383,7 +383,7 @@ class Decorator : TemplateSystem {
                             parsedParts.forEach {
                                 part ->
                                 val partParams = part
-                                        .replace("item${memberSeparator.value}", "")
+                                        .replace("${tags.itemTag}${memberSeparator.value}", "")
                                         .split(memberSeparator.value)
                                 var partData: TemplateData? = null
                                 val partIt = partParams.iterator()

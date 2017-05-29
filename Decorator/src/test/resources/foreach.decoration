@@ -1,70 +1,14 @@
-<dc>decorator.describe</dc>
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC <dc>decorator.doctype</dc>>
-<html <dc>decorator.xmlns</dc> xml:lang="en" lang="en">
-<head>
-  <title>Foreach test</title>
-</head>
-<body>
-
-<ul>
-<foreach>names</foreach>
-    <li>Item [ <dc>index</dc> ][ <dc>item</dc> ]</li>
-<endfor/>
-</ul>
-
-<ul>
-<foreach>cars</foreach>
-    <li>Item [ <dc>index</dc> ][ <dc>item.model</dc> ]</li>
-
-<endfor/>
-</ul>
-
-<ul>
-<foreach>storage.stuff</foreach>
-    <li>
-        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ]</a>
-
-
-    </li>
-<endfor/>
-</ul>
-
-<ul>
-<foreach>storage.stuff</foreach>
-    <li>
-        <a href="/<dc>index</dc>">Item [ <dc>index</dc> ][ <dc>item</dc> ][ <dc>something</dc> ]</a>
-    </li>
-<endfor/>
-</ul>
-
-<ul>
-<foreach>workers</foreach>
-    <li>
-        <a href="/<dc>index</dc>">Worker [ <dc>something</dc> ]</a>
-    </li>
-<endfor/>
-</ul>
-
-<ul>
-<foreach>workers</foreach>
-    <li>
-        <a href="/<dc>index</dc>">Worker [ <dc>index</dc> ][ <dc>item.firstName</dc> ][ <dc>item.lastName</dc> ][ <dc>something</dc> ][ <dc>item.skills.social</dc> ]</a>
-    </li>
-<endfor/>
-</ul>
-
 <ul>
 <foreach>workers</foreach>
     <if>something</if>
     <li>
-        <a href="/<dc>index</dc>">
+        <a href="/<dc><index></dc>">
             Worker:
-            Index [ <dc>index</dc> ]
-            First name: [ <dc>item.firstName</dc> ]
-            Last name: [ <if>item.lastName</if><dc>item.lastName</dc><else>- - -<endif/> ]
+            Index [ <dc><index></dc> ]
+            First name: [ <dc><item>.firstName</dc> ]
+            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
             Status: [ <dc>something</dc> ]
-            Social skills: [ <if>item.skills.social</if><dc>item.skills.social</dc><else>- - -<endif/> ]
+            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
         </a>
     </li>
     <else>
@@ -75,5 +19,82 @@
 <endfor/>
 </ul>
 
-</body>
-</html>
+//<dc>decorator.describe</dc>
+//<?xml version="1.0" encoding="UTF-8"?>
+//<!DOCTYPE html PUBLIC <dc>decorator.doctype</dc>>
+//<html <dc>decorator.xmlns</dc> xml:lang="en" lang="en">
+//<head>
+//  <title>Foreach test</title>
+//</head>
+//<body>
+//
+//<ul>
+//<foreach>names</foreach>
+//    <li>Item [ <dc><index></dc> ][ <dc><item></dc> ]</li>
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>cars</foreach>
+//    <li>Item [ <dc><index></dc> ][ <dc><item>.model</dc> ]</li>
+//
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>storage.stuff</foreach>
+//    <li>
+//        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
+//
+//
+//    </li>
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>storage.stuff</foreach>
+//    <li>
+//        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ][ <dc>something</dc> ]</a>
+//    </li>
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>workers</foreach>
+//    <li>
+//        <a href="/<dc><index></dc>">Worker [ <dc>something</dc> ]</a>
+//    </li>
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>workers</foreach>
+//    <li>
+//        <a href="/<dc><index></dc>">Worker [ <dc><index></dc> ][ <dc><item>.firstName</dc> ][ <dc><item>.lastName</dc> ][ <dc>something</dc> ][ <dc><item>.skills.social</dc> ]</a>
+//    </li>
+//<endfor/>
+//</ul>
+//
+//<ul>
+//<foreach>workers</foreach>
+//    <if>something</if>
+//    <li>
+//        <a href="/<dc><index></dc>">
+//            Worker:
+//            Index [ <dc><index></dc> ]
+//            First name: [ <dc><item>.firstName</dc> ]
+//            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
+//            Status: [ <dc>something</dc> ]
+//            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
+//        </a>
+//    </li>
+//    <else>
+//    <li>
+//        <a href="/home">Home</a>
+//    </li>
+//    <endif/>
+//<endfor/>
+//</ul>
+//
+//</body>
+//</html>
