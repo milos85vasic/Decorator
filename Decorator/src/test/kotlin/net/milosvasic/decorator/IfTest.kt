@@ -61,6 +61,13 @@ class IfTest {
         Assert.assertEquals("x 3", lines[20])
         Assert.assertEquals("x 4", lines[21])
         Assert.assertTrue(lines[22].isEmpty())
+        Assert.assertEquals("k 1", lines[23])
+        Assert.assertTrue(lines[24].isEmpty())
+        Assert.assertTrue(lines[25].isEmpty())
+        Assert.assertEquals("k 3", lines[26])
+        Assert.assertTrue(lines[27].isEmpty())
+        Assert.assertTrue(lines[28].isEmpty())
+
 
 
 
