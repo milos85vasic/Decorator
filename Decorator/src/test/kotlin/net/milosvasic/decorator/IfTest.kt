@@ -48,6 +48,12 @@ class IfTest {
         Assert.assertEquals("m 8", lines[7])
         Assert.assertTrue(lines[8].isEmpty())
         Assert.assertEquals("s 1", lines[9])
+        Assert.assertTrue(lines[10].isEmpty())
+        Assert.assertTrue(lines[11].isEmpty())
+        Assert.assertEquals("s 3", lines[12])
+        Assert.assertTrue(lines[13].isEmpty())
+        Assert.assertTrue(lines[14].isEmpty())
+        Assert.assertEquals("s 5", lines[15])
         Assert.assertEquals(134, lines.size)
     }
 
