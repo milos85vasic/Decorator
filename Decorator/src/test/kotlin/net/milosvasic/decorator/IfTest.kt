@@ -114,6 +114,8 @@ class IfTest {
         Assert.assertEquals("--> nice!!!!", lines[73])
         Assert.assertEquals("~ ~ ~ nice!!!!", lines[74])
         Assert.assertEquals("--- repeating stuff - END", lines[75])
+        Assert.assertEquals("--- end commented invalid ifs", lines[76])
+        Assert.assertEquals("---", lines[77])
 
 
         Assert.assertEquals(134, lines.size)
