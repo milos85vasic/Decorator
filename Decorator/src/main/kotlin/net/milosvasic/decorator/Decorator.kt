@@ -479,6 +479,7 @@ class Decorator : TemplateSystem {
             override fun getExpressionValue(key: String): ExpressionValue? {
                 val resolve: String?
                 try {
+                    logger.c("", "-> $key")
                     resolve = resolve(template, templateData, key)
                     return object : ExpressionValue {
                         override fun getValue(): Boolean {
