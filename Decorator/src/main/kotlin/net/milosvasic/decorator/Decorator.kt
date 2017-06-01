@@ -376,7 +376,7 @@ class Decorator : TemplateSystem {
                             val pIf = Pattern.compile("${tags.ifOpen}${tags.itemTag}.(.+?)${tags.ifClose}")
                             val mIf = pIf.matcher(row)
                             while (mIf.find()) {
-                                val partParams = mIf.group(1).trim().split(memberSeparator.value)
+                                val partParams = mIf.group(1).split(memberSeparator.value)
                                 partParams.forEach {
                                     part ->
                                     var partsData: TemplateData? = null
@@ -404,9 +404,13 @@ class Decorator : TemplateSystem {
                                     if (partsData != null) {
                                         if (partsData is Value) {
                                             if (partsData.content.isEmpty()) {
-                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.falseTag)
+                                                logger.w("", "-> $row")
+                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
+                                                logger.c("", "-> $row")
                                             } else {
-                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.trueTag)
+                                                logger.w("", "-> $row")
+                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.trueTag}${tags.ifClose}")
+                                                logger.c("", "-> $row")
                                             }
                                         } else {
                                             throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
@@ -415,12 +419,18 @@ class Decorator : TemplateSystem {
                                         try {
                                             val resolved = resolve(template, templateData, part)
                                             if (resolved.isEmpty()) {
-                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.falseTag)
+                                                logger.w("", "-> $row")
+                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
+                                                logger.c("", "-> $row")
                                             } else {
-                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.trueTag)
+                                                logger.w("", "-> $row")
+                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.trueTag}${tags.ifClose}")
+                                                logger.c("", "-> $row")
                                             }
                                         } catch (e: Exception) {
-                                            row = row.replaceFirst("${tags.itemTag}.$part", tags.falseTag)
+                                            logger.w("", "-> $row")
+                                            row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
+                                            logger.c("", "-> $row")
                                         }
                                     }
                                 }
