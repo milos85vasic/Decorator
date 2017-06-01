@@ -377,8 +377,12 @@ class Decorator : TemplateSystem {
                             val pIf = Pattern.compile("${tags.ifOpen}${tags.itemTag}.(.+?)${tags.ifClose}")
                             val mIf = pIf.matcher(row)
                             while (mIf.find()){
-                                val result = mIf.group(1)
-                                logger.i("", "-> -> $result")
+                                val partParams = mIf.group(1).split(memberSeparator.value)
+                                partParams.forEach {
+                                    param ->
+                                    logger.i("", "-> -> $param")
+                                }
+                                logger.i("", "- - - ")
                             }
 
                             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
