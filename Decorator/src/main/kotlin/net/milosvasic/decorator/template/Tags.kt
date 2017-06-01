@@ -14,5 +14,7 @@ abstract class Tags {
     abstract val foreachClose: String
     abstract val endFor: String
     abstract val lineComment: String
+    abstract val trueTag: String
+    abstract val falseTag: String
 
 }

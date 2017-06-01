@@ -19,6 +19,8 @@ class DecoratorTags : Tags(), IterationItem {
     override val lineComment = "//"
     override val itemTag: String = "<item>"
     override val indexTag: String = "<index>"
+    override val trueTag: String = "<true>"
+    override val falseTag: String = "<false>"
 
     val tabPlaceholder = "<t/>"
 

@@ -373,15 +373,12 @@ class Decorator : TemplateSystem {
                         }
                         is Data -> {
                             var row = item.replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
-
                             val pIf = Pattern.compile("${tags.ifOpen}${tags.itemTag}.(.+?)${tags.ifClose}")
                             val mIf = pIf.matcher(row)
-                            while (mIf.find()){
+                            while (mIf.find()) {
                                 val partParams = mIf.group(1).split(memberSeparator.value)
                                 partParams.forEach {
                                     part ->
-                                    logger.i("", "-> -> $part")
-
                                     var partsData: TemplateData? = null
                                     val partIt = partParams.iterator()
                                     if (partIt.hasNext()) {
@@ -406,31 +403,27 @@ class Decorator : TemplateSystem {
                                     }
                                     if (partsData != null) {
                                         if (partsData is Value) {
-                                            logger.w("", "-> -> -> 1, ${partsData.content}")
-                                            row = row.replace("${tags.open}$part${tags.close}", partsData.content)
+                                            if (partsData.content.isEmpty()) {
+                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.falseTag)
+                                            } else {
+                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.trueTag)
+                                            }
                                         } else {
                                             throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
                                         }
                                     } else {
                                         try {
                                             val resolved = resolve(template, templateData, part)
-                                            logger.w("", "-> -> -> 2, $resolved")
-                                            row = row.replace(
-                                                    "${tags.open}$part${tags.close}", resolved
-                                            )
+                                            if (resolved.isEmpty()) {
+                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.falseTag)
+                                            } else {
+                                                row = row.replaceFirst("${tags.itemTag}.$part", tags.trueTag)
+                                            }
                                         } catch (e: Exception) {
-                                            logger.w("", "-> -> -> /---/")
-                                            row = row.replace("${tags.open}$part${tags.close}", "")
+                                            row = row.replaceFirst("${tags.itemTag}.$part", tags.falseTag)
                                         }
                                     }
-
                                 }
-                                logger.i("", "- - - ")
-
-
-
-
-
                             }
 
                             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
