@@ -71,7 +71,7 @@ class Decorator : TemplateSystem {
             val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
             val mInclude = pInclude.matcher(line)
             while (mInclude.find()) {
-                val include = mInclude.group(1)
+                val include = mInclude.group(1).trim()
                 var element = decorate(include, data)
                 if (element.endsWith("\n")) {
                     element = element.substring(0, element.lastIndex)
@@ -88,7 +88,7 @@ class Decorator : TemplateSystem {
             val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
             val mFor = pFor.matcher(line)
             while (mFor.find()) {
-                val forCondition = mFor.group(1)
+                val forCondition = mFor.group(1).trim()
                 row = row.replace(mFor.group(0), "")
                 rows[index] = row
                 if (!row.isEmpty()) {
@@ -171,7 +171,7 @@ class Decorator : TemplateSystem {
                 var elseStartPos = row.indexOf(tags.elseTag)
                 var endIfStartPos = row.indexOf(tags.endIf)
 
-                val ifCondition = mIf.group(1)
+                val ifCondition = mIf.group(1).trim()
                 val result = resolveIf(template, data, ifCondition)
                 row = row.replaceFirst(mIf.group(0), "")
                 if (row.isEmpty()) {
@@ -295,7 +295,7 @@ class Decorator : TemplateSystem {
             val m = p.matcher(row)
             val commands = mutableListOf<String>()
             while (m.find()) {
-                val result = m.group()
+                val result = m.group().trim()
                 commands.add(result)
             }
             if (!commands.isEmpty()) {
@@ -430,7 +430,7 @@ class Decorator : TemplateSystem {
                             val m = p.matcher(row)
                             val parsedParts = mutableListOf<String>()
                             while (m.find()) {
-                                val result = m.group(1)
+                                val result = m.group(1).trim()
                                 parsedParts.add(result)
                             }
                             parsedParts.forEach {
