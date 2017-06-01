@@ -373,6 +373,7 @@ class Decorator : TemplateSystem {
                         }
                         is Data -> {
                             var row = item.replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
+                            row = row.replaceFirst(Regex("${tags.ifOpen}(\\s+)"), tags.ifOpen)
                             val pIf = Pattern.compile("${tags.ifOpen}${tags.itemTag}.(.+?)${tags.ifClose}")
                             val mIf = pIf.matcher(row)
                             while (mIf.find()) {
