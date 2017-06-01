@@ -532,15 +532,24 @@ class Decorator : TemplateSystem {
             override fun getExpressionValue(key: String): ExpressionValue? {
                 val resolve: String?
                 try {
-                    logger.c("", "-> $key")
-                    resolve = resolve(template, templateData, key)
-                    return object : ExpressionValue {
-                        override fun getValue(): Boolean {
-                            return !resolve.isEmpty()
+                    when (key) {
+                        tags.trueTag -> {
+                            resolve = tags.trueTag
+                        }
+                        tags.falseTag -> {
+                            resolve = ""
+                        }
+                        else -> {
+                            resolve = resolve(template, templateData, key)
                         }
                     }
                 } catch (e: Exception) {
                     return null
+                }
+                return object : ExpressionValue {
+                    override fun getValue(): Boolean {
+                        return !resolve.isEmpty()
+                    }
                 }
             }
         }
