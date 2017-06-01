@@ -373,6 +373,14 @@ class Decorator : TemplateSystem {
                         }
                         is Data -> {
                             var row = item.replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
+
+                            val pIf = Pattern.compile("${tags.ifOpen}${tags.itemTag}.(.+?)${tags.ifClose}")
+                            val mIf = pIf.matcher(row)
+                            while (mIf.find()){
+                                val result = mIf.group(1)
+                                logger.i("", "-> -> $result")
+                            }
+
                             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
                             val m = p.matcher(row)
                             val parsedParts = mutableListOf<String>()
