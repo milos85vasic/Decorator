@@ -379,10 +379,58 @@ class Decorator : TemplateSystem {
                             while (mIf.find()){
                                 val partParams = mIf.group(1).split(memberSeparator.value)
                                 partParams.forEach {
-                                    param ->
-                                    logger.i("", "-> -> $param")
+                                    part ->
+                                    logger.i("", "-> -> $part")
+
+                                    var partsData: TemplateData? = null
+                                    val partIt = partParams.iterator()
+                                    if (partIt.hasNext()) {
+                                        val param = partIt.next()
+                                        partsData = tData.content[param]
+                                    }
+                                    if (partIt.hasNext()) {
+                                        val param = partIt.next()
+                                        partsData = tData.content[param]
+                                    }
+                                    while (partsData != null && partsData !is Value && partIt.hasNext()) {
+                                        when (partsData) {
+                                            is Data -> {
+                                                val param = partIt.next()
+                                                partsData = partsData.content[param]
+                                            }
+                                            is Value -> {
+                                                // Ignore
+                                            }
+                                            else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template))
+                                        }
+                                    }
+                                    if (partsData != null) {
+                                        if (partsData is Value) {
+                                            logger.w("", "-> -> -> 1, ${partsData.content}")
+                                            row = row.replace("${tags.open}$part${tags.close}", partsData.content)
+                                        } else {
+                                            throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
+                                        }
+                                    } else {
+                                        try {
+                                            val resolved = resolve(template, templateData, part)
+                                            logger.w("", "-> -> -> 2, $resolved")
+                                            row = row.replace(
+                                                    "${tags.open}$part${tags.close}", resolved
+                                            )
+                                        } catch (e: Exception) {
+                                            logger.w("", "-> -> -> /---/")
+                                            row = row.replace("${tags.open}$part${tags.close}", "")
+                                        }
+                                    }
+
                                 }
                                 logger.i("", "- - - ")
+
+
+
+
+
                             }
 
                             val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
