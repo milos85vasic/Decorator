@@ -441,6 +441,7 @@ class Decorator : TemplateSystem {
                             val parsedParts = mutableListOf<String>()
                             while (m.find()) {
                                 val result = m.group(1).trim()
+                                logger.i("", "-> $result")
                                 parsedParts.add(result)
                             }
                             parsedParts.forEach {
