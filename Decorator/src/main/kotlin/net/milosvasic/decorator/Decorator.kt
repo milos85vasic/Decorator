@@ -151,155 +151,156 @@ class Decorator : TemplateSystem {
 
         rows.forEachIndexed {
             index, line ->
-            var row = line
-
-            if (row.indexOf(tags.ifOpen) >= 0 && row.indexOf(tags.ifClose) < 0) {
-                throw IllegalStateException(Messages.IF_CONDITION_NOT_CLOSED(template))
-            }
-
-            if (row.indexOf(tags.ifClose) >= 0 && row.indexOf(tags.ifOpen) < 0) {
-                throw IllegalStateException(Messages.IF_CONDITION_NOT_OPENED(template))
-            }
-
-            // Parse <if> tags
-            var endIfDetected: Boolean
-            val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
-            val mIf = pIf.matcher(row)
-            while (mIf.find()) {
-                endIfDetected = false
-                val ifStartPos = row.indexOf(tags.ifOpen)
-                var elseStartPos = row.indexOf(tags.elseTag)
-                var endIfStartPos = row.indexOf(tags.endIf)
-
-                val ifCondition = mIf.group(1).trim()
-                val result = resolveIf(template, data, ifCondition)
-                row = row.replaceFirst(mIf.group(0), "")
-                if (row.isEmpty()) {
-                    rowsToBeIgnored.add(index)
+            if (!rowsToBeIgnored.contains(index)) {
+                var row = line
+                if (row.indexOf(tags.ifOpen) >= 0 && row.indexOf(tags.ifClose) < 0) {
+                    throw IllegalStateException(Messages.IF_CONDITION_NOT_CLOSED(template))
                 }
-                rows[index] = row
-                val ifState = IfState(index, -1, result)
-                ifStates.add(ifState)
-                ifStatesOpened++
 
-                val pElse = Pattern.compile(tags.elseTag)
-                val mElse = pElse.matcher(row)
-                if (elseStartPos < endIfStartPos && mElse.find()) {
-                    elseStartPos = row.indexOf(tags.elseTag)
-                    row = row.replaceFirst(mElse.group(0), "")
+                if (row.indexOf(tags.ifClose) >= 0 && row.indexOf(tags.ifOpen) < 0) {
+                    throw IllegalStateException(Messages.IF_CONDITION_NOT_OPENED(template))
+                }
+
+                // Parse <if> tags
+                var endIfDetected: Boolean
+                val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
+                val mIf = pIf.matcher(row)
+                while (mIf.find()) {
+                    endIfDetected = false
+                    val ifStartPos = row.indexOf(tags.ifOpen)
+                    var elseStartPos = row.indexOf(tags.elseTag)
+                    var endIfStartPos = row.indexOf(tags.endIf)
+
+                    val ifCondition = mIf.group(1).trim()
+                    val result = resolveIf(template, data, ifCondition)
+                    row = row.replaceFirst(mIf.group(0), "")
                     if (row.isEmpty()) {
-                        rowsToBeIgnored.remove(index)
+                        rowsToBeIgnored.add(index)
                     }
                     rows[index] = row
-                    endIfStartPos = row.indexOf(tags.endIf)
-                    val pEndIf = Pattern.compile(tags.endIf)
-                    val mEndIf = pEndIf.matcher(row)
-                    if (mEndIf.find()) {
-                        endIfDetected = true
-                        if (ifStates.contains(ifState)) {
-                            ifStates.remove(ifState)
-                            ifStatesOpened--
-                        }
+                    val ifState = IfState(index, -1, result)
+                    ifStates.add(ifState)
+                    ifStatesOpened++
 
-                        if (result) {
-                            row = row.replaceFirst(row.substring(elseStartPos, endIfStartPos), "")
-                        } else {
-                            row = row.replaceFirst(row.substring(ifStartPos, mElse.start()), "")
-                        }
-                        row = row.replaceFirst(mEndIf.group(0), "")
+                    val pElse = Pattern.compile(tags.elseTag)
+                    val mElse = pElse.matcher(row)
+                    if (elseStartPos < endIfStartPos && mElse.find()) {
+                        elseStartPos = row.indexOf(tags.elseTag)
+                        row = row.replaceFirst(mElse.group(0), "")
                         if (row.isEmpty()) {
                             rowsToBeIgnored.remove(index)
                         }
                         rows[index] = row
+                        endIfStartPos = row.indexOf(tags.endIf)
+                        val pEndIf = Pattern.compile(tags.endIf)
+                        val mEndIf = pEndIf.matcher(row)
+                        if (mEndIf.find()) {
+                            endIfDetected = true
+                            if (ifStates.contains(ifState)) {
+                                ifStates.remove(ifState)
+                                ifStatesOpened--
+                            }
+
+                            if (result) {
+                                row = row.replaceFirst(row.substring(elseStartPos, endIfStartPos), "")
+                            } else {
+                                row = row.replaceFirst(row.substring(ifStartPos, mElse.start()), "")
+                            }
+                            row = row.replaceFirst(mEndIf.group(0), "")
+                            if (row.isEmpty()) {
+                                rowsToBeIgnored.remove(index)
+                            }
+                            rows[index] = row
+                        }
+                    }
+
+                    if (!endIfDetected) {
+                        val pEndIf = Pattern.compile(tags.endIf)
+                        val mEndIf = pEndIf.matcher(row)
+                        if (mEndIf.find()) {
+                            if (ifStates.contains(ifState)) {
+                                ifStates.remove(ifState)
+                                ifStatesOpened--
+                            }
+
+                            val endIfStart = mEndIf.start()
+                            if (!result) {
+                                row = row.replaceFirst(row.substring(0, endIfStart), "")
+                            }
+                            row = row.replaceFirst(mEndIf.group(0), "")
+                            if (row.isEmpty()) {
+                                rowsToBeIgnored.remove(index)
+                            }
+                            rows[index] = row
+                        } else if (elseStartPos >= 0) {
+                            throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
+                        }
                     }
                 }
 
-                if (!endIfDetected) {
-                    val pEndIf = Pattern.compile(tags.endIf)
-                    val mEndIf = pEndIf.matcher(row)
-                    if (mEndIf.find()) {
-                        if (ifStates.contains(ifState)) {
-                            ifStates.remove(ifState)
-                            ifStatesOpened--
-                        }
-
-                        val endIfStart = mEndIf.start()
-                        if (!result) {
-                            row = row.replaceFirst(row.substring(0, endIfStart), "")
-                        }
-                        row = row.replaceFirst(mEndIf.group(0), "")
-                        if (row.isEmpty()) {
-                            rowsToBeIgnored.remove(index)
-                        }
-                        rows[index] = row
-                    } else if (elseStartPos >= 0) {
-                        throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
+                // Parse <else> tags
+                val pElse = Pattern.compile(tags.elseTag)
+                val mElse = pElse.matcher(row)
+                while (mElse.find()) {
+                    row = row.replaceFirst(mElse.group(0), "")
+                    if (row.trim().isEmpty()) {
+                        rowsToBeIgnored.add(index)
+                    } else {
+                        throw IllegalStateException(Messages.ELSE_VERTICAL_INVALID(template))
+                    }
+                    rows[index] = row
+                    var ifState: IfState? = null
+                    if (!ifStates.isEmpty() && ifStatesOpened > 0) {
+                        ifState = ifStates[ifStates.size - ifStatesOpened]
+                    }
+                    if (ifState != null) {
+                        val elseState = ElseState(index, -1)
+                        elseStates.add(elseState)
+                        elseStatesOpened++
                     }
                 }
-            }
 
-            // Parse <else> tags
-            val pElse = Pattern.compile(tags.elseTag)
-            val mElse = pElse.matcher(row)
-            while (mElse.find()) {
-                row = row.replaceFirst(mElse.group(0), "")
-                if (row.trim().isEmpty()) {
-                    rowsToBeIgnored.add(index)
-                } else {
-                    throw IllegalStateException(Messages.ELSE_VERTICAL_INVALID(template))
-                }
-                rows[index] = row
-                var ifState: IfState? = null
-                if (!ifStates.isEmpty() && ifStatesOpened > 0) {
-                    ifState = ifStates[ifStates.size - ifStatesOpened]
-                }
-                if (ifState != null) {
-                    val elseState = ElseState(index, -1)
-                    elseStates.add(elseState)
-                    elseStatesOpened++
-                }
-            }
+                // Parse <endif/> tag
+                val pEndIf = Pattern.compile(tags.endIf)
+                val mEndIf = pEndIf.matcher(row)
+                while (mEndIf.find()) {
+                    if (ifStatesOpened == 0) {
+                        throw IllegalStateException(Messages.IF_NOT_OPENED(template))
+                    }
 
-            // Parse <endif/> tag
-            val pEndIf = Pattern.compile(tags.endIf)
-            val mEndIf = pEndIf.matcher(row)
-            while (mEndIf.find()) {
-                if (ifStatesOpened == 0) {
-                    throw IllegalStateException(Messages.IF_NOT_OPENED(template))
-                }
-
-                row = row.replaceFirst(mEndIf.group(0), "")
-                if (row.isEmpty()) {
-                    rowsToBeIgnored.add(index)
-                }
-                rows[index] = row
-                var ifState: IfState? = null
-                if (!ifStates.isEmpty() && ifStatesOpened > 0) {
-                    ifState = ifStates[ifStates.size - ifStatesOpened]
-                }
-                if (ifState != null) {
-                    ifState.to = index
-                    ifStatesOpened--
-                }
-                if (!elseStates.isEmpty() && elseStatesOpened > 0) {
-                    val elseState = elseStates[elseStates.size - elseStatesOpened]
-                    if (elseState != null) {
-                        elseState.to = index
-                        elseStatesOpened--
+                    row = row.replaceFirst(mEndIf.group(0), "")
+                    if (row.isEmpty()) {
+                        rowsToBeIgnored.add(index)
+                    }
+                    rows[index] = row
+                    var ifState: IfState? = null
+                    if (!ifStates.isEmpty() && ifStatesOpened > 0) {
+                        ifState = ifStates[ifStates.size - ifStatesOpened]
+                    }
+                    if (ifState != null) {
+                        ifState.to = index
+                        ifStatesOpened--
+                    }
+                    if (!elseStates.isEmpty() && elseStatesOpened > 0) {
+                        val elseState = elseStates[elseStates.size - elseStatesOpened]
+                        if (elseState != null) {
+                            elseState.to = index
+                            elseStatesOpened--
+                        }
                     }
                 }
-            }
 
-            // Parse <dc> tags
-            val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
-            val m = p.matcher(row)
-            val commands = mutableListOf<String>()
-            while (m.find()) {
-                val result = m.group().trim()
-                commands.add(result)
-            }
-            if (!commands.isEmpty()) {
-                decoratedRows[index] = commands
+                // Parse <dc> tags
+                val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
+                val m = p.matcher(row)
+                val commands = mutableListOf<String>()
+                while (m.find()) {
+                    val result = m.group().trim()
+                    commands.add(result)
+                }
+                if (!commands.isEmpty()) {
+                    decoratedRows[index] = commands
+                }
             }
         }
 
@@ -452,7 +453,8 @@ class Decorator : TemplateSystem {
 
 
                                 partParams.forEach {
-                                    prt -> logger.w("", "-> -> $prt")
+                                    prt ->
+                                    logger.w("", "-> -> $prt")
                                 }
 
                                 var partData: TemplateData? = null
@@ -468,7 +470,6 @@ class Decorator : TemplateSystem {
                                             partData = partData.content[param]
                                         }
                                         is Value -> {
-                                            logger.c("", ">>>> ${partData.content}")
                                             // Ignore
                                         }
                                         else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template))
@@ -489,9 +490,7 @@ class Decorator : TemplateSystem {
                                         row = row.replace("${tags.open}$part${tags.close}", "")
                                     }
                                 }
-                                logger.v("", ">>> $row")
                             }
-                            logger.d("", ">>> $row")
                             builder.append(row)
                         }
                         else -> {

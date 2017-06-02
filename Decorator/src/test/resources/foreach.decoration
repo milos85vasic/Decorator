@@ -6,7 +6,7 @@
 //            Worker:
 //            Index [ <dc><index></dc> ]
 //            First name: [ <if>   <item>.firstName</if><dc><item>.firstName</dc><else>- - -<endif/> ]
-            Last name: [ <if><item>.lastName  </if><dc><item>.lastName</dc><else>- - -<endif/> ]
+            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
 //            Status: [ <dc>something</dc> ]
 //            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
         </a>
