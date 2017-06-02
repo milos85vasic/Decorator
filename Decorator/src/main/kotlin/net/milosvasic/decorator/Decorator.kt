@@ -81,6 +81,18 @@ class Decorator : TemplateSystem {
             }
         }
 
+        val cleanRows = mutableListOf<String>()
+        rows.forEachIndexed{
+            index, row ->
+            if(!rowsToBeIgnored.contains(index)){
+                cleanRows.add(row)
+            }
+        }
+        rows.clear()
+        rows.addAll(cleanRows)
+        cleanRows.clear()
+        rowsToBeIgnored.clear()
+
         rows.forEachIndexed {
             index, line ->
             var row = line
