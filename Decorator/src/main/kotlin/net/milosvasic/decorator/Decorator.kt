@@ -449,6 +449,12 @@ class Decorator : TemplateSystem {
                                 val partParams = part
                                         .replace("${tags.itemTag}${memberSeparator.value}", "")
                                         .split(memberSeparator.value)
+
+
+                                partParams.forEach {
+                                    prt -> logger.w("", "-> -> $prt")
+                                }
+
                                 var partData: TemplateData? = null
                                 val partIt = partParams.iterator()
                                 if (partIt.hasNext()) {
