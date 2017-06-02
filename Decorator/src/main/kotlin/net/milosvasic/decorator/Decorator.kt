@@ -468,6 +468,7 @@ class Decorator : TemplateSystem {
                                             partData = partData.content[param]
                                         }
                                         is Value -> {
+                                            logger.c("", ">>>> ${partData.content}")
                                             // Ignore
                                         }
                                         else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template))
@@ -488,7 +489,9 @@ class Decorator : TemplateSystem {
                                         row = row.replace("${tags.open}$part${tags.close}", "")
                                     }
                                 }
+                                logger.v("", ">>> $row")
                             }
+                            logger.d("", ">>> $row")
                             builder.append(row)
                         }
                         else -> {
