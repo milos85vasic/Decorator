@@ -405,13 +405,9 @@ class Decorator : TemplateSystem {
                                     if (partsData != null) {
                                         if (partsData is Value) {
                                             if (partsData.content.isEmpty()) {
-                                                logger.w("", "-> $row")
                                                 row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
-                                                logger.c("", "-> $row")
                                             } else {
-                                                logger.w("", "-> $row")
                                                 row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.trueTag}${tags.ifClose}")
-                                                logger.c("", "-> $row")
                                             }
                                         } else {
                                             throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
@@ -420,18 +416,12 @@ class Decorator : TemplateSystem {
                                         try {
                                             val resolved = resolve(template, templateData, part)
                                             if (resolved.isEmpty()) {
-                                                logger.w("", "-> $row")
                                                 row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
-                                                logger.c("", "-> $row")
                                             } else {
-                                                logger.w("", "-> $row")
                                                 row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.trueTag}${tags.ifClose}")
-                                                logger.c("", "-> $row")
                                             }
                                         } catch (e: Exception) {
-                                            logger.w("", "-> $row")
                                             row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
-                                            logger.c("", "-> $row")
                                         }
                                     }
                                 }
@@ -442,7 +432,6 @@ class Decorator : TemplateSystem {
                             val parsedParts = mutableListOf<String>()
                             while (m.find()) {
                                 val result = m.group(1).trim()
-                                logger.i("", "-> $result")
                                 parsedParts.add(result)
                             }
                             parsedParts.forEach {
@@ -450,12 +439,6 @@ class Decorator : TemplateSystem {
                                 val partParams = part
                                         .replace("${tags.itemTag}${memberSeparator.value}", "")
                                         .split(memberSeparator.value)
-
-
-                                partParams.forEach {
-                                    prt ->
-                                    logger.w("", "-> -> $prt")
-                                }
 
                                 var partData: TemplateData? = null
                                 val partIt = partParams.iterator()
