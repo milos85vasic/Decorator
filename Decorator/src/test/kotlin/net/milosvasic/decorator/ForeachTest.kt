@@ -10,7 +10,6 @@ import org.junit.Test
 
 class ForeachTest {
 
-    private var end = 0L
     private val tag = ""
     private val logger = SimpleLogger()
 
@@ -68,13 +67,17 @@ class ForeachTest {
                 )
                 .build()
 
+        var html = ""
         val decorator = Decorator("foreach", data)
 
-        val start = System.currentTimeMillis()
-        val html = decorator.getContent()
-        end = System.currentTimeMillis() - start
-        logger.v("", html)
+        for (x in 0..10) { // Repeat a few times to see timings.
+            val start = System.currentTimeMillis()
+            html = decorator.getContent()
+            val end = System.currentTimeMillis() - start
+            logger.i(tag, "Template generated in $end ms.")
+        }
 
+        logger.v("", html)
         assertHtml(html)
     }
 
@@ -90,7 +93,7 @@ class ForeachTest {
 
     @After
     fun afterTest() {
-        logger.i(tag, "Template generated in $end ms.")
+        // TODO: TBD.
     }
 
 }

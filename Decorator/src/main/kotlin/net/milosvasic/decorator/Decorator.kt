@@ -27,6 +27,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     override val templateMainClass = DecoratorTemplateClass()
 
     private val tautology = Tautology()
+    private val keyCache = mutableMapOf<String, TemplateData?>()
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     override fun getContent(): String {
@@ -363,18 +364,25 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     }
 
     private fun getData(key: String): TemplateData? {
-        var tdata: TemplateData? = null
-        val it = key.trim().split(memberSeparator.value).iterator()
-        if (it.hasNext()) {
-            tdata = data.content[it.next()]
-        }
-        while (tdata != null && it.hasNext()) {
-            when (tdata) {
-                is Data -> {
-                    val param = it.next()
-                    tdata = tdata.content[param]
+        var tdata = keyCache[key]
+        if (tdata == null) {
+            val it = key.trim().split(memberSeparator.value).iterator()
+            if (it.hasNext()) {
+                tdata = data.content[it.next()]
+            }
+            while (tdata != null && it.hasNext()) {
+                when (tdata) {
+                    is Data -> {
+                        val param = it.next()
+                        tdata = tdata.content[param]
+                    }
                 }
             }
+            if (tdata != null) {
+                keyCache[key] = tdata
+            }
+        } else {
+            logger.i("", "Got data from the cache [ $key ]")
         }
         return tdata
     }
