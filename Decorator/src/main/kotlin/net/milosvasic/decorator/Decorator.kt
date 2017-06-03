@@ -45,6 +45,8 @@ class Decorator : TemplateSystem {
         val foreachTemplates = mutableMapOf<Int, String>()
         val decoratedRows = mutableMapOf<Int, List<String>>()
 
+        // TODO: Refactor so performance are gained.
+
         rows.forEachIndexed {
             index, line ->
             var row = line
