@@ -1,4 +1,9 @@
-<ul>
+/*
+try me
+*/
+<ul> /* ??? */ ok
+/* ok2
+  */
 <foreach>workers</foreach>
     <if>something</if>
     <li>

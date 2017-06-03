@@ -31,319 +31,323 @@ class Decorator : TemplateSystem {
 
     override fun decorate(template: String, data: Data): String {
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
-        val rendered = StringBuilder()
+//        val rendered = StringBuilder()
+
         val content = templateFile.readText()
-        val rows = mutableListOf<String>()
-        rows.addAll(content.split("\n"))
-        var ifStatesOpened = 0
-        val ifStates = mutableListOf<IfState?>()
-        var elseStatesOpened = 0
-        val elseStates = mutableListOf<ElseState?>()
-        var foreachState: ForeachState? = null
-        val foreachStates = mutableListOf<ForeachState?>()
-        val rowsToBeIgnored = mutableListOf<Int>()
-        val foreachTemplates = mutableMapOf<Int, String>()
-        val decoratedRows = mutableMapOf<Int, List<String>>()
+                .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "")
+
+//        val rows = mutableListOf<String>()
+//        rows.addAll(content.split("\n"))
+//        var ifStatesOpened = 0
+//        val ifStates = mutableListOf<IfState?>()
+//        var elseStatesOpened = 0
+//        val elseStates = mutableListOf<ElseState?>()
+//        var foreachState: ForeachState? = null
+//        val foreachStates = mutableListOf<ForeachState?>()
+//        val rowsToBeIgnored = mutableListOf<Int>()
+//        val foreachTemplates = mutableMapOf<Int, String>()
+//        val decoratedRows = mutableMapOf<Int, List<String>>()
 
         // TODO: Refactor so performance are gained.
 
-        rows.forEachIndexed {
-            index, line ->
-            var row = line
+//        rows.forEachIndexed {
+//            index, line ->
+//            var row = line
+//
+//            // Trim comments that are not at the line start
+//            val lineCommentIndex = row.indexOf(tags.lineComment)
+//            if (!row.startsWith(tags.lineComment) && lineCommentIndex > 0) {
+//                row = row.substring(0, lineCommentIndex)
+//            }
+//            rows[index] = row
+//
+//            // Trim comments that are at line start:
+//            if (row.startsWith(tags.lineComment)) {
+//                row = ""
+//                rows[index] = row
+//                rowsToBeIgnored.add(index)
+//            }
+//
+//            // Trim tab placeholder
+//            row = row.replace(tags.tabPlaceholder, "")
+//            rows[index] = row
+//
+//            // Parse <include> tags
+//            val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
+//            val mInclude = pInclude.matcher(line)
+//            while (mInclude.find()) {
+//                val include = mInclude.group(1).trim()
+//                var element = decorate(include, data)
+//                if (element.endsWith("\n")) {
+//                    element = element.substring(0, element.lastIndex)
+//                }
+//                row = row.replace(mInclude.group(0), element)
+//                rows[index] = row
+//            }
+//        }
+//
+//        val cleanRows = mutableListOf<String>()
+//        rows.forEachIndexed{
+//            index, row ->
+//            if(!rowsToBeIgnored.contains(index)){
+//                cleanRows.add(row)
+//            }
+//        }
+//        rows.clear()
+//        rows.addAll(cleanRows)
+//        cleanRows.clear()
+//        rowsToBeIgnored.clear()
+//
+//        rows.forEachIndexed {
+//            index, line ->
+//            var row = line
+//            // Parse <foreach>
+//            val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
+//            val mFor = pFor.matcher(line)
+//            while (mFor.find()) {
+//                val forCondition = mFor.group(1).trim()
+//                row = row.replace(mFor.group(0), "")
+//                rows[index] = row
+//                if (!row.isEmpty()) {
+//                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template))
+//                }
+//                if (foreachState != null) {
+//                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template))
+//                } else {
+//                    foreachState = ForeachState(index, -1, forCondition)
+//                }
+//            }
+//
+//            // Parse <endfor/>
+//            val pEndfor = Pattern.compile(tags.endFor)
+//            val mEndfor = pEndfor.matcher(line)
+//            while (mEndfor.find()) {
+//                row = row.replace(mEndfor.group(0), "")
+//                if (row.isEmpty()) {
+//                    rowsToBeIgnored.add(index)
+//                }
+//                rows[index] = row
+//                if (foreachState == null) {
+//                    throw IllegalStateException(Messages.FOR_NOT_OPENED(template))
+//                } else {
+//                    foreachState?.to = index
+//                    foreachStates.add(foreachState)
+//                    foreachState = null
+//                }
+//            }
+//
+//            var foreachStateInProgress = false
+//            val currentState = foreachState
+//            currentState?.let {
+//                foreachStateInProgress = index > currentState.from
+//            }
+//            if (foreachStateInProgress) {
+//                foreachTemplates[index] = line
+//                rowsToBeIgnored.add(index)
+//            }
+//        }
+//
+//        rows.forEachIndexed {
+//            index, line ->
+//            var row = line
+//            val state = getForeachState(foreachStates, index)
+//            state?.let {
+//                if (state.from == index) {
+//                    val templateRows = mutableListOf<String>()
+//                    for (x in state.from..state.to) {
+//                        foreachTemplates[x]?.let {
+//                            item ->
+//                            templateRows.add(item)
+//                        }
+//                    }
+//                    row = resolveForeach(template, templateRows, data, state.value)
+//                }
+//            }
+//            rows[index] = row
+//        }
+//
+//        rows.forEachIndexed {
+//            index, line ->
+//            if (!rowsToBeIgnored.contains(index)) {
+//                var row = line
+//                if (row.indexOf(tags.ifOpen) >= 0 && row.indexOf(tags.ifClose) < 0) {
+//                    throw IllegalStateException(Messages.IF_CONDITION_NOT_CLOSED(template))
+//                }
+//
+//                if (row.indexOf(tags.ifClose) >= 0 && row.indexOf(tags.ifOpen) < 0) {
+//                    throw IllegalStateException(Messages.IF_CONDITION_NOT_OPENED(template))
+//                }
+//
+//                // Parse <if> tags
+//                var endIfDetected: Boolean
+//                val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
+//                val mIf = pIf.matcher(row)
+//                while (mIf.find()) {
+//                    endIfDetected = false
+//                    val ifStartPos = row.indexOf(tags.ifOpen)
+//                    var elseStartPos = row.indexOf(tags.elseTag)
+//                    var endIfStartPos = row.indexOf(tags.endIf)
+//
+//                    val ifCondition = mIf.group(1).trim()
+//                    val result = resolveIf(template, data, ifCondition)
+//                    row = row.replaceFirst(mIf.group(0), "")
+//                    if (row.isEmpty()) {
+//                        rowsToBeIgnored.add(index)
+//                    }
+//                    rows[index] = row
+//                    val ifState = IfState(index, -1, result)
+//                    ifStates.add(ifState)
+//                    ifStatesOpened++
+//
+//                    val pElse = Pattern.compile(tags.elseTag)
+//                    val mElse = pElse.matcher(row)
+//                    if (elseStartPos < endIfStartPos && mElse.find()) {
+//                        elseStartPos = row.indexOf(tags.elseTag)
+//                        row = row.replaceFirst(mElse.group(0), "")
+//                        if (row.isEmpty()) {
+//                            rowsToBeIgnored.remove(index)
+//                        }
+//                        rows[index] = row
+//                        endIfStartPos = row.indexOf(tags.endIf)
+//                        val pEndIf = Pattern.compile(tags.endIf)
+//                        val mEndIf = pEndIf.matcher(row)
+//                        if (mEndIf.find()) {
+//                            endIfDetected = true
+//                            if (ifStates.contains(ifState)) {
+//                                ifStates.remove(ifState)
+//                                ifStatesOpened--
+//                            }
+//
+//                            if (result) {
+//                                row = row.replaceFirst(row.substring(elseStartPos, endIfStartPos), "")
+//                            } else {
+//                                row = row.replaceFirst(row.substring(ifStartPos, mElse.start()), "")
+//                            }
+//                            row = row.replaceFirst(mEndIf.group(0), "")
+//                            if (row.isEmpty()) {
+//                                rowsToBeIgnored.remove(index)
+//                            }
+//                            rows[index] = row
+//                        }
+//                    }
+//
+//                    if (!endIfDetected) {
+//                        val pEndIf = Pattern.compile(tags.endIf)
+//                        val mEndIf = pEndIf.matcher(row)
+//                        if (mEndIf.find()) {
+//                            if (ifStates.contains(ifState)) {
+//                                ifStates.remove(ifState)
+//                                ifStatesOpened--
+//                            }
+//
+//                            val endIfStart = mEndIf.start()
+//                            if (!result) {
+//                                row = row.replaceFirst(row.substring(0, endIfStart), "")
+//                            }
+//                            row = row.replaceFirst(mEndIf.group(0), "")
+//                            if (row.isEmpty()) {
+//                                rowsToBeIgnored.remove(index)
+//                            }
+//                            rows[index] = row
+//                        } else if (elseStartPos >= 0) {
+//                            throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
+//                        }
+//                    }
+//                }
+//
+//                // Parse <else> tags
+//                val pElse = Pattern.compile(tags.elseTag)
+//                val mElse = pElse.matcher(row)
+//                while (mElse.find()) {
+//                    row = row.replaceFirst(mElse.group(0), "")
+//                    if (row.trim().isEmpty()) {
+//                        rowsToBeIgnored.add(index)
+//                    } else {
+//                        throw IllegalStateException(Messages.ELSE_VERTICAL_INVALID(template))
+//                    }
+//                    rows[index] = row
+//                    var ifState: IfState? = null
+//                    if (!ifStates.isEmpty() && ifStatesOpened > 0) {
+//                        ifState = ifStates[ifStates.size - ifStatesOpened]
+//                    }
+//                    if (ifState != null) {
+//                        val elseState = ElseState(index, -1)
+//                        elseStates.add(elseState)
+//                        elseStatesOpened++
+//                    }
+//                }
+//
+//                // Parse <endif/> tag
+//                val pEndIf = Pattern.compile(tags.endIf)
+//                val mEndIf = pEndIf.matcher(row)
+//                while (mEndIf.find()) {
+//                    if (ifStatesOpened == 0) {
+//                        throw IllegalStateException(Messages.IF_NOT_OPENED(template))
+//                    }
+//
+//                    row = row.replaceFirst(mEndIf.group(0), "")
+//                    if (row.isEmpty()) {
+//                        rowsToBeIgnored.add(index)
+//                    }
+//                    rows[index] = row
+//                    var ifState: IfState? = null
+//                    if (!ifStates.isEmpty() && ifStatesOpened > 0) {
+//                        ifState = ifStates[ifStates.size - ifStatesOpened]
+//                    }
+//                    if (ifState != null) {
+//                        ifState.to = index
+//                        ifStatesOpened--
+//                    }
+//                    if (!elseStates.isEmpty() && elseStatesOpened > 0) {
+//                        val elseState = elseStates[elseStates.size - elseStatesOpened]
+//                        if (elseState != null) {
+//                            elseState.to = index
+//                            elseStatesOpened--
+//                        }
+//                    }
+//                }
+//
+//                // Parse <dc> tags
+//                val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
+//                val m = p.matcher(row)
+//                val commands = mutableListOf<String>()
+//                while (m.find()) {
+//                    val result = m.group().trim()
+//                    commands.add(result)
+//                }
+//                if (!commands.isEmpty()) {
+//                    decoratedRows[index] = commands
+//                }
+//            }
+//        }
+//
+//        rows.forEachIndexed {
+//            index, line ->
+//            val isLineValid: Boolean
+//            val satisfiesElse = satisfiesElse(elseStates, index, template)
+//            if (!satisfiesIf(ifStates, index, template)) {
+//                isLineValid = satisfiesElse
+//            } else {
+//                isLineValid = !satisfiesElse
+//            }
+//            if (!rowsToBeIgnored.contains(index) && isLineValid) {
+//                var renderedLine = line
+//                if (decoratedRows.containsKey(index)) {
+//                    decoratedRows[index]?.forEach {
+//                        row ->
+//                        val decoration = row
+//                                .replace(tags.open, "")
+//                                .replace(tags.close, "")
+//                                .trim()
+//                        val result = resolve(template, data, decoration)
+//                        renderedLine = renderedLine.replace(row, result)
+//                    }
+//                }
+//                rendered.append("$renderedLine\n")
+//            }
+//        }
 
-            // Trim comments that are not at the line start
-            val lineCommentIndex = row.indexOf(tags.lineComment)
-            if (!row.startsWith(tags.lineComment) && lineCommentIndex > 0) {
-                row = row.substring(0, lineCommentIndex)
-            }
-            rows[index] = row
-
-            // Trim comments that are at line start:
-            if (row.startsWith(tags.lineComment)) {
-                row = ""
-                rows[index] = row
-                rowsToBeIgnored.add(index)
-            }
-
-            // Trim tab placeholder
-            row = row.replace(tags.tabPlaceholder, "")
-            rows[index] = row
-
-            // Parse <include> tags
-            val pInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
-            val mInclude = pInclude.matcher(line)
-            while (mInclude.find()) {
-                val include = mInclude.group(1).trim()
-                var element = decorate(include, data)
-                if (element.endsWith("\n")) {
-                    element = element.substring(0, element.lastIndex)
-                }
-                row = row.replace(mInclude.group(0), element)
-                rows[index] = row
-            }
-        }
-
-        val cleanRows = mutableListOf<String>()
-        rows.forEachIndexed{
-            index, row ->
-            if(!rowsToBeIgnored.contains(index)){
-                cleanRows.add(row)
-            }
-        }
-        rows.clear()
-        rows.addAll(cleanRows)
-        cleanRows.clear()
-        rowsToBeIgnored.clear()
-
-        rows.forEachIndexed {
-            index, line ->
-            var row = line
-            // Parse <foreach>
-            val pFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}")
-            val mFor = pFor.matcher(line)
-            while (mFor.find()) {
-                val forCondition = mFor.group(1).trim()
-                row = row.replace(mFor.group(0), "")
-                rows[index] = row
-                if (!row.isEmpty()) {
-                    throw IllegalStateException(Messages.CONTENT_AFTER_FOR_OPENING(template))
-                }
-                if (foreachState != null) {
-                    throw IllegalStateException(Messages.FOR_NOT_CLOSED(template))
-                } else {
-                    foreachState = ForeachState(index, -1, forCondition)
-                }
-            }
-
-            // Parse <endfor/>
-            val pEndfor = Pattern.compile(tags.endFor)
-            val mEndfor = pEndfor.matcher(line)
-            while (mEndfor.find()) {
-                row = row.replace(mEndfor.group(0), "")
-                if (row.isEmpty()) {
-                    rowsToBeIgnored.add(index)
-                }
-                rows[index] = row
-                if (foreachState == null) {
-                    throw IllegalStateException(Messages.FOR_NOT_OPENED(template))
-                } else {
-                    foreachState?.to = index
-                    foreachStates.add(foreachState)
-                    foreachState = null
-                }
-            }
-
-            var foreachStateInProgress = false
-            val currentState = foreachState
-            currentState?.let {
-                foreachStateInProgress = index > currentState.from
-            }
-            if (foreachStateInProgress) {
-                foreachTemplates[index] = line
-                rowsToBeIgnored.add(index)
-            }
-        }
-
-        rows.forEachIndexed {
-            index, line ->
-            var row = line
-            val state = getForeachState(foreachStates, index)
-            state?.let {
-                if (state.from == index) {
-                    val templateRows = mutableListOf<String>()
-                    for (x in state.from..state.to) {
-                        foreachTemplates[x]?.let {
-                            item ->
-                            templateRows.add(item)
-                        }
-                    }
-                    row = resolveForeach(template, templateRows, data, state.value)
-                }
-            }
-            rows[index] = row
-        }
-
-        rows.forEachIndexed {
-            index, line ->
-            if (!rowsToBeIgnored.contains(index)) {
-                var row = line
-                if (row.indexOf(tags.ifOpen) >= 0 && row.indexOf(tags.ifClose) < 0) {
-                    throw IllegalStateException(Messages.IF_CONDITION_NOT_CLOSED(template))
-                }
-
-                if (row.indexOf(tags.ifClose) >= 0 && row.indexOf(tags.ifOpen) < 0) {
-                    throw IllegalStateException(Messages.IF_CONDITION_NOT_OPENED(template))
-                }
-
-                // Parse <if> tags
-                var endIfDetected: Boolean
-                val pIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}")
-                val mIf = pIf.matcher(row)
-                while (mIf.find()) {
-                    endIfDetected = false
-                    val ifStartPos = row.indexOf(tags.ifOpen)
-                    var elseStartPos = row.indexOf(tags.elseTag)
-                    var endIfStartPos = row.indexOf(tags.endIf)
-
-                    val ifCondition = mIf.group(1).trim()
-                    val result = resolveIf(template, data, ifCondition)
-                    row = row.replaceFirst(mIf.group(0), "")
-                    if (row.isEmpty()) {
-                        rowsToBeIgnored.add(index)
-                    }
-                    rows[index] = row
-                    val ifState = IfState(index, -1, result)
-                    ifStates.add(ifState)
-                    ifStatesOpened++
-
-                    val pElse = Pattern.compile(tags.elseTag)
-                    val mElse = pElse.matcher(row)
-                    if (elseStartPos < endIfStartPos && mElse.find()) {
-                        elseStartPos = row.indexOf(tags.elseTag)
-                        row = row.replaceFirst(mElse.group(0), "")
-                        if (row.isEmpty()) {
-                            rowsToBeIgnored.remove(index)
-                        }
-                        rows[index] = row
-                        endIfStartPos = row.indexOf(tags.endIf)
-                        val pEndIf = Pattern.compile(tags.endIf)
-                        val mEndIf = pEndIf.matcher(row)
-                        if (mEndIf.find()) {
-                            endIfDetected = true
-                            if (ifStates.contains(ifState)) {
-                                ifStates.remove(ifState)
-                                ifStatesOpened--
-                            }
-
-                            if (result) {
-                                row = row.replaceFirst(row.substring(elseStartPos, endIfStartPos), "")
-                            } else {
-                                row = row.replaceFirst(row.substring(ifStartPos, mElse.start()), "")
-                            }
-                            row = row.replaceFirst(mEndIf.group(0), "")
-                            if (row.isEmpty()) {
-                                rowsToBeIgnored.remove(index)
-                            }
-                            rows[index] = row
-                        }
-                    }
-
-                    if (!endIfDetected) {
-                        val pEndIf = Pattern.compile(tags.endIf)
-                        val mEndIf = pEndIf.matcher(row)
-                        if (mEndIf.find()) {
-                            if (ifStates.contains(ifState)) {
-                                ifStates.remove(ifState)
-                                ifStatesOpened--
-                            }
-
-                            val endIfStart = mEndIf.start()
-                            if (!result) {
-                                row = row.replaceFirst(row.substring(0, endIfStart), "")
-                            }
-                            row = row.replaceFirst(mEndIf.group(0), "")
-                            if (row.isEmpty()) {
-                                rowsToBeIgnored.remove(index)
-                            }
-                            rows[index] = row
-                        } else if (elseStartPos >= 0) {
-                            throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
-                        }
-                    }
-                }
-
-                // Parse <else> tags
-                val pElse = Pattern.compile(tags.elseTag)
-                val mElse = pElse.matcher(row)
-                while (mElse.find()) {
-                    row = row.replaceFirst(mElse.group(0), "")
-                    if (row.trim().isEmpty()) {
-                        rowsToBeIgnored.add(index)
-                    } else {
-                        throw IllegalStateException(Messages.ELSE_VERTICAL_INVALID(template))
-                    }
-                    rows[index] = row
-                    var ifState: IfState? = null
-                    if (!ifStates.isEmpty() && ifStatesOpened > 0) {
-                        ifState = ifStates[ifStates.size - ifStatesOpened]
-                    }
-                    if (ifState != null) {
-                        val elseState = ElseState(index, -1)
-                        elseStates.add(elseState)
-                        elseStatesOpened++
-                    }
-                }
-
-                // Parse <endif/> tag
-                val pEndIf = Pattern.compile(tags.endIf)
-                val mEndIf = pEndIf.matcher(row)
-                while (mEndIf.find()) {
-                    if (ifStatesOpened == 0) {
-                        throw IllegalStateException(Messages.IF_NOT_OPENED(template))
-                    }
-
-                    row = row.replaceFirst(mEndIf.group(0), "")
-                    if (row.isEmpty()) {
-                        rowsToBeIgnored.add(index)
-                    }
-                    rows[index] = row
-                    var ifState: IfState? = null
-                    if (!ifStates.isEmpty() && ifStatesOpened > 0) {
-                        ifState = ifStates[ifStates.size - ifStatesOpened]
-                    }
-                    if (ifState != null) {
-                        ifState.to = index
-                        ifStatesOpened--
-                    }
-                    if (!elseStates.isEmpty() && elseStatesOpened > 0) {
-                        val elseState = elseStates[elseStates.size - elseStatesOpened]
-                        if (elseState != null) {
-                            elseState.to = index
-                            elseStatesOpened--
-                        }
-                    }
-                }
-
-                // Parse <dc> tags
-                val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
-                val m = p.matcher(row)
-                val commands = mutableListOf<String>()
-                while (m.find()) {
-                    val result = m.group().trim()
-                    commands.add(result)
-                }
-                if (!commands.isEmpty()) {
-                    decoratedRows[index] = commands
-                }
-            }
-        }
-
-        rows.forEachIndexed {
-            index, line ->
-            val isLineValid: Boolean
-            val satisfiesElse = satisfiesElse(elseStates, index, template)
-            if (!satisfiesIf(ifStates, index, template)) {
-                isLineValid = satisfiesElse
-            } else {
-                isLineValid = !satisfiesElse
-            }
-            if (!rowsToBeIgnored.contains(index) && isLineValid) {
-                var renderedLine = line
-                if (decoratedRows.containsKey(index)) {
-                    decoratedRows[index]?.forEach {
-                        row ->
-                        val decoration = row
-                                .replace(tags.open, "")
-                                .replace(tags.close, "")
-                                .trim()
-                        val result = resolve(template, data, decoration)
-                        renderedLine = renderedLine.replace(row, result)
-                    }
-                }
-                rendered.append("$renderedLine\n")
-            }
-        }
-        return rendered.toString()
+        return content
     }
 
     private fun resolveForeach(
