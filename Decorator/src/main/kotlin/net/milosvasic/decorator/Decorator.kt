@@ -34,7 +34,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
 //        val rendered = StringBuilder()
 
-        val content = templateFile.readText()
+        var content = templateFile.readText()
                 .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "") // Clean up multiline comments
                 .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments
                 .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
@@ -43,10 +43,16 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
         val matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
-            val ctx = matcherFor.group(1).trim()
+            val g1 = matcherFor.group(1)
+            val g2 = matcherFor.group(2)
+            val ctx = g1.trim()
             val data = getData(ctx)
-            logger.c("", "Context: $ctx")
-            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
+            if (data is Collection) {
+                content = content.replace(g2, g2.repeat(data.items.count()))
+            } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
+
+//            logger.c("", "Context: $ctx")
+//            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
         }
 
 //        val rows = mutableListOf<String>()

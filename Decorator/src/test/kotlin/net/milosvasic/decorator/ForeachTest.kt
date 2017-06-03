@@ -23,7 +23,8 @@ class ForeachTest {
                         DataBuilder()
                                 .append("header", "Main header")
                                 .append("body", "Body paragraph ...")
-                                .append("stuff", listOf("Xxx", "Yyy", "Zzz"))
+                                .append("stuff", listOf("Xxx", "Yyy", "Zzz", "111", "222"))
+                                .append("no_stuff", listOf<String>())
                 )
                 .append(
                         "workers",
