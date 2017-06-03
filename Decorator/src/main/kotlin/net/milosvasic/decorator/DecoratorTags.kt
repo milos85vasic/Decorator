@@ -17,6 +17,7 @@ class DecoratorTags : Tags(), IterationItem {
     override val foreachClose = "</foreach>"
     override val endFor = "<endfor/>"
     override val lineComment = "//"
+    override val newLine = "<n/>"
     override val itemTag: String = "<item>"
     override val indexTag: String = "<index>"
     override val trueTag: String = "<true>"

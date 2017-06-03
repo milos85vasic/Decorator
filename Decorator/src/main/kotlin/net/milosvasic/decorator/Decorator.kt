@@ -37,6 +37,14 @@ class Decorator : TemplateSystem {
                 .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "") // Clean up multiline comments
                 .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments
                 .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
+                .replace("\n", tags.newLine)
+
+        val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
+        val matcherFor = patternFor.matcher(content)
+        while (matcherFor.find()) {
+            logger.i("", "-> ${matcherFor.group(1).replace(tags.newLine, "\n")}")
+            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
+        }
 
 //        val rows = mutableListOf<String>()
 //        rows.addAll(content.split("\n"))
@@ -349,7 +357,7 @@ class Decorator : TemplateSystem {
 //            }
 //        }
 
-        return content
+        return content.replace(tags.newLine, "\n")
     }
 
     private fun resolveForeach(
