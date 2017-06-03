@@ -17,7 +17,6 @@ class ForeachTest {
     @Test
     fun testForeach() {
         val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
-        val decorator = Decorator()
         val data = DataBuilder()
                 .append("something", "nice!")
                 .append(
@@ -69,8 +68,10 @@ class ForeachTest {
                 )
                 .build()
 
+        val decorator = Decorator("foreach", data)
+
         val start = System.currentTimeMillis()
-        val html = decorator.decorate("foreach", data)
+        val html = decorator.getContent()
         end = System.currentTimeMillis() - start
         logger.v("", html)
 

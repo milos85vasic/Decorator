@@ -17,7 +17,6 @@ class DecoratorTest {
     @Test
     fun testDecorator() {
         val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
-        val decorator = Decorator()
         val data = DataBuilder()
                 .append("doesNotExist", "")
                 .append("doesExist", "exist!")
@@ -51,8 +50,10 @@ class DecoratorTest {
                 )
                 .build()
 
+        val decorator = Decorator("sample", data)
+
         val start = System.currentTimeMillis()
-        val html = decorator.decorate("sample", data)
+        val html = decorator.getContent()
         end = System.currentTimeMillis() - start
         logger.v("", html)
 

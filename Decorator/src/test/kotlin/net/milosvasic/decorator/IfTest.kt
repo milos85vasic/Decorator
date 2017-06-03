@@ -16,7 +16,6 @@ class IfTest {
     @Test
     fun testForeach() {
         val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
-        val decorator = Decorator()
         val data = DataBuilder()
                 .append("exist", "exist")
                 .append("does_not_exist", "")
@@ -25,7 +24,8 @@ class IfTest {
                 .build()
 
         val start = System.currentTimeMillis()
-        val html = decorator.decorate("if", data)
+        val decorator = Decorator("if", data)
+        val html = decorator.getContent()
         end = System.currentTimeMillis() - start
         logger.v("", html)
 

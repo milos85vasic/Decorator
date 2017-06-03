@@ -9,7 +9,7 @@ import net.milosvasic.decorator.data.state.ElseState
 import net.milosvasic.decorator.data.state.ForeachState
 import net.milosvasic.decorator.data.state.IfState
 import net.milosvasic.decorator.separator.Separator
-import net.milosvasic.decorator.template.TemplateSystem
+import net.milosvasic.decorator.template.Template
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
 import net.milosvasic.tautology.Tautology
@@ -19,7 +19,7 @@ import net.milosvasic.tautology.parser.TautologyParserDelegate
 import java.lang.IllegalStateException
 import java.util.regex.Pattern
 
-class Decorator : TemplateSystem {
+class Decorator(template: String, data: Data) : Template(template, data) {
 
     override val tags = DecoratorTags()
     override val templateExtension = "decoration"
@@ -29,7 +29,7 @@ class Decorator : TemplateSystem {
     private val tautology = Tautology()
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
-    override fun decorate(template: String, data: Data): String {
+    override fun getContent(): String {
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
 //        val rendered = StringBuilder()
 
@@ -43,7 +43,7 @@ class Decorator : TemplateSystem {
         val matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
             val ctx = matcherFor.group(1).trim()
-            val data = getData(ctx, template, data)
+            val data = getData(ctx)
             logger.c("", "Context: $ctx")
             logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
         }
@@ -362,7 +362,7 @@ class Decorator : TemplateSystem {
         return content.replace(tags.newLine, "\n")
     }
 
-    private fun getData(key: String, template: String, data: Data): TemplateData? {
+    private fun getData(key: String): TemplateData? {
         var tdata: TemplateData? = null
         val it = key.trim().split(memberSeparator.value).iterator()
         if (it.hasNext()) {
