@@ -48,7 +48,13 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val ctx = g1.trim()
             val data = getData(ctx)
             if (data is Collection) {
-                content = content.replace(g2, g2.repeat(data.items.count()))
+                val count = data.items.count()
+                if (count > 0) {
+                    content = content.replaceFirst(g2, g2.repeat(count + 1))
+                } else {
+                    logger.c("", "count: $count ${content.indexOf(g2)} \n $g2")
+                    content = content.replaceFirst(g2, "- - - - - - - - - -")
+                }
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
 
 //            logger.c("", "Context: $ctx")
@@ -387,8 +393,6 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (tdata != null) {
                 keyCache[key] = tdata
             }
-        } else {
-            logger.i("", "Got data from the cache [ $key ]")
         }
         return tdata
     }
