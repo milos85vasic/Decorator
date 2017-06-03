@@ -34,7 +34,9 @@ class Decorator : TemplateSystem {
 //        val rendered = StringBuilder()
 
         val content = templateFile.readText()
-                .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "")
+                .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "") // Clean up multiline comments
+                .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments
+                .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
 
 //        val rows = mutableListOf<String>()
 //        rows.addAll(content.split("\n"))
