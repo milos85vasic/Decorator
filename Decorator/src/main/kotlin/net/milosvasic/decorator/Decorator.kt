@@ -42,7 +42,9 @@ class Decorator : TemplateSystem {
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
         val matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
-            logger.i("", "-> ${matcherFor.group(1).replace(tags.newLine, "\n")}")
+            val ctx = matcherFor.group(1).trim()
+            val data = getData(ctx, template, data)
+            logger.c("", "Context: $ctx")
             logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
         }
 
@@ -358,6 +360,23 @@ class Decorator : TemplateSystem {
 //        }
 
         return content.replace(tags.newLine, "\n")
+    }
+
+    private fun getData(key: String, template: String, data: Data): TemplateData? {
+        var tdata: TemplateData? = null
+        val it = key.trim().split(memberSeparator.value).iterator()
+        if (it.hasNext()) {
+            tdata = data.content[it.next()]
+        }
+        while (tdata != null && it.hasNext()) {
+            when (tdata) {
+                is Data -> {
+                    val param = it.next()
+                    tdata = tdata.content[param]
+                }
+            }
+        }
+        return tdata
     }
 
     private fun resolveForeach(
