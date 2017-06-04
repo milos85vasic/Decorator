@@ -48,26 +48,26 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val data = getData(ctx)
             if (data is Collection) {
                 val count = data.items.count()
-                logger.e("", "-> $g1")
-                logger.w("", "-> $g2")
-                logger.c("", "-> ${matcherFor.start()} ${matcherFor.end()} ${content.indexOf(g2)}")
-                logger.d("", "-> ${content.substring(matcherFor.start(), matcherFor.end()).replace(tags.newLine, "\n").replace(Regex("(?m)^[ \t]*\r?\n"), "")}")
-                content = content.replaceFirst(g2, g2.repeat(count))
+                val replace = content.substring(matcherFor.start(), matcherFor.end())
+                var index = content.indexOf(replace)
+                while (index >= 0) {
+                    if (index >= matcherFor.start() && index <= matcherFor.end()) {
+                        break
+                    } else {
+                        index = content.indexOf(content, index + 1)
+                    }
+                }
+                content = StringBuilder(content.substring(0, index))
+                        .append(g2.repeat(count))
+                        .append(content.substring(index + replace.length, content.length))
+                        .toString()
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
             content = content
                     .replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}", "")
                     .replaceFirst(tags.endFor, "")
-
-
-//            logger.c("", "Context: $ctx")
-//            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
-
             matcherFor = patternFor.matcher(content)
         }
-
-
-
-
+        // Parse 'For' - END
 
 
 //        val rows = mutableListOf<String>()
