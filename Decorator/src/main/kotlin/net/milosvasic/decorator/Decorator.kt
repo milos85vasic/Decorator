@@ -49,7 +49,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (data is Collection) {
                 val count = data.items.count()
                 if (count > 0) {
-                    content = content.replaceFirst(g2, g2.repeat(count + 1))
+                    content = content.replaceFirst(g2, g2.repeat(count))
                 } else {
                     content = content.replaceFirst(g2, "")
                 }
