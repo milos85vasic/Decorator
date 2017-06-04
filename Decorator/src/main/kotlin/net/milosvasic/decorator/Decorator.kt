@@ -39,32 +39,19 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 .replace("\n", tags.newLine)
 
         // Parse 'For'
-        val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
+        val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)(${tags.endFor})")
         var matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
             val g1 = matcherFor.group(1)
             val g2 = matcherFor.group(2)
+            val g3 = matcherFor.group(3)
             val ctx = g1.trim()
             val data = getData(ctx)
             if (data is Collection) {
                 val count = data.items.count()
-                val replace = content.substring(matcherFor.start(), matcherFor.end())
-                var index = content.indexOf(replace)
-                while (index >= 0) {
-                    if (index >= matcherFor.start() && index <= matcherFor.end()) {
-                        break
-                    } else {
-                        index = content.indexOf(content, index + 1)
-                    }
-                }
-                content = StringBuilder(content.substring(0, index))
-                        .append(g2.repeat(count))
-                        .append(content.substring(index + replace.length, content.length))
-                        .toString()
+                val replaceWith = g2.repeat(count)
+                content = content.replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}$g2$g3", replaceWith)
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
-            content = content
-                    .replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}", "")
-                    .replaceFirst(tags.endFor, "")
             matcherFor = patternFor.matcher(content)
         }
         // Parse 'For' - END
