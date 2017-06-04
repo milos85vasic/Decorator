@@ -56,6 +56,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     content = content.replaceFirst(g2, "- - - - - - - - - -")
                 }
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
+            content = content
+                    .replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}", "")
+                    .replaceFirst(tags.endFor, "")
+
 
 //            logger.c("", "Context: $ctx")
 //            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
