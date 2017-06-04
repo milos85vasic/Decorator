@@ -40,7 +40,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         // Parse 'For'
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
-        val matcherFor = patternFor.matcher(content)
+        var matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
             val g1 = matcherFor.group(1)
             val g2 = matcherFor.group(2)
@@ -48,11 +48,11 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val data = getData(ctx)
             if (data is Collection) {
                 val count = data.items.count()
-                if (count > 0) {
-                    content = content.replaceFirst(g2, g2.repeat(count))
-                } else {
-                    content = content.replaceFirst(g2, "")
-                }
+                logger.e("", "-> $g1")
+                logger.w("", "-> $g2")
+                logger.c("", "-> ${matcherFor.start()} ${matcherFor.end()} ${content.indexOf(g2)}")
+                logger.d("", "-> ${content.substring(matcherFor.start(), matcherFor.end()).replace(tags.newLine, "\n").replace(Regex("(?m)^[ \t]*\r?\n"), "")}")
+                content = content.replaceFirst(g2, g2.repeat(count))
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
             content = content
                     .replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}", "")
@@ -61,6 +61,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
 //            logger.c("", "Context: $ctx")
 //            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
+
+            matcherFor = patternFor.matcher(content)
         }
 
 

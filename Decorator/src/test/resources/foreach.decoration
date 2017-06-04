@@ -23,19 +23,19 @@ try me
     <endif/>
 <endfor/>
 </ul>
-//
-//---
-//
-//<ul>
-//<foreach>storage.stuff</foreach> dd
-//    <li>
-//        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
-//
-//
-//    </li>
-//<endfor/>
-//</ul>
-//
+
+---
+
+<ul>
+<foreach>storage.stuff</foreach> dd
+    <li>
+        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
+
+
+    </li>
+<endfor/>
+</ul>
+
 ---
 
 <ul>
