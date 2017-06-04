@@ -32,14 +32,13 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
     override fun getContent(): String {
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
-//        val rendered = StringBuilder()
-
         var content = templateFile.readText()
                 .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "") // Clean up multiline comments
                 .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments
                 .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
                 .replace("\n", tags.newLine)
 
+        // Parse 'For'
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
         val matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
@@ -52,8 +51,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 if (count > 0) {
                     content = content.replaceFirst(g2, g2.repeat(count + 1))
                 } else {
-                    logger.c("", "count: $count ${content.indexOf(g2)} \n $g2")
-                    content = content.replaceFirst(g2, "- - - - - - - - - -")
+                    content = content.replaceFirst(g2, "")
                 }
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
             content = content
@@ -64,6 +62,11 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 //            logger.c("", "Context: $ctx")
 //            logger.w("", "-> ${matcherFor.group(2).replace(tags.newLine, "\n")}")
         }
+
+
+
+
+
 
 //        val rows = mutableListOf<String>()
 //        rows.addAll(content.split("\n"))
