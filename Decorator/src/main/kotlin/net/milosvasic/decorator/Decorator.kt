@@ -83,13 +83,16 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val result = resolveIf(ctx)
             val replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
             if (result) {
-                content = content.replaceFirst(replace, g2)
+                if (g2.contains(tags.elseTag)) {
+                    val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
+                    content = content.replaceFirst(replace, replaceWith)
+                } else {
+                    content = content.replaceFirst(replace, g2)
+                }
             } else {
                 if (g2.contains(tags.elseTag)) {
                     val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
-                    logger.w("", "-> $g2")
-                    logger.c("", "-> $replaceWith")
-                    content = content.replaceFirst(replace, "- - - =")
+                    content = content.replaceFirst(replace, replaceWith)
                 } else {
                     content = content.replaceFirst(replace, "")
                 }

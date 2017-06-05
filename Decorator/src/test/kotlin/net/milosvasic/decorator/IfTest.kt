@@ -9,7 +9,6 @@ import org.junit.Test
 
 class IfTest {
 
-    private var end = 0L
     private val tag = ""
     private val logger = SimpleLogger()
 
@@ -23,12 +22,16 @@ class IfTest {
                 .append("person", "John")
                 .build()
 
-        val start = System.currentTimeMillis()
-        val decorator = Decorator("if", data)
-        val html = decorator.getContent()
-        end = System.currentTimeMillis() - start
-        logger.v("", html)
+        var html = ""
+        for (x in 0..10) {
+            val start = System.currentTimeMillis()
+            val decorator = Decorator("if", data)
+            html = decorator.getContent()
+            val end = System.currentTimeMillis() - start
+            logger.i(tag, "Template generated in $end ms.")
+        }
 
+        logger.v("", html)
         assertHtml(html)
     }
 
@@ -173,11 +176,6 @@ class IfTest {
 //        Assert.assertEquals("---", lines[132])
 //        Assert.assertTrue(lines[133].isEmpty())
 //        Assert.assertEquals(134, lines.size)
-    }
-
-    @After
-    fun afterTest() {
-        logger.i(tag, "Template generated in $end ms.")
     }
 
 }
