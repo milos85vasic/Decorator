@@ -101,7 +101,14 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         // Parse 'If' - END
 
         // Parse data tags
-
+        val patternData = Pattern.compile("${tags.open}(.+?)${tags.close}")
+        val matcherData = patternData.matcher(content)
+        while (matcherData.find()) {
+            val g1 = matcherData.group(1)
+            val ctx = g1.trim()
+            val value = resolve(ctx)
+            content = content.replaceFirst("${tags.open}$g1${tags.close}", value)
+        }
         // Parse data tags - END
 
         return content
