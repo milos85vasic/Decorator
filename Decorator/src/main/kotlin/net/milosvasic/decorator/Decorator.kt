@@ -57,7 +57,14 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         // Parse 'For' - END
 
         // Parse 'Include'
+        val patternInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
+        var matcherInclude = patternInclude.matcher(content)
+        while(matcherInclude.find()){
+            val g1 = matcherInclude.group(1)
+            logger.c("", "-> $g1")
 
+            matcherInclude = patternInclude.matcher(content)
+        }
         // Parse 'Include' - END
 
 

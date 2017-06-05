@@ -48,6 +48,20 @@ try me
 
 ---
 
+<include>footer</include>
+
+---
+
+<ul>
+<foreach>storage.stuff</foreach>
+    <li>
+        <include>footer</include>
+    </li>
+<endfor/>
+</ul>
+
+---
+
 //<ul>
 //<foreach>workers</foreach>
 //    <if>something</if>
