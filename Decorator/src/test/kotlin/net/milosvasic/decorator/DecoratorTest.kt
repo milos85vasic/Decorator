@@ -49,9 +49,8 @@ class DecoratorTest {
                 )
                 .build()
 
-        val decorator = Decorator("sample", data)
-
         var html = ""
+        val decorator = Decorator("sample", data)
         for (x in 0..10) {
             val start = System.currentTimeMillis()
             html = decorator.getContent()
