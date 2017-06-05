@@ -20,8 +20,6 @@ class DecoratorTags : Tags(), IterationItem {
     override val newLine = "<n/>"
     override val itemTag: String = "<item>"
     override val indexTag: String = "<index>"
-    override val trueTag: String = "<true>"
-    override val falseTag: String = "<false>"
     override val multiLineCommentOpen = "/\\*"
     override val multiLineCommentClose = "\\*/"
 

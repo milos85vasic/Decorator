@@ -15,8 +15,6 @@ abstract class Tags {
     abstract val endFor: String
     abstract val newLine: String
     abstract val lineComment: String
-    abstract val trueTag: String
-    abstract val falseTag: String
     abstract val multiLineCommentOpen: String
     abstract val multiLineCommentClose: String
 

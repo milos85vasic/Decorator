@@ -5,9 +5,6 @@ import net.milosvasic.decorator.data.Collection
 import net.milosvasic.decorator.data.Data
 import net.milosvasic.decorator.data.TemplateData
 import net.milosvasic.decorator.data.Value
-import net.milosvasic.decorator.data.state.ElseState
-import net.milosvasic.decorator.data.state.ForeachState
-import net.milosvasic.decorator.data.state.IfState
 import net.milosvasic.decorator.separator.Separator
 import net.milosvasic.decorator.template.Template
 import net.milosvasic.logger.SimpleLogger
@@ -30,6 +27,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     private val keyCacheIncludes = mutableMapOf<String, String>()
     private val keyCacheData = mutableMapOf<String, TemplateData?>()
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
+
+    init {
+        data.content.putAll(templateMainClass.data.content)
+    }
 
     override fun getContent(): String {
         val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
@@ -73,21 +74,16 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         // Parse 'Include' - END
 
         // Parse 'If'
-
+        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
+        val matcherIf = patternIf.matcher(content)
+        while (matcherIf.find()) {
+            val g1 = matcherIf.group(1)
+            val g2 = matcherIf.group(2)
+            val ctx = g1.trim()
+            val result = resolveIf(ctx)
+            logger.c("", "-> $ctx $result")
+        }
         // Parse 'If' - END
-
-
-//        val rows = mutableListOf<String>()
-//        rows.addAll(content.split("\n"))
-//        var ifStatesOpened = 0
-//        val ifStates = mutableListOf<IfState?>()
-//        var elseStatesOpened = 0
-//        val elseStates = mutableListOf<ElseState?>()
-//        var foreachState: ForeachState? = null
-//        val foreachStates = mutableListOf<ForeachState?>()
-//        val rowsToBeIgnored = mutableListOf<Int>()
-//        val foreachTemplates = mutableMapOf<Int, String>()
-//        val decoratedRows = mutableMapOf<Int, List<String>>()
 
         // TODO: Refactor so performance are gained.
 
@@ -415,219 +411,25 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         return tdata
     }
 
-    private fun resolveForeach(
-            template: String,
-            templateRows: List<String>,
-            templateData: Data,
-            templateDataKey: String
-    ): String {
-        val params = templateDataKey.trim().split(memberSeparator.value)
-        var data: TemplateData? = null
-        val it = params.iterator()
-        if (it.hasNext()) {
-            data = templateData.content[it.next()]
-        }
-        loop@ while (data != null && data !is Collection && it.hasNext()) {
-            when (data) {
-                is Data -> {
-                    val param = it.next()
-                    data = data.content[param]
-                }
-                is Collection -> {
-                    break@loop
-                }
-                else -> throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
-            }
-        }
-
-        if (data is Collection) {
-            val builder = StringBuilder()
-            val items = data.items
-            items.forEachIndexed {
-                index, tData ->
-                templateRows.forEach {
-                    item ->
-                    when (tData) {
-                        is Value -> {
-                            builder.append(
-                                    item
-                                            .replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
-                                            .replace(Regex("${tags.open}${tags.itemTag}${tags.close}"), tData.content)
-                            )
-                        }
-                        is Data -> {
-                            var row = item.replace("${tags.open}${tags.indexTag}${tags.close}", index.toString())
-                            val pIf = Pattern.compile("${tags.ifOpen}${tags.itemTag}.(.+?)${tags.ifClose}")
-                            val mIf = pIf.matcher(row)
-                            while (mIf.find()) {
-                                val partParams = mIf.group(1).split(memberSeparator.value)
-                                partParams.forEach {
-                                    part ->
-                                    var partsData: TemplateData? = null
-                                    val partIt = partParams.iterator()
-                                    if (partIt.hasNext()) {
-                                        val param = partIt.next()
-                                        partsData = tData.content[param]
-                                    }
-                                    if (partIt.hasNext()) {
-                                        val param = partIt.next()
-                                        partsData = tData.content[param]
-                                    }
-                                    while (partsData != null && partsData !is Value && partIt.hasNext()) {
-                                        when (partsData) {
-                                            is Data -> {
-                                                val param = partIt.next()
-                                                partsData = partsData.content[param]
-                                            }
-                                            is Value -> {
-                                                // Ignore
-                                            }
-                                            else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template))
-                                        }
-                                    }
-                                    if (partsData != null) {
-                                        if (partsData is Value) {
-                                            if (partsData.content.isEmpty()) {
-                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
-                                            } else {
-                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.trueTag}${tags.ifClose}")
-                                            }
-                                        } else {
-                                            throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
-                                        }
-                                    } else {
-                                        try {
-                                            val resolved = resolve(template, templateData, part)
-                                            if (resolved.isEmpty()) {
-                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
-                                            } else {
-                                                row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.trueTag}${tags.ifClose}")
-                                            }
-                                        } catch (e: Exception) {
-                                            row = row.replaceFirst(mIf.group(0), "${tags.ifOpen}${tags.falseTag}${tags.ifClose}")
-                                        }
-                                    }
-                                }
-                            }
-
-                            val p = Pattern.compile("${tags.open}(.+?)${tags.close}")
-                            val m = p.matcher(row)
-                            val parsedParts = mutableListOf<String>()
-                            while (m.find()) {
-                                val result = m.group(1).trim()
-                                parsedParts.add(result)
-                            }
-                            parsedParts.forEach {
-                                part ->
-                                val partParams = part
-                                        .replace("${tags.itemTag}${memberSeparator.value}", "")
-                                        .split(memberSeparator.value)
-
-                                var partData: TemplateData? = null
-                                val partIt = partParams.iterator()
-                                if (partIt.hasNext()) {
-                                    val param = partIt.next()
-                                    partData = tData.content[param]
-                                }
-                                while (partData != null && partData !is Value && partIt.hasNext()) {
-                                    when (partData) {
-                                        is Data -> {
-                                            val param = partIt.next()
-                                            partData = partData.content[param]
-                                        }
-                                        is Value -> {
-                                            // Ignore
-                                        }
-                                        else -> throw IllegalStateException(Messages.COLLECTION_NOT_ALLOWED(template))
-                                    }
-                                }
-                                if (partData != null) {
-                                    if (partData is Value) {
-                                        row = row.replace("${tags.open}$part${tags.close}", partData.content)
-                                    } else {
-                                        throw IllegalStateException(Messages.COULD_NOT_RESOLVE(part, template))
-                                    }
-                                } else {
-                                    try {
-                                        row = row.replace(
-                                                "${tags.open}$part${tags.close}", resolve(template, templateData, part)
-                                        )
-                                    } catch (e: Exception) {
-                                        row = row.replace("${tags.open}$part${tags.close}", "")
-                                    }
-                                }
-                            }
-                            builder.append(row)
-                        }
-                        else -> {
-                            throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template))
-                        }
-                    }
-                    if (templateRows.indexOf(item) < templateRows.lastIndex) {
-                        builder.append("\n")
-                    }
-                }
-                if (tData != items.last()) {
-                    builder.append("\n")
-                }
-            }
-            return builder.toString()
-        } else {
-            if (data != null) {
-                throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
-            } else {
-                throw IllegalStateException(Messages.COULD_NOT_RESOLVE(templateDataKey, template))
-            }
-        }
-    }
-
-    private fun resolve(template: String, templateData: Data, line: String): String {
-        val params = line.trim().split(memberSeparator.value)
-        templateData.content.putAll(templateMainClass.data.content)
-        val it = params.iterator()
-        var data: TemplateData? = null
-        if (it.hasNext()) {
-            data = templateData.content[it.next()]
-        }
-        while (data != null && data !is Value && it.hasNext()) {
-            when (data) {
-                is Data -> {
-                    val param = it.next()
-                    data = data.content[param]
-                }
-                is Value -> {
-                    return data.content
-                }
-                else -> throw IllegalStateException(Messages.UNKNOWN_TEMPLATE_DATA_TYPE)
-            }
-        }
+    private fun resolve(key: String): String {
+        val data = getData(key)
         if (data != null && data is Value) {
             return data.content
         } else {
             if (data is Collection) {
-                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(line, template))
+                throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(key, template))
             } else {
-                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(line, template))
+                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(key, template))
             }
         }
     }
 
-    private fun resolveIf(template: String, templateData: Data, line: String): Boolean {
+    private fun resolveIf(key: String): Boolean {
         val delegate = object : TautologyParserDelegate {
             override fun getExpressionValue(key: String): ExpressionValue? {
-                val resolve: String?
+                val resolve: String
                 try {
-                    when (key) {
-                        tags.trueTag -> {
-                            resolve = tags.trueTag
-                        }
-                        tags.falseTag -> {
-                            resolve = ""
-                        }
-                        else -> {
-                            resolve = resolve(template, templateData, key)
-                        }
-                    }
+                    resolve = resolve(key)
                 } catch (e: Exception) {
                     return null
                 }
@@ -639,50 +441,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             }
         }
         val parser = TautologyParser(delegate)
-        val expressions = parser.parse(line)
+        val expressions = parser.parse(key)
         return tautology.evaluate(expressions)
-    }
-
-    private fun satisfiesIf(ifStates: List<IfState?>, index: Int, template: String): Boolean {
-        ifStates.forEach {
-            state ->
-            if (state != null) {
-                if (state.to == -1) {
-                    throw IllegalStateException(Messages.IF_NOT_CLOSED(template))
-                }
-                if (index >= state.from && index <= state.to) {
-                    return state.value
-                }
-            }
-        }
-        return true
-    }
-
-    private fun satisfiesElse(elseStates: List<ElseState?>, index: Int, template: String): Boolean {
-        elseStates.forEach {
-            state ->
-            if (state != null) {
-                if (state.to == -1) {
-                    throw IllegalStateException(Messages.ELSE_NOT_CLOSED(template))
-                }
-                if (index >= state.from && index <= state.to) {
-                    return true
-                }
-            }
-        }
-        return false
-    }
-
-    private fun getForeachState(foreachStates: List<ForeachState?>, index: Int): ForeachState? {
-        foreachStates.forEach {
-            foreachState ->
-            if (foreachState != null) {
-                if (index >= foreachState.from && index <= foreachState.to) {
-                    return foreachState
-                }
-            }
-        }
-        return null
     }
 
 }
