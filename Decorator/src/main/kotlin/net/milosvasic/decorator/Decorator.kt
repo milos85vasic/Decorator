@@ -72,6 +72,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         }
         // Parse 'Include' - END
 
+        // Parse 'If'
+
+        // Parse 'If' - END
+
 
 //        val rows = mutableListOf<String>()
 //        rows.addAll(content.split("\n"))
