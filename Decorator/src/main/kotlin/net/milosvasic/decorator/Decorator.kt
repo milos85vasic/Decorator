@@ -66,8 +66,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (include == null) {
                 val decorator = Decorator(ctx, data)
                 include = decorator.getContent()
+                keyCacheIncludes[ctx] = include
             }
-            logger.c("", "-> $include")
             content = content.replaceFirst("${tags.includeOpen}(.+?)${tags.includeClose}", include)
         }
         // Parse 'Include' - END
