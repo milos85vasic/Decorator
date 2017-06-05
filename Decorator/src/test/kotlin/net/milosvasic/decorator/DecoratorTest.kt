@@ -10,7 +10,6 @@ import org.junit.Test
 
 class DecoratorTest {
 
-    private var end = 0L
     private val tag = ""
     private val logger = SimpleLogger()
 
@@ -52,12 +51,16 @@ class DecoratorTest {
 
         val decorator = Decorator("sample", data)
 
-        val start = System.currentTimeMillis()
-        val html = decorator.getContent()
-        end = System.currentTimeMillis() - start
-        logger.v("", html)
+        var html = ""
+        for (x in 0..10) {
+            val start = System.currentTimeMillis()
+            html = decorator.getContent()
+            val end = System.currentTimeMillis() - start
+            logger.i(tag, "Template generated in $end ms.")
+            assertHtml(html)
+        }
 
-        assertHtml(html)
+        logger.v("", html)
     }
 
     fun assertHtml(html: String) {
@@ -101,11 +104,6 @@ class DecoratorTest {
         Assert.assertEquals(33, lines.size)
         Assert.assertEquals("</body>", lines[lines.lastIndex - 1])
         Assert.assertEquals("</html>", lines.last())
-    }
-
-    @After
-    fun afterTest() {
-        logger.i(tag, "Template generated in $end ms.")
     }
 
 }
