@@ -27,7 +27,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     override val templateMainClass = DecoratorTemplateClass()
 
     private val tautology = Tautology()
-    private val keyCache = mutableMapOf<String, TemplateData?>()
+    private val keyCacheIncludes = mutableMapOf<String, String>()
+    private val keyCacheData = mutableMapOf<String, TemplateData?>()
     private val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     override fun getContent(): String {
@@ -40,7 +41,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         // Parse 'For'
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)(${tags.endFor})")
-        var matcherFor = patternFor.matcher(content)
+        val matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
             val g1 = matcherFor.group(1)
             val g2 = matcherFor.group(2)
@@ -52,18 +53,22 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 val replaceWith = g2.repeat(count)
                 content = content.replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}$g2$g3", replaceWith)
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
-            matcherFor = patternFor.matcher(content)
         }
         // Parse 'For' - END
 
         // Parse 'Include'
         val patternInclude = Pattern.compile("${tags.includeOpen}(.+?)${tags.includeClose}")
-        var matcherInclude = patternInclude.matcher(content)
-        while(matcherInclude.find()){
+        val matcherInclude = patternInclude.matcher(content)
+        while (matcherInclude.find()) {
             val g1 = matcherInclude.group(1)
-            logger.c("", "-> $g1")
-
-            matcherInclude = patternInclude.matcher(content)
+            val ctx = g1.trim()
+            var include = keyCacheIncludes[ctx]
+            if (include == null) {
+                val decorator = Decorator(ctx, data)
+                include = decorator.getContent()
+            }
+            logger.c("", "-> $include")
+            content = content.replaceFirst("${tags.includeOpen}(.+?)${tags.includeClose}", include)
         }
         // Parse 'Include' - END
 
@@ -385,7 +390,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     }
 
     private fun getData(key: String): TemplateData? {
-        var tdata = keyCache[key]
+        var tdata = keyCacheData[key]
         if (tdata == null) {
             val it = key.trim().split(memberSeparator.value).iterator()
             if (it.hasNext()) {
@@ -400,7 +405,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 }
             }
             if (tdata != null) {
-                keyCache[key] = tdata
+                keyCacheData[key] = tdata
             }
         }
         return tdata
