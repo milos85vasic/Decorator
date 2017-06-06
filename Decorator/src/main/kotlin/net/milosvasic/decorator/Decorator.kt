@@ -113,6 +113,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         return content
                 .replace(tags.newLine, "\n")
+                .replace(tags.tabPlaceholder, "")
                 .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
     }
 

@@ -97,12 +97,11 @@ class DecoratorTest {
         Assert.assertEquals("Some text 5 ", lines[26])
         Assert.assertEquals("Some text 6", lines[27])
         Assert.assertEquals("Some text 7", lines[28])
-        Assert.assertEquals(" ", lines[29])
-        Assert.assertEquals("Tab placeholder trimmed", lines[30])
-        Assert.assertEquals("<p>Will show</p>", lines[31])
-        Assert.assertEquals(33, lines.size)
-        Assert.assertEquals("</body>", lines[lines.lastIndex - 1])
-        Assert.assertEquals("</html>", lines.last())
+        Assert.assertEquals("Tab placeholder trimmed", lines[29])
+        Assert.assertEquals("<p>Will show</p>", lines[30])
+        Assert.assertEquals("</body>", lines[31])
+        Assert.assertEquals("</html>", lines[32])
+        Assert.assertEquals(32, lines.size)
     }
 
 }
