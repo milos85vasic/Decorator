@@ -69,7 +69,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 include = decorator.getContent()
                 keyCacheIncludes[ctx] = include
             }
-            content = content.replaceFirst("${tags.includeOpen}(.+?)${tags.includeClose}", include)
+            content = content.replaceFirst("${tags.includeOpen}$g1${tags.includeClose}", include)
         }
         // Parse 'Include' - END
 
