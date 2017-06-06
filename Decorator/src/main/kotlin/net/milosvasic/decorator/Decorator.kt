@@ -75,7 +75,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         // Parse 'If'
         val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
-        val matcherIf = patternIf.matcher(content)
+        var matcherIf = patternIf.matcher(content)
         while (matcherIf.find()) {
             val g1 = matcherIf.group(1)
             val g2 = matcherIf.group(2)
@@ -97,6 +97,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     content = content.replaceFirst(replace, "")
                 }
             }
+            matcherIf = patternIf.matcher(content)
         }
         // Parse 'If' - END
 
