@@ -101,7 +101,7 @@ class DecoratorTest {
         Assert.assertEquals("<p>Will show</p>", lines[30])
         Assert.assertEquals("</body>", lines[31])
         Assert.assertEquals("</html>", lines[32])
-        Assert.assertEquals(32, lines.size)
+        Assert.assertEquals(33, lines.size)
     }
 
 }
