@@ -129,8 +129,7 @@ k 4
 //it does not exist
 //<endif/>
 --- end commented invalid ifs
-<else> // Empty else will be ignored.
----
+. . . . .
 // <endif/>
 // <if>dsds</if>
 //<if>exist</if>
