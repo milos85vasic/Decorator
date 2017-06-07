@@ -84,10 +84,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     ifIndex++
                     if (ifIndex > 1) {
                         content = StringBuilder()
-                                .append(content.substring(0, matcherTag.start() + 1))
-                                .append("${g1}_$ifIndex")
+                                .append(content.substring(0, matcherTag.start()))
                                 .append(
-                                        content.substring(matcherTag.start() + 1 + g1.length, content.length)
+                                        content.substring(matcherTag.start(), content.length)
+                                                .replaceFirst(tags.ifOpen, "<if_$ifIndex>")
                                                 .replaceFirst(tags.ifClose, "</if_$ifIndex>")
                                                 .replaceFirst(tags.elseTag, "<else_$ifIndex>")
                                                 .replaceFirst(tags.endIf, "<endif_$ifIndex/>")
