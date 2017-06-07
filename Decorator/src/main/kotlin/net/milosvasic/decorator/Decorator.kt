@@ -91,18 +91,18 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
                         logger.w("", "-> $ifIndex")
 
-                        logger.i("", "1 -> ${content.replace(tags.newLine, "\n")}")
 
+                        val toReplace = content.substring(matcherTag.start(), content.length)
+                        logger.i("", "-> $toReplace")
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start()))
                                 .append(
-                                        content.substring(matcherTag.start(), content.length)
+                                        toReplace
                                                 .replaceFirst(tags.ifOpen, "<if_$ifIndex>")
                                                 .replaceFirst(tags.ifClose, "</if_$ifIndex>")
                                 )
                                 .toString()
 
-                        logger.i("", "2 -> ${content.replace(tags.newLine, "\n")}")
 
                     }
                 }
