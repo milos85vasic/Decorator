@@ -27,14 +27,14 @@
 
 
 
-//<if>!exist</if>
-//<t/><if>something</if><dc>something</dc><else>XxX<endif/>
-//<else>
-//<t/><if>!something</if><dc>something</dc><else>Zzz<endif/>
-//<endif/>
+<if>!exist</if>
+<t/><if>something</if><dc>something</dc><else>XxX<endif/>
+<else>
+<t/><if>!something</if><dc>something</dc><else>Zzz<endif/>
+<endif/>
 
-//<if>exist</if>
-//<t/><if>something</if><dc>something</dc><else>XxX<endif/>
-//<else>
-//<t/><if>!something</if><dc>something</dc><else>Zzz<endif/>
-//<endif/>
+<if>exist</if>
+<t/><if>something</if><dc>something</dc><else>XxX<endif/>
+<else>
+<t/><if>!something</if><dc>something</dc><else>Zzz<endif/>
+<endif/>

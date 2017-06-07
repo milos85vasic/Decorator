@@ -89,34 +89,34 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
 
         // Parse 'If'
-        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
-        var matcherIf = patternIf.matcher(content)
-        while (matcherIf.find()) {
-            val g1 = matcherIf.group(1)
-            val g2 = matcherIf.group(2)
-            val ctx = g1.trim()
-            val result = resolveIf(ctx)
-            val replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
-            if (result) {
-                if (g2.contains(tags.elseTag)) {
-                    val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
-                    content = content.replaceFirst(replace, replaceWith)
-                } else {
-                    content = content.replaceFirst(replace, g2)
-                }
-            } else {
-                if (g2.contains(tags.elseTag)) {
-                    // logger.c("", "-> $g2")
-                    val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
-                    // logger.c("", "-> $replaceWith")
-                    // logger.c("", "-> $replace")
-                    content = content.replaceFirst(replace, replaceWith)
-                } else {
-                    content = content.replaceFirst(replace, "")
-                }
-            }
-            matcherIf = patternIf.matcher(content)
-        }
+//        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
+//        var matcherIf = patternIf.matcher(content)
+//        while (matcherIf.find()) {
+//            val g1 = matcherIf.group(1)
+//            val g2 = matcherIf.group(2)
+//            val ctx = g1.trim()
+//            val result = resolveIf(ctx)
+//            val replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
+//            if (result) {
+//                if (g2.contains(tags.elseTag)) {
+//                    val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
+//                    content = content.replaceFirst(replace, replaceWith)
+//                } else {
+//                    content = content.replaceFirst(replace, g2)
+//                }
+//            } else {
+//                if (g2.contains(tags.elseTag)) {
+//                    // logger.c("", "-> $g2")
+//                    val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
+//                    // logger.c("", "-> $replaceWith")
+//                    // logger.c("", "-> $replace")
+//                    content = content.replaceFirst(replace, replaceWith)
+//                } else {
+//                    content = content.replaceFirst(replace, "")
+//                }
+//            }
+//            matcherIf = patternIf.matcher(content)
+//        }
         // Parse 'If' - END
 
         // Parse data tags
