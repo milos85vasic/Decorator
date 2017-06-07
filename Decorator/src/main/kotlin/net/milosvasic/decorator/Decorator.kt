@@ -74,18 +74,37 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         // Parse 'Include' - END
 
 
-
+        var ifIndex = 0
+        val patternTag = Pattern.compile("<(.+?)>")
+        val matcherTag = patternTag.matcher(content)
+        while (matcherTag.find()) {
+            val g1 = matcherTag.group(1)
+            when (g1) {
+                "if" -> {
+                    ifIndex++
+                    if(ifIndex > 1){
+                        content = StringBuilder()
+                                .append(content.substring(0, matcherTag.start() + 1))
+                                .append("${g1}_$ifIndex")
+                                .append(content.substring(matcherTag.start() + 1 + g1.length, content.length))
+                                .toString()
+                    }
+                }
+                "endif/" -> {
+                    ifIndex = 0
+                }
+            }
+        }
 
         var ifs = 0
         var slice = content
         var index = slice.indexOf(tags.ifOpen)
-        while(index > -1){
+        while (index > -1) {
             ifs++
             slice = slice.substring(index + tags.ifOpen.length, slice.length)
             index = slice.indexOf(tags.ifOpen)
         }
         logger.c("", "-> $ifs")
-
 
 
         // Parse 'If'
