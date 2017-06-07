@@ -76,12 +76,13 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         var ifIndex = 0
         val patternTag = Pattern.compile("<(.+?)>")
-        val matcherTag = patternTag.matcher(content)
+        var matcherTag = patternTag.matcher(content)
         while (matcherTag.find()) {
             val g1 = matcherTag.group(1)
             when (g1) {
                 "if" -> {
                     ifIndex++
+                    logger.i("", "---> $ifIndex")
                     if (ifIndex > 1) {
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start()))
@@ -95,8 +96,11 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                                 .toString()
                     }
                 }
-                "endif/" -> {
-                    ifIndex--
+                else -> {
+                    if (g1.contains("endif")) {
+                        ifIndex--
+                        logger.e("", "---> $ifIndex")
+                    }
                 }
             }
         }
