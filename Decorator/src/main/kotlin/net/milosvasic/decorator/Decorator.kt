@@ -82,16 +82,21 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             when (g1) {
                 "if" -> {
                     ifIndex++
-                    if(ifIndex > 1){
+                    if (ifIndex > 1) {
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start() + 1))
                                 .append("${g1}_$ifIndex")
-                                .append(content.substring(matcherTag.start() + 1 + g1.length, content.length))
+                                .append(
+                                        content.substring(matcherTag.start() + 1 + g1.length, content.length)
+                                                .replaceFirst(tags.ifClose, "</if_$ifIndex>")
+                                                .replaceFirst(tags.elseTag, "<else_$ifIndex>")
+                                                .replaceFirst(tags.endIf, "<endif_$ifIndex/>")
+                                )
                                 .toString()
                     }
                 }
                 "endif/" -> {
-                    ifIndex = 0
+                    ifIndex--
                 }
             }
         }
