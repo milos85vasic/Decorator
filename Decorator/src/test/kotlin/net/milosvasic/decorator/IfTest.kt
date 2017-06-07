@@ -24,13 +24,13 @@ class IfTest {
 
         var html = ""
         val decorator = Decorator("if", data)
-        for (x in 0..10) { // Repeat a few times to see timings.
+        // for (x in 0..10) { // Repeat a few times to see timings.
             val start = System.currentTimeMillis()
             html = decorator.getContent()
             val end = System.currentTimeMillis() - start
             logger.i(tag, "Template generated in $end ms.")
             assertHtml(html) // Check if we got valid result.
-        }
+        // }
 
         logger.v("", html)
     }

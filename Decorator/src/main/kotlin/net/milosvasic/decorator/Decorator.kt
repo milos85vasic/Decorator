@@ -82,7 +82,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             when (g1) {
                 "if" -> {
                     ifIndex++
-                    logger.i("", "---> $ifIndex")
+                    logger.c("", "-> $ifIndex")
                     if (ifIndex > 1) {
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start()))
@@ -90,31 +90,24 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                                         content.substring(matcherTag.start(), content.length)
                                                 .replaceFirst(tags.ifOpen, "<if_$ifIndex>")
                                                 .replaceFirst(tags.ifClose, "</if_$ifIndex>")
-                                                .replaceFirst(tags.elseTag, "<else_$ifIndex>")
-                                                .replaceFirst(tags.endIf, "<endif_$ifIndex/>")
                                 )
                                 .toString()
                     }
                 }
-                else -> {
-                    if (g1.contains("endif")) {
-                        ifIndex--
-                        logger.e("", "---> $ifIndex")
+                "endif/" -> {
+                    if (ifIndex > 1) {
+                        content = StringBuilder()
+                                .append(content.substring(0, matcherTag.start()))
+                                .append(
+                                        content.substring(matcherTag.start(), content.length)
+                                                .replaceFirst(tags.endIf, "<endif_$ifIndex/>")
+                                )
+                                .toString()
                     }
+                    ifIndex--
                 }
             }
         }
-
-        var ifs = 0
-        var slice = content
-        var index = slice.indexOf(tags.ifOpen)
-        while (index > -1) {
-            ifs++
-            slice = slice.substring(index + tags.ifOpen.length, slice.length)
-            index = slice.indexOf(tags.ifOpen)
-        }
-        logger.c("", "-> $ifs")
-
 
         // Parse 'If'
 //        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
