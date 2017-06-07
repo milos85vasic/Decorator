@@ -84,9 +84,12 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 "if" -> {
                     ifIndex++
                     lastIfIndex = ifIndex
+
+                    logger.c("", "-> ${matcherTag.start()}")
+
                     if (ifIndex > 1) {
 
-                        logger.c("", "-> $ifIndex")
+                        logger.w("", "-> $ifIndex")
 
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start()))
