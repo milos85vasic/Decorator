@@ -91,6 +91,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
                         logger.w("", "-> $ifIndex")
 
+                        logger.i("", "1 -> ${content.replace(tags.newLine, "\n")}")
+
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start()))
                                 .append(
@@ -99,6 +101,9 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                                                 .replaceFirst(tags.ifClose, "</if_$ifIndex>")
                                 )
                                 .toString()
+
+                        logger.i("", "2 -> ${content.replace(tags.newLine, "\n")}")
+
                     }
                 }
                 "endif/" -> {
