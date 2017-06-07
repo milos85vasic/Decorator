@@ -75,15 +75,19 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
 
         var ifIndex = 0
+        var lastIfIndex = 0
         val patternTag = Pattern.compile("<(.+?)>")
-        var matcherTag = patternTag.matcher(content)
+        val matcherTag = patternTag.matcher(content)
         while (matcherTag.find()) {
             val g1 = matcherTag.group(1)
             when (g1) {
                 "if" -> {
                     ifIndex++
-                    logger.c("", "-> $ifIndex")
+                    lastIfIndex = ifIndex
                     if (ifIndex > 1) {
+
+                        logger.c("", "-> $ifIndex")
+
                         content = StringBuilder()
                                 .append(content.substring(0, matcherTag.start()))
                                 .append(
@@ -108,6 +112,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 }
             }
         }
+
+        logger.w("", "-> $ifIndex $lastIfIndex")
 
         // Parse 'If'
 //        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
