@@ -73,6 +73,21 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         }
         // Parse 'Include' - END
 
+
+
+
+        var ifs = 0
+        var slice = content
+        var index = slice.indexOf(tags.ifOpen)
+        while(index > -1){
+            ifs++
+            slice = slice.substring(index + tags.ifOpen.length, slice.length)
+            index = slice.indexOf(tags.ifOpen)
+        }
+        logger.c("", "-> $ifs")
+
+
+
         // Parse 'If'
         val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
         var matcherIf = patternIf.matcher(content)
@@ -91,7 +106,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 }
             } else {
                 if (g2.contains(tags.elseTag)) {
+                    // logger.c("", "-> $g2")
                     val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
+                    // logger.c("", "-> $replaceWith")
+                    // logger.c("", "-> $replace")
                     content = content.replaceFirst(replace, replaceWith)
                 } else {
                     content = content.replaceFirst(replace, "")
