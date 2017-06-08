@@ -82,7 +82,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val g1 = matcherTag.group(1)
             val start = matcherTag.start(1) - 1
             when (g1) {
-                "if" -> {
+                tags.ifOpen -> {
                     ifIndex++
                     lastIfIndex = ifIndex
                     if (ifIndex > 1) {
@@ -105,7 +105,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
                     }
                 }
-                "endif/" -> {
+                tags.ifClose -> {
+
+                }
+                tags.endIf -> {
                     if (ifIndex > 1) {
                         val toReplace = content.substring(start, content.length)
                         val replaced = toReplace.replaceFirst(tags.endIf, "<endif_$ifIndex/>")
