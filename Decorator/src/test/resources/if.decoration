@@ -22,7 +22,7 @@
 
 
 <if>!exist</if>
-<t/><if>something</if><dc>something</dc><else>XxX<endif/>
+<t/><if>something</if><dc>something</dc><else><if>something</if><dc>something</dc><else>XxX<endif/><endif/>
 <else>
 <t/><if>!something</if><dc>something</dc><else>Zzz<endif/>
 <endif/>
