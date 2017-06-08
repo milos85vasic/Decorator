@@ -46,5 +46,5 @@
 ---
 
 <if>!exist</if>
-<t/><if>something</if><dc>something</dc><else>XxX<endif/>
+<t/><if>something</if><dc>something</dc><else>BzBz<endif/>
 <endif/>
