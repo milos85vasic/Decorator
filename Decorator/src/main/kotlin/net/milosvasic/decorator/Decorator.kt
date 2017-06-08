@@ -127,7 +127,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             }
         }
 
-        logger.w("", "-> $ifIndex $lastIfIndex")
+        logger.n("", "-> $ifIndex $lastIfIndex")
 
         // Parse 'If'
 //        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
