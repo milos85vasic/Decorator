@@ -90,9 +90,13 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     if (ifIndex > 1) {
                         logger.i("", "-> $start")
 
-//                        val replaced = toReplace
-//                                .replaceFirst(tags.ifOpen, "<if_$ifIndex>")
-//                                .replaceFirst(tags.ifClose, "</if_$ifIndex>")
+                        val replaced = StringBuilder()
+                                .append(content.substring(0, start))
+                                .append(tags.ifOpen.replace(">", "_$ifIndex>"))
+                                .append(content.substring(start + g1.length, content.length))
+
+                        logger.e("", "-> $replaced")
+
 //
 //                        content = StringBuilder()
 //                                .append(content.substring(0, start))
