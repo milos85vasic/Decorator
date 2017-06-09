@@ -76,11 +76,12 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         var ifIndex = 0
         var lastIfIndex = 0
+        var replacedCount = 0
         val patternTag = Pattern.compile("(<.+?>)")
-        var matcherTag = patternTag.matcher(content)
+        val matcherTag = patternTag.matcher(content)
         while (matcherTag.find()) {
             val g1 = matcherTag.group(1)
-            val start = matcherTag.start(1)
+            val start = matcherTag.start(1) - replacedCount
             val toReplace = content.substring(start, start + g1.length)
             logger.v("", "-> $toReplace")
             when (g1) {
@@ -98,6 +99,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
                         logger.e("", "-> $replaced")
                         content = replaced
+                        replacedCount -= 2
 
 //
 //                        content = StringBuilder()
