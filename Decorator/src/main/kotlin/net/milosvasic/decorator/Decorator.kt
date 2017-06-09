@@ -83,7 +83,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val g1 = matcherTag.group(1)
             val start = matcherTag.start(1) - replacementDelta
             val toReplace = content.substring(start, start + g1.length)
-            logger.v("", "-> $toReplace")
+//            logger.v("", "-> $toReplace")
 
             fun replace(){
                 var delta = g1.length
@@ -108,29 +108,32 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     lastIfIndex = ifIndex
                     if (ifIndex > 1) {
                         replace()
-                        logger.i("", "-> $start")
-                        logger.e("", "-> $content")
+//                        logger.i("", "-> $start")
+//                        logger.e("", "-> $content")
                     }
                 }
                 tags.ifClose -> {
                     if (ifIndex > 1) {
                         replace()
-                        logger.i("", "-> $start")
-                        logger.e("", "-> $content")
+//                        logger.i("", "-> $start")
+//                        logger.e("", "-> $content")
                     }
                 }
                 tags.endIf -> {
                     if (ifIndex > 1) {
                         replace()
-                        logger.i("", "-> $start")
-                        logger.e("", "-> $content")
+//                        logger.i("", "-> $start")
+//                        logger.e("", "-> $content")
                     }
                     ifIndex--
                 }
             }
         }
 
-        logger.n("", "-> $ifIndex $lastIfIndex")
+//        logger.n("", "-> $ifIndex $lastIfIndex")
+
+
+
 
         // Parse 'If'
 //        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
