@@ -81,6 +81,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         while (matcherTag.find()) {
             val g1 = matcherTag.group(1)
             val start = matcherTag.start(1)
+            val toReplace = content.substring(start, start + g1.length)
+            logger.v("", "-> $toReplace")
             when (g1) {
                 tags.ifOpen -> {
                     ifIndex++
@@ -88,7 +90,6 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     if (ifIndex > 1) {
                         logger.i("", "-> $start")
 
-//                        val toReplace = content.substring(start, content.length)
 //                        val replaced = toReplace
 //                                .replaceFirst(tags.ifOpen, "<if_$ifIndex>")
 //                                .replaceFirst(tags.ifClose, "</if_$ifIndex>")
