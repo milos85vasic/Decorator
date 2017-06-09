@@ -85,10 +85,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val toReplace = content.substring(start, start + g1.length)
 //            logger.v("", "-> $toReplace")
 
-            fun replace(){
+            fun replace() {
                 var delta = g1.length
                 var endTag = tags.tagEnd
-                if(g1.endsWith(tags.tagClosedEnd)){
+                if (g1.endsWith(tags.tagClosedEnd)) {
                     endTag = tags.tagClosedEnd
                 }
                 val g1Replaced = g1.replace(endTag, "_$ifIndex$endTag")
@@ -130,40 +130,46 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             }
         }
 
-//        logger.n("", "-> $ifIndex $lastIfIndex")
-
-
-
+        logger.n("", "-> $ifIndex $lastIfIndex")
 
         // Parse 'If'
-//        val patternIf = Pattern.compile("${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}")
-//        var matcherIf = patternIf.matcher(content)
-//        while (matcherIf.find()) {
-//            val g1 = matcherIf.group(1)
-//            val g2 = matcherIf.group(2)
-//            val ctx = g1.trim()
-//            val result = resolveIf(ctx)
-//            val replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
-//            if (result) {
-//                if (g2.contains(tags.elseTag)) {
-//                    val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
-//                    content = content.replaceFirst(replace, replaceWith)
-//                } else {
-//                    content = content.replaceFirst(replace, g2)
-//                }
-//            } else {
-//                if (g2.contains(tags.elseTag)) {
-//                    // logger.c("", "-> $g2")
-//                    val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
-//                    // logger.c("", "-> $replaceWith")
-//                    // logger.c("", "-> $replace")
-//                    content = content.replaceFirst(replace, replaceWith)
-//                } else {
-//                    content = content.replaceFirst(replace, "")
-//                }
-//            }
-//            matcherIf = patternIf.matcher(content)
-//        }
+        for (x in lastIfIndex downTo 1) {
+            val pattern : String
+            if(x == 1){
+                pattern = "${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}"
+            } else {
+                pattern = "${tags.tagStart}if_$x${tags.tagEnd}(.+?)${tags.tagClosedStart}if_$x${tags.tagEnd}(.+?)${tags.tagStart}endif_$x${tags.tagClosedEnd}"
+            }
+            logger.c("", "-> $x $pattern")
+            val patternIf = Pattern.compile(pattern)
+            var matcherIf = patternIf.matcher(content)
+            while (matcherIf.find()) {
+                val g1 = matcherIf.group(1)
+                val g2 = matcherIf.group(2)
+                val ctx = g1.trim()
+                val result = resolveIf(ctx)
+                val replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
+                if (result) {
+                    if (g2.contains(tags.elseTag)) {
+                        val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
+                        content = content.replaceFirst(replace, replaceWith)
+                    } else {
+                        content = content.replaceFirst(replace, g2)
+                    }
+                } else {
+                    if (g2.contains(tags.elseTag)) {
+                        // logger.c("", "-> $g2")
+                        val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
+                        // logger.c("", "-> $replaceWith")
+                        // logger.c("", "-> $replace")
+                        content = content.replaceFirst(replace, replaceWith)
+                    } else {
+                        content = content.replaceFirst(replace, "")
+                    }
+                }
+                //matcherIf = patternIf.matcher(content)
+            }
+        }
         // Parse 'If' - END
 
         // Parse data tags
