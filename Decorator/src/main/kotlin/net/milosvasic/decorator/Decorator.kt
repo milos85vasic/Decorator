@@ -82,8 +82,6 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         while (matcherTag.find()) {
             val g1 = matcherTag.group(1)
             val start = matcherTag.start(1) - replacementDelta
-            val toReplace = content.substring(start, start + g1.length)
-//            logger.v("", "-> $toReplace")
 
             fun replace() {
                 var delta = g1.length
@@ -108,22 +106,16 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     lastIfIndex = ifIndex
                     if (ifIndex > 1) {
                         replace()
-//                        logger.i("", "-> $start")
-//                        logger.e("", "-> $content")
                     }
                 }
                 tags.ifClose -> {
                     if (ifIndex > 1) {
                         replace()
-//                        logger.i("", "-> $start")
-//                        logger.e("", "-> $content")
                     }
                 }
                 tags.endIf -> {
                     if (ifIndex > 1) {
                         replace()
-//                        logger.i("", "-> $start")
-//                        logger.e("", "-> $content")
                     }
                     ifIndex--
                 }
@@ -148,7 +140,12 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 val g2 = matcherIf.group(2)
                 val ctx = g1.trim()
                 val result = resolveIf(ctx)
-                val replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
+                val replace : String
+                if(x == 1){
+                    replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
+                } else {
+                    replace = "${tags.tagStart}if_$x${tags.tagEnd}$g1${tags.tagClosedStart}if_$x${tags.tagEnd}$g2${tags.tagStart}endif_$x${tags.tagClosedEnd}"
+                }
                 if (result) {
                     if (g2.contains(tags.elseTag)) {
                         val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
@@ -167,7 +164,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                         content = content.replaceFirst(replace, "")
                     }
                 }
-                //matcherIf = patternIf.matcher(content)
+                matcherIf = patternIf.matcher(content)
             }
         }
         // Parse 'If' - END
