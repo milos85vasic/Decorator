@@ -94,8 +94,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                                 .append(content.substring(0, start))
                                 .append(tags.ifOpen.replace(">", "_$ifIndex>"))
                                 .append(content.substring(start + g1.length, content.length))
+                                .toString()
 
                         logger.e("", "-> $replaced")
+                        content = replaced
 
 //
 //                        content = StringBuilder()
