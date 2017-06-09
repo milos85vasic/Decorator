@@ -84,51 +84,46 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val start = matcherTag.start(1) - replacementDelta
             val toReplace = content.substring(start, start + g1.length)
             logger.v("", "-> $toReplace")
+
+            fun replace(){
+                var delta = g1.length
+                var endTag = tags.tagEnd
+                if(g1.endsWith(tags.tagClosedEnd)){
+                    endTag = tags.tagClosedEnd
+                }
+                val g1Replaced = g1.replace(endTag, "_$ifIndex$endTag")
+                val replaced = StringBuilder()
+                        .append(content.substring(0, start))
+                        .append(g1Replaced)
+                        .append(content.substring(start + g1.length, content.length))
+                        .toString()
+                delta = g1Replaced.length - delta
+                replacementDelta -= delta
+                content = replaced
+            }
+
             when (g1) {
                 tags.ifOpen -> {
                     ifIndex++
                     lastIfIndex = ifIndex
                     if (ifIndex > 1) {
+                        replace()
                         logger.i("", "-> $start")
-
-                        var delta = g1.length
-                        var endTag = tags.tagEnd
-                        if(g1.endsWith(tags.tagClosedEnd)){
-                            endTag = tags.tagClosedEnd
-                        }
-                        val g1Replaced = g1.replace(endTag, "_$ifIndex$endTag")
-                        val replaced = StringBuilder()
-                                .append(content.substring(0, start))
-                                .append(g1Replaced)
-                                .append(content.substring(start + g1.length, content.length))
-                                .toString()
-                        delta = g1Replaced.length - delta
-                        replacementDelta -= delta
-                        content = replaced
-
-                        logger.e("", "-> $replaced")
-
-//
-//                        content = StringBuilder()
-//                                .append(content.substring(0, start))
-//                                .append(replaced)
-//                                .toString()
+                        logger.e("", "-> $content")
                     }
                 }
                 tags.ifClose -> {
-                    logger.w("", "-> $start")
+                    if (ifIndex > 1) {
+                        replace()
+                        logger.i("", "-> $start")
+                        logger.e("", "-> $content")
+                    }
                 }
                 tags.endIf -> {
                     if (ifIndex > 1) {
-                        logger.d("", "-> $start")
-
-//                        val toReplace = content.substring(start, content.length)
-//                        val replaced = toReplace.replaceFirst(tags.endIf, "<endif_$ifIndex/>")
-//
-//                        content = StringBuilder()
-//                                .append(content.substring(0, start))
-//                                .append(replaced)
-//                                .toString()
+                        replace()
+                        logger.i("", "-> $start")
+                        logger.e("", "-> $content")
                     }
                     ifIndex--
                 }
