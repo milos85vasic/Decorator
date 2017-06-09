@@ -91,15 +91,18 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     if (ifIndex > 1) {
                         logger.i("", "-> $start")
 
+                        var delta = g1.length
+                        val gReplaced = g1.replace(">", "_$ifIndex>")
                         val replaced = StringBuilder()
                                 .append(content.substring(0, start))
-                                .append(tags.ifOpen.replace(">", "_$ifIndex>"))
+                                .append(gReplaced)
                                 .append(content.substring(start + g1.length, content.length))
                                 .toString()
+                        delta = gReplaced.length - delta
 
                         logger.e("", "-> $replaced")
                         content = replaced
-                        replacedCount -= 2
+                        replacedCount -= delta
 
 //
 //                        content = StringBuilder()
