@@ -92,7 +92,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                         logger.i("", "-> $start")
 
                         var delta = g1.length
-                        val gReplaced = g1.replace(">", "_$ifIndex>")
+                        val gReplaced = g1.replace(tags.tagEnd, "_$ifIndex${tags.tagEnd}")
                         val replaced = StringBuilder()
                                 .append(content.substring(0, start))
                                 .append(gReplaced)
