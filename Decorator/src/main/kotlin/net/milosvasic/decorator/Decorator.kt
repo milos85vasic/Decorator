@@ -74,7 +74,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         // Parse 'Include' - END
 
         var ifIndex = 0
-        var lastIfIndex = 0
+        var highestIfIndex = 0
         var replacementDelta = 0
         val patternTag = Pattern.compile("(${tags.ifOpen}|${tags.ifClose}|${tags.endIf})")
         val matcherTag = patternTag.matcher(content)
@@ -102,7 +102,9 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             when (g1) {
                 tags.ifOpen -> {
                     ifIndex++
-                    lastIfIndex = ifIndex
+                    if(ifIndex > highestIfIndex) {
+                        highestIfIndex = ifIndex
+                    }
                     if (ifIndex > 1) {
                         replace()
                     }
@@ -121,17 +123,14 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             }
         }
 
-        logger.n("", "-> $ifIndex $lastIfIndex")
-
         // Parse 'If'
-        for (x in lastIfIndex downTo 1) {
+        for (x in highestIfIndex downTo 1) {
             val pattern : String
             if(x == 1){
                 pattern = "${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}"
             } else {
                 pattern = "${tags.tagStart}if_$x${tags.tagEnd}(.+?)${tags.tagClosedStart}if_$x${tags.tagEnd}(.+?)${tags.tagStart}endif_$x${tags.tagClosedEnd}"
             }
-            logger.c("", "-> $x $pattern")
             val patternIf = Pattern.compile(pattern)
             var matcherIf = patternIf.matcher(content)
             while (matcherIf.find()) {
