@@ -153,10 +153,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     }
                 } else {
                     if (g2.contains(tags.elseTag)) {
-                        // logger.c("", "-> $g2")
                         val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
-                        // logger.c("", "-> $replaceWith")
-                        // logger.c("", "-> $replace")
                         content = content.replaceFirst(replace, replaceWith)
                     } else {
                         content = content.replaceFirst(replace, "")
