@@ -73,11 +73,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         }
         // Parse 'Include' - END
 
-
         var ifIndex = 0
         var lastIfIndex = 0
         var replacementDelta = 0
-        val patternTag = Pattern.compile("(<.+?>)")
+        val patternTag = Pattern.compile("(${tags.ifOpen}|${tags.ifClose}|${tags.endIf})")
         val matcherTag = patternTag.matcher(content)
         while (matcherTag.find()) {
             val g1 = matcherTag.group(1)
