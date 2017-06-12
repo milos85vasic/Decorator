@@ -18,6 +18,7 @@ class ForeachTest {
         val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
         val data = DataBuilder()
                 .append("something", "nice!")
+                .append("footer", "f.o.o.t.e.r.")
                 .append(
                         "storage",
                         DataBuilder()
