@@ -50,8 +50,26 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val data = getData(ctx)
             if (data is Collection) {
                 val count = data.items.count()
-                val replaceWith = g2.repeat(count)
-                content = content.replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}$g2${tags.endFor}", replaceWith)
+                val replaceWith = StringBuilder()
+                for(x in 0..count){
+                    var replaced = g2
+                    val patternDcs = Pattern.compile("${tags.open}(.+?)${tags.close}")
+                    val matcherDcs = patternDcs.matcher(replaced)
+                    while(matcherDcs.find()){
+                        val g1dcs = matcherDcs.group(1)
+                        val ctxDcs = g1dcs.trim()
+                        when(ctxDcs){
+                            tags.indexTag -> {
+                                replaced = replaced.replaceFirst("${tags.open}$g1dcs${tags.close}", x.toString())
+                            }
+                        }
+                    }
+                    replaceWith.append(replaced)
+                }
+                content = content.replaceFirst(
+                        "${tags.foreachOpen}$g1${tags.foreachClose}$g2${tags.endFor}",
+                        replaceWith.toString()
+                )
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
         }
         // Parse 'For' - END
@@ -168,6 +186,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         val matcherData = patternData.matcher(content)
         while (matcherData.find()) {
             val g1 = matcherData.group(1)
+            logger.c("", "-> $g1")
             val ctx = g1.trim()
             val value = resolve(ctx)
             content = content.replaceFirst("${tags.open}$g1${tags.close}", value)

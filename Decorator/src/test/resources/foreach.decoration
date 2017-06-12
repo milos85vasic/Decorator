@@ -11,7 +11,11 @@ try me
 //            Worker:
 //            Index [ <dc><index></dc> ]
 //            First name: [ <if>   <item>.firstName</if><dc><item>.firstName</dc><else>- - -<endif/> ]
-            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
+            <dc> <index></dc>
+            <dc> <index> </dc>
+            <dc><index>   </dc>
+            <dc><index>   </dc> dsdsds <dc><index></dc> kssksks <dc><index></dc> dkdd
+            //Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
 //            Status: [ <dc>something</dc> ]
 //            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
         </a>
@@ -29,7 +33,8 @@ try me
 <ul>
 <foreach>storage.stuff</foreach> dd
     <li>
-        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
+        <dc><index></dc>
+        //<a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
 
 
     </li>
@@ -41,7 +46,8 @@ try me
 <ul>
 <foreach>storage.no_stuff</foreach>
     <li>
-        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
+        <dc><index></dc>
+        // <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
     </li>
 <endfor/>
 </ul>
