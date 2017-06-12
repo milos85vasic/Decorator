@@ -51,7 +51,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (data is Collection) {
                 val count = data.items.count()
                 val replaceWith = StringBuilder()
-                for(x in 0..count){
+                for(x in 0..count - 1){
                     var replaced = g2
                     val patternDcs = Pattern.compile("${tags.open}(.+?)${tags.close}")
                     val matcherDcs = patternDcs.matcher(replaced)
