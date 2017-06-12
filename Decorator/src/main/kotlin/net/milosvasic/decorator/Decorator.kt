@@ -41,18 +41,17 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 .replace("\n", tags.newLine)
 
         // Parse 'For'
-        val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)(${tags.endFor})")
+        val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
         val matcherFor = patternFor.matcher(content)
         while (matcherFor.find()) {
             val g1 = matcherFor.group(1)
             val g2 = matcherFor.group(2)
-            val g3 = matcherFor.group(3)
             val ctx = g1.trim()
             val data = getData(ctx)
             if (data is Collection) {
                 val count = data.items.count()
                 val replaceWith = g2.repeat(count)
-                content = content.replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}$g2$g3", replaceWith)
+                content = content.replaceFirst("${tags.foreachOpen}$g1${tags.foreachClose}$g2${tags.endFor}", replaceWith)
             } else throw IllegalStateException(Messages.ONLY_COLLECTION_ALLOWED(template))
         }
         // Parse 'For' - END
