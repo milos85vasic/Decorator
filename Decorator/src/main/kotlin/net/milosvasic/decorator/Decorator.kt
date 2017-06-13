@@ -209,7 +209,11 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         if (tdata == null) {
             val it = key.trim().split(memberSeparator.value).iterator()
             if (it.hasNext()) {
-                tdata = data.content[it.next()]
+                val next = it.next()
+
+                logger.c("", "-> $next")
+
+                tdata = data.content[next]
             }
             while (tdata != null && it.hasNext()) {
                 when (tdata) {
