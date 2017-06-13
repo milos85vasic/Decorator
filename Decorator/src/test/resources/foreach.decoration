@@ -1,4 +1,7 @@
-<p><dc>workers[0].firstName</dc></p>
+<p>
+Name: <dc>workers[0].firstName</dc>
+Last name: <dc>workers[0].lastName</dc>
+</p>
 /*
 try me
 */
