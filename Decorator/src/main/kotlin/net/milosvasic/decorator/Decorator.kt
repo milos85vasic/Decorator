@@ -64,7 +64,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                             }
                             else -> {
                                 if (ctxDcs.startsWith(tags.itemTag)) {
-                                    logger.c("", "ITEM")
+                                    val itemData = getData(g1)
+                                    logger.c("", "ITEM [ $itemData ]")
                                 }
                             }
                         }
