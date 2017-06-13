@@ -5,20 +5,20 @@ Last name: <dc>workers[0].lastName</dc>
 /*
 try me
 */
-//<ul> /* ??? */ ok
-///* ok2
-//  */
-//<foreach>misc</foreach> // Some Foreach...
-//    <li>
-//        <a href="/<dc><index></dc>">
-//            Index [ <dc><index></dc> ]
-//            Item [ <dc><item></dc> ]
-//        </a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//---
+<ul> /* ??? */ ok
+/* ok2
+  */
+<foreach>misc</foreach> // Some Foreach...
+    <li>
+        <a href="/<dc><index></dc>">
+            Index [ <dc><index></dc> ]
+            Item [ <dc><item></dc> ]
+        </a>
+    </li>
+<endfor/>
+</ul>
+
+---
 
 //<ul> /* ??? */ ok
 ///* ok2
@@ -128,17 +128,8 @@ try me
 //<endfor/>
 //</ul>
 
----
+//---
 
-//<dc>decorator.describe</dc>
-//<?xml version="1.0" encoding="UTF-8"?>
-//<!DOCTYPE html PUBLIC <dc>decorator.doctype</dc>>
-//<html <dc>decorator.xmlns</dc> xml:lang="en" lang="en">
-//<head>
-//  <title>Foreach test</title>
-//</head>
-//<body>
-//
 //<ul>
 //<foreach>names</foreach>
 //    <li>Item [ <dc><index></dc> ][ <dc><item></dc> ]</li>
@@ -206,6 +197,3 @@ try me
 //    <endif/>
 //<endfor/>
 //</ul>
-//
-//</body>
-//</html>
