@@ -69,15 +69,16 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                                     when(item){
                                         is Collection -> {
                                             val child = item.items[x]
+                                            logger.c("", "-> $child")
                                             when(child){
                                                 is Value -> {
-                                                    logger.c("", "--> ${child.content}")
+                                                    logger.i("", "--> ${child.content}")
                                                     replaced = replaced.replaceFirst(
                                                             "${tags.open}$g1dcs${tags.close}", child.content
                                                     )
                                                 }
                                                 is Data -> {
-                                                    logger.c("", ". . . . .")
+                                                    logger.i("", ". . . . .")
                                                 }
                                             }
                                         }
@@ -211,7 +212,6 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         val matcherData = patternData.matcher(content)
         while (matcherData.find()) {
             val g1 = matcherData.group(1)
-            logger.c("", "-> $g1")
             val ctx = g1.trim()
             val value = resolve(ctx)
             content = content.replaceFirst("${tags.open}$g1${tags.close}", value)
