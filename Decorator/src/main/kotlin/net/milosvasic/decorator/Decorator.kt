@@ -21,6 +21,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     override val tags = DecoratorTags()
     override val templateExtension = "decoration"
     override val memberSeparator = Separator.MEMBER()
+    override val arrayOpenSeparator = Separator.ARRAY_OPEN()
+    override val arrayCloseSeparator = Separator.ARRAY_CLOSE()
     override val templateMainClass = DecoratorTemplateClass()
 
     private val tautology = Tautology()
@@ -212,6 +214,17 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 val next = it.next()
 
                 logger.c("", "-> $next")
+
+                val pattern = "(.+?)${arrayOpenSeparator.value}(.+?)${arrayCloseSeparator.value}"
+                logger.w("", "-> $pattern")
+                val patternArrayAccess = Pattern.compile(pattern)
+                val matcherArrayAccess = patternArrayAccess.matcher(next)
+                while(matcherArrayAccess.find()){
+                    val g1 = matcherArrayAccess.group(1)
+                    val g2 = matcherArrayAccess.group(2)
+
+                    logger.c("", "-> -> $g1 $g2")
+                }
 
                 tdata = data.content[next]
             }

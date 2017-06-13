@@ -8,4 +8,8 @@ object Separator {
 
     class MEMBER : MemberSeparator(".")
 
+    class ARRAY_OPEN : MemberSeparator("[")
+
+    class ARRAY_CLOSE : MemberSeparator("]")
+
 }
