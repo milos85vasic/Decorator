@@ -212,21 +212,24 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val it = key.trim().split(memberSeparator.value).iterator()
             if (it.hasNext()) {
                 val next = it.next()
-
-                logger.c("", "-> $next")
-
-                val pattern = "(.+?)${arrayOpenSeparator.value}(.+?)${arrayCloseSeparator.value}"
-                logger.w("", "-> $pattern")
+                var matched = false
+                val pattern = "(.+?)\\${arrayOpenSeparator.value}(.*?)\\${arrayCloseSeparator.value}"
                 val patternArrayAccess = Pattern.compile(pattern)
                 val matcherArrayAccess = patternArrayAccess.matcher(next)
-                while(matcherArrayAccess.find()){
+                while (matcherArrayAccess.find()) {
+                    matched = true
                     val g1 = matcherArrayAccess.group(1)
                     val g2 = matcherArrayAccess.group(2)
-
-                    logger.c("", "-> -> $g1 $g2")
+                    val arrayData = getData(g1)
+                    if (arrayData is Collection) {
+                        tdata = arrayData.items[g2.toInt()]
+                    } else {
+                        throw IllegalArgumentException(Messages.ONLY_COLLECTION_ALLOWED(template))
+                    }
                 }
-
-                tdata = data.content[next]
+                if (!matched) {
+                    tdata = data.content[next]
+                }
             }
             while (tdata != null && it.hasNext()) {
                 when (tdata) {
