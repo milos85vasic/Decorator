@@ -67,6 +67,10 @@ class ForeachTest {
                                 data().get("model", "Kia")
                         )
                 )
+                .append(
+                        "misc",
+                        listOf("First", "Second", "Third")
+                )
                 .build()
 
         var html = ""

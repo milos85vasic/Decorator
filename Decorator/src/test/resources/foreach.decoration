@@ -4,20 +4,13 @@ try me
 <ul> /* ??? */ ok
 /* ok2
   */
-<foreach>    cars   </foreach> // Some Foreach...
-    <if>something</if>
+<foreach>misc</foreach> // Some Foreach...
     <li>
         <a href="/<dc><index></dc>">
-            Car:
             Index [ <dc><index></dc> ]
-            Vehicle [ <dc><item></dc> ]
+            Item [ <dc><item></dc> ]
         </a>
     </li>
-    <else>
-    <li>
-        <a href="/home">Home</a>
-    </li>
-    <endif/>
 <endfor/>
 </ul>
 

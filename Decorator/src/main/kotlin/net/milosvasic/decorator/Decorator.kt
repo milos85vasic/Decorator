@@ -69,10 +69,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                                     when(item){
                                         is Collection -> {
                                             val child = item.items[x]
-                                            logger.c("", "-> $child")
                                             when(child){
                                                 is Value -> {
-                                                    logger.i("", "--> ${child.content}")
                                                     replaced = replaced.replaceFirst(
                                                             "${tags.open}$g1dcs${tags.close}", child.content
                                                     )
