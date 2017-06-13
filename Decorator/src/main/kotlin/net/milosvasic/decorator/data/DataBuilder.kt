@@ -30,7 +30,7 @@ class DataBuilder : DataBuilderAbstract() {
     }
 
     override fun append(key: String, iterable: Iterable<TemplateData>): DataBuilder {
-        data.content[key] = Collection(iterable)
+        data.content[key] = Collection(iterable.toList())
         return this
     }
 

@@ -61,11 +61,30 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                         when (ctxDcs) {
                             tags.indexTag -> {
                                 replaced = replaced.replaceFirst("${tags.open}$g1dcs${tags.close}", x.toString())
+
                             }
                             else -> {
                                 if (ctxDcs.startsWith(tags.itemTag)) {
-                                    val itemData = getData(g1)
-                                    logger.c("", "ITEM [ $itemData ]")
+                                    val item = getData(g1)
+                                    when(item){
+                                        is Collection -> {
+                                            val child = item.items[x]
+                                            when(child){
+                                                is Value -> {
+                                                    logger.c("", "--> ${child.content}")
+                                                    replaced = replaced.replaceFirst(
+                                                            "${tags.open}$g1dcs${tags.close}", child.content
+                                                    )
+                                                }
+                                                is Data -> {
+                                                    logger.c("", ". . . . .")
+                                                }
+                                            }
+                                        }
+                                        else -> {
+                                            throw IllegalArgumentException(Messages.ONLY_COLLECTION_ALLOWED(template))
+                                        }
+                                    }
                                 }
                             }
                         }
