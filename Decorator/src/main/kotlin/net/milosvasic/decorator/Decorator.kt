@@ -51,16 +51,21 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (data is Collection) {
                 val count = data.items.count()
                 val replaceWith = StringBuilder()
-                for(x in 0..count - 1){
+                for (x in 0..count - 1) {
                     var replaced = g2
                     val patternDcs = Pattern.compile("${tags.open}(.+?)${tags.close}")
                     val matcherDcs = patternDcs.matcher(replaced)
-                    while(matcherDcs.find()){
+                    while (matcherDcs.find()) {
                         val g1dcs = matcherDcs.group(1)
                         val ctxDcs = g1dcs.trim()
-                        when(ctxDcs){
+                        when (ctxDcs) {
                             tags.indexTag -> {
                                 replaced = replaced.replaceFirst("${tags.open}$g1dcs${tags.close}", x.toString())
+                            }
+                            else -> {
+                                if (ctxDcs.startsWith(tags.itemTag)) {
+                                    logger.c("", "ITEM")
+                                }
                             }
                         }
                     }
@@ -119,7 +124,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             when (g1) {
                 tags.ifOpen -> {
                     ifIndex++
-                    if(ifIndex > highestIfIndex) {
+                    if (ifIndex > highestIfIndex) {
                         highestIfIndex = ifIndex
                     }
                     if (ifIndex > 1) {
@@ -142,8 +147,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         // Parse 'If'
         for (x in highestIfIndex downTo 1) {
-            val pattern : String
-            if(x == 1){
+            val pattern: String
+            if (x == 1) {
                 pattern = "${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}"
             } else {
                 pattern = "${tags.tagStart}if_$x${tags.tagEnd}(.+?)${tags.tagClosedStart}if_$x${tags.tagEnd}(.+?)${tags.tagStart}endif_$x${tags.tagClosedEnd}"
@@ -155,8 +160,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 val g2 = matcherIf.group(2)
                 val ctx = g1.trim()
                 val result = resolveIf(ctx)
-                val replace : String
-                if(x == 1){
+                val replace: String
+                if (x == 1) {
                     replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
                 } else {
                     replace = "${tags.tagStart}if_$x${tags.tagEnd}$g1${tags.tagClosedStart}if_$x${tags.tagEnd}$g2${tags.tagStart}endif_$x${tags.tagClosedEnd}"

@@ -10,8 +10,8 @@ try me
         <a href="/<dc><index></dc>">
             Worker:
             Index [ <dc><index></dc> ]
-//            First name: [ <if>   <item>.firstName</if><dc><item>.firstName</dc><else>- - -<endif/> ]
-            //Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
+            First name: [ <if>   <item>.firstName</if><dc><item>.firstName</dc><else>- - -<endif/> ]
+            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
 //            Status: [ <dc>something</dc> ]
 //            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
         </a>
@@ -24,65 +24,69 @@ try me
 <endfor/>
 </ul>
 
----
+//---
+//
+//<foreach>    workers   </foreach> // Some Foreach...
+//    <if>something</if>
+//    <li>
+//        <a href="/<dc><index></dc>">
+//            <dc> <index></dc>
+//            <dc> <index> </dc>
+//            <dc><index>   </dc>
+//            <dc><index>   </dc> dsdsds <dc><index></dc> kssksks <dc><index></dc> dkdd
+//        </a>
+//    </li>
+//    <else>
+//    <li>
+//        <a href="/home">Home</a>
+//    </li>
+//    <endif/>
+//<endfor/>
+//</ul>
+//
+//---
+//
+//<ul>
+//<foreach>storage.stuff</foreach> dd
+//    <li>
+//        <dc><index></dc>
+//        //<a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
+//
+//
+//    </li>
+//<endfor/>
+//</ul>
+//
+//---
+//
+//<ul>
+//<foreach>storage.no_stuff</foreach>
+//    <li>
+//        <dc><index></dc>
+//        // <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
+//    </li>
+//<endfor/>
+//</ul>
+//
+//---
+//
+//<include>footer</include>
+//
+//---
+//
+//<ul>
+//<foreach>storage.stuff</foreach>
+//    <li>
+//        <include>footer</include>
+//    </li>
+//<endfor/>
+//</ul>
+//
+//---
 
-<foreach>    workers   </foreach> // Some Foreach...
-    <if>something</if>
-    <li>
-        <a href="/<dc><index></dc>">
-            <dc> <index></dc>
-            <dc> <index> </dc>
-            <dc><index>   </dc>
-            <dc><index>   </dc> dsdsds <dc><index></dc> kssksks <dc><index></dc> dkdd
-        </a>
-    </li>
-    <else>
-    <li>
-        <a href="/home">Home</a>
-    </li>
-    <endif/>
-<endfor/>
-</ul>
-
----
-
-<ul>
-<foreach>storage.stuff</foreach> dd
-    <li>
-        <dc><index></dc>
-        //<a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
 
 
-    </li>
-<endfor/>
-</ul>
 
----
-
-<ul>
-<foreach>storage.no_stuff</foreach>
-    <li>
-        <dc><index></dc>
-        // <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
-    </li>
-<endfor/>
-</ul>
-
----
-
-<include>footer</include>
-
----
-
-<ul>
-<foreach>storage.stuff</foreach>
-    <li>
-        <include>footer</include>
-    </li>
-<endfor/>
-</ul>
-
----
 
 //<ul>
 //<foreach>workers</foreach>
