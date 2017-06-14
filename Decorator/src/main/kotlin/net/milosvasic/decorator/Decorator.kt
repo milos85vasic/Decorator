@@ -55,23 +55,10 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 val replaceWith = StringBuilder()
                 for (x in 0..count - 1) {
                     var replaced = g2
-                    val patternDcs = Pattern.compile("${tags.open}(.+?)${tags.close}")
-                    val matcherDcs = patternDcs.matcher(replaced)
-                    while (matcherDcs.find()) {
-                        val g1dcs = matcherDcs.group(1)
-                        val ctxDcs = g1dcs.trim()
-                        when (ctxDcs) {
-                            tags.indexTag -> {
-                                replaced = replaced.replaceFirst("${tags.open}$g1dcs${tags.close}", x.toString())
 
-                            }
-                            else -> {
-                                if (ctxDcs.startsWith(tags.itemTag)) {
-                                    replaced = replaced.replaceFirst(tags.itemTag, "$ctx[$x]")
-                                }
-                            }
-                        }
-                    }
+                    replaced = replaced.replace(tags.indexTag, x.toString())
+                    replaced = replaced.replace(tags.itemTag, "$ctx[$x]")
+
                     replaceWith.append(replaced)
                 }
                 content = content.replaceFirst(
@@ -209,6 +196,9 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     }
 
     private fun getData(key: String): TemplateData? {
+
+        logger.c("", "-> $key")
+
         var tdata = keyCacheData[key]
         if (tdata == null) {
             val it = key.trim().split(memberSeparator.value).iterator()
