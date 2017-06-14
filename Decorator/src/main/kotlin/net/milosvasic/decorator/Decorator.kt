@@ -98,6 +98,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         }
         // Parse 'Include' - END
 
+        // Mark nested 'If's
         var ifIndex = 0
         var highestIfIndex = 0
         var replacementDelta = 0
@@ -147,6 +148,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 }
             }
         }
+        // Mark nested 'If's - END.
 
         // Parse 'If'
         for (x in highestIfIndex downTo 1) {
