@@ -194,6 +194,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     }
 
     private fun getData(key: String): TemplateData? {
+        logger.w("", "-> $key")
+
         var tdata = keyCacheData[key]
         if (tdata == null) {
             val it = key.trim().split(memberSeparator.value).iterator()
@@ -207,6 +209,9 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     matched = true
                     val g1 = matcherArrayAccess.group(1)
                     val g2 = matcherArrayAccess.group(2)
+
+                    logger.c("", "-> $g1, $g2")
+
                     val arrayData = getData(g1)
                     if (arrayData is Collection) {
                         tdata = arrayData.items[g2.toInt()]
