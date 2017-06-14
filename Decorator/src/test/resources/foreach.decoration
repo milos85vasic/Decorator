@@ -12,7 +12,7 @@ try me
     <li>
         <a href="/<index>">
             Index [ <index> ]
-            Item [ <item> ]
+            Item [ <dc><item></dc> ]
         </a>
     </li>
 <endfor/>
@@ -26,7 +26,7 @@ try me
 <foreach>    workers   </foreach> // Some Foreach...
     <li>
             <a href="/<index>">
-                Worker: <item>.firstName <item>.lastName
+                Worker: <dc><item>.firstName</dc> <dc><item>.lastName</dc>
                 Index [ <index> ]
 
 //                First name: [ <if>   <item>.firstName</if><item>.firstName<else>- - -<endif/> ]

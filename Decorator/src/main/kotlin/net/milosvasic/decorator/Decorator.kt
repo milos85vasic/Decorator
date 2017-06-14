@@ -246,7 +246,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (data is Collection) {
                 throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(key, template))
             } else {
-                throw IllegalArgumentException(Messages.COULD_NOT_RESOLVE(key, template))
+                return ""
             }
         }
     }
