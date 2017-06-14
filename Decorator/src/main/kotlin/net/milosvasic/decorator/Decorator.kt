@@ -55,10 +55,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 val replaceWith = StringBuilder()
                 for (x in 0..count - 1) {
                     var replaced = g2
-
                     replaced = replaced.replace(tags.indexTag, x.toString())
                     replaced = replaced.replace(tags.itemTag, "$ctx[$x]")
-
                     replaceWith.append(replaced)
                 }
                 content = content.replaceFirst(
