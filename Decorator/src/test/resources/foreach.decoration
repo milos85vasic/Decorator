@@ -86,43 +86,39 @@ try me
 
 ---
 
-//<ul>
-//<foreach>storage.stuff</foreach> dd
-//    <li>
-//        <dc><index></dc>
-//        //<a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
-//
-//
-//    </li>
-//<endfor/>
-//</ul>
-//
-//---
-//
-//<ul>
-//<foreach>storage.no_stuff</foreach>
-//    <li>
-//        <dc><index></dc>
-//        // <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//---
-//
-//<include>footer</include>
-//
-//---
-//
-//<ul>
-//<foreach>storage.stuff</foreach>
-//    <li>
-//        <include>footer</include>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//---
+<ul>
+<foreach>storage.stuff</foreach> dd
+    <li>
+        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+---
+
+<ul>
+<foreach>storage.no_stuff</foreach>
+    <li>
+         <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+---
+
+<include>footer</include>
+
+---
+
+<ul>
+<foreach>storage.stuff</foreach>
+    <li>
+        <include>footer</include>
+    </li>
+<endfor/>
+</ul>
+
+---
 
 
 
