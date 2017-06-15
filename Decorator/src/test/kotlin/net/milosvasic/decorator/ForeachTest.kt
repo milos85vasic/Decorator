@@ -87,13 +87,13 @@ class ForeachTest {
     }
 
     fun assertHtml(html: String) {
-//        val lines = mutableListOf<String>()
-//        lines.addAll(html.split("\n"))
-//        Assert.assertFalse(lines.isEmpty())
-//        lines.removeAt(lines.lastIndex)
-//        Assert.assertFalse(lines.isEmpty())
+        val lines = mutableListOf<String>()
+        lines.addAll(html.split("\n"))
+        Assert.assertFalse(lines.isEmpty())
+        lines.removeAt(lines.lastIndex)
+        Assert.assertFalse(lines.isEmpty())
 
-        // Assert.assertEquals(34, lines.size)
+         Assert.assertEquals(171, lines.size)
     }
 
     @After
