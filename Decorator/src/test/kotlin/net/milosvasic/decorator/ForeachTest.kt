@@ -92,8 +92,11 @@ class ForeachTest {
         Assert.assertFalse(lines.isEmpty())
         lines.removeAt(lines.lastIndex)
         Assert.assertFalse(lines.isEmpty())
-
-         Assert.assertEquals(171, lines.size)
+        Assert.assertEquals("---", lines[0])
+//        Assert.assertEquals("Xxx", lines[1])
+//        Assert.assertEquals("Xxx", lines[1])
+//        Assert.assertEquals("---", lines[3])
+        Assert.assertEquals(171, lines.size)
     }
 
     @After

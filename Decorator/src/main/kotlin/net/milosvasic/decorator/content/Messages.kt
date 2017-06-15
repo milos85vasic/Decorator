@@ -64,6 +64,10 @@ object Messages {
         return "Collection data type not allowed here ${where(template)}"
     }
 
+    fun INVALID_INDEX(key: String, size: Int) : String {
+        return "No results for '$key', size is: $size"
+    }
+
     private fun where(who: String) = "from '$who' template."
 
 }

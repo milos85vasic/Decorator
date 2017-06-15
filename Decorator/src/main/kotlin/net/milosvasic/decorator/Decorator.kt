@@ -208,14 +208,20 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                     matched = true
                     val g1 = matcherArrayAccess.group(1)
                     val g2 = matcherArrayAccess.group(2)
-                    if(tdata is Data) {
+                    if (tdata is Data) {
                         val arrayData = tdata.content[g1]
                         if (arrayData is Collection) {
-                            tdata = arrayData.items[g2.toInt()]
+                            try {
+                                tdata = arrayData.items[g2.toInt()]
+                            } catch (e: IndexOutOfBoundsException) {
+                                throw IllegalArgumentException(
+                                        Messages.INVALID_INDEX(param, arrayData.items.size)
+                                )
+                            }
                         }
                     }
                 }
-                if(!matched){
+                if (!matched) {
                     when (tdata) {
                         is Data -> {
                             tdata = tdata.content[param]
