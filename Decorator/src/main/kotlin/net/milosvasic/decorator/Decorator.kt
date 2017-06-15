@@ -199,8 +199,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             tdata = data
             val it = key.trim().split(memberSeparator.value).iterator()
             while (it.hasNext()) {
-                val param = it.next()
                 var matched = false
+                val param = it.next()
                 val pattern = "(.+?)\\${arrayOpenSeparator.value}(.*?)\\${arrayCloseSeparator.value}"
                 val patternArrayAccess = Pattern.compile(pattern)
                 val matcherArrayAccess = patternArrayAccess.matcher(param)
