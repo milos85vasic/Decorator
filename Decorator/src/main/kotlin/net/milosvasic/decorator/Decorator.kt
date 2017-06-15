@@ -197,7 +197,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         var tdata = keyCacheData[key]
         if (tdata == null) {
 
-            logger.c("", "-> $key")
+            logger.i("", "-> $key")
 
             val it = key.trim().split(memberSeparator.value).iterator()
             while (it.hasNext()) {
