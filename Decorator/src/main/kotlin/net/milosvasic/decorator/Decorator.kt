@@ -196,6 +196,9 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     private fun getData(key: String): TemplateData? {
         var tdata = keyCacheData[key]
         if (tdata == null) {
+
+            logger.c("", "-> $key")
+
             val it = key.trim().split(memberSeparator.value).iterator()
             if (it.hasNext()) {
                 val next = it.next()
