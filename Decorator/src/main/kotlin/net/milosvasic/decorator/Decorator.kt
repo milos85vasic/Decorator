@@ -200,7 +200,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             logger.c("", "-> $key")
 
             val it = key.trim().split(memberSeparator.value).iterator()
-            if (it.hasNext()) {
+            while (it.hasNext()) {
                 val next = it.next()
 
                 logger.w("", "-> $next")
