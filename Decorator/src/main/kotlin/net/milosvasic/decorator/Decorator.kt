@@ -194,13 +194,14 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     }
 
     private fun getData(key: String): TemplateData? {
-        logger.w("", "-> $key")
-
         var tdata = keyCacheData[key]
         if (tdata == null) {
             val it = key.trim().split(memberSeparator.value).iterator()
             if (it.hasNext()) {
                 val next = it.next()
+
+                logger.w("", "-> $next")
+
                 var matched = false
                 val pattern = "(.+?)\\${arrayOpenSeparator.value}(.*?)\\${arrayCloseSeparator.value}"
                 val patternArrayAccess = Pattern.compile(pattern)

@@ -1,14 +1,14 @@
 ---
 <dc>storage.stuff[0]</dc>
 ---
-<ul>
-<foreach>storage.stuff</foreach> dd
-    <li>
-        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
-    </li>
-<endfor/>
-</ul>
----
+//<ul>
+//<foreach>storage.stuff</foreach> dd
+//    <li>
+//        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
+//    </li>
+//<endfor/>
+//</ul>
+//---
 
 //<p>
 //Name: <dc>workers[0].firstName</dc>
