@@ -91,6 +91,29 @@ class ForeachTest {
                 """---
 Xxx
 Zzz
+---""",
+"""<ul>
+ dd
+    <li>
+        <a href="/0">Item [ 0 ][ Xxx ]</a>
+    </li>
+ dd
+    <li>
+        <a href="/1">Item [ 1 ][ Yyy ]</a>
+    </li>
+ dd
+    <li>
+        <a href="/2">Item [ 2 ][ Zzz ]</a>
+    </li>
+ dd
+    <li>
+        <a href="/3">Item [ 3 ][ 111 ]</a>
+    </li>
+ dd
+    <li>
+        <a href="/4">Item [ 4 ][ 222 ]</a>
+    </li>
+</ul>
 ---"""
         )
 
