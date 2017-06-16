@@ -87,16 +87,17 @@ class ForeachTest {
     }
 
     fun assertHtml(html: String) {
-        val lines = mutableListOf<String>()
-        lines.addAll(html.split("\n"))
-        Assert.assertFalse(lines.isEmpty())
-        lines.removeAt(lines.lastIndex)
-        Assert.assertFalse(lines.isEmpty())
-        Assert.assertEquals("---", lines[0])
-        Assert.assertEquals("Xxx", lines[1])
-        Assert.assertEquals("Zzz", lines[2])
-        Assert.assertEquals("---", lines[3])
-        Assert.assertEquals(172, lines.size)
+        val assertionItems = listOf(
+                """---
+Xxx
+Zzz
+---"""
+        )
+
+        assertionItems.forEach {
+            item ->
+            Assert.assertTrue(item in html)
+        }
     }
 
     @After
