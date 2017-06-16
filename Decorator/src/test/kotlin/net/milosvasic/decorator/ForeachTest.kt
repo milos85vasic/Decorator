@@ -250,9 +250,43 @@ Last name: Smith
         <p>Footer text: f.o.o.t.e.r.</p>
     </li>
 </ul>
+---""",
+
+"""<ul>
+    <li>
+        <a href="/">
+            Worker:
+            Index [ 0 ]
+            First name: [ John ]
+            Last name: [ Smith ]
+            Status: [ nice! ]
+            Social skills: [ excellent ]
+        </a>
+    </li>
+    <li>
+        <a href="/">
+            Worker:
+            Index [ 1 ]
+            First name: [ Pera ]
+            Last name: [ Peric ]
+            Status: [ nice! ]
+            Social skills: [ - - - ]
+        </a>
+    </li>
+    <li>
+        <a href="/">
+            Worker:
+            Index [ 2 ]
+            First name: [ Unknown ]
+            Last name: [ - - - ]
+            Status: [ nice! ]
+            Social skills: [ - - - ]
+        </a>
+    </li>
+</ul>
 ---"""
 
-        )
+)
 
         assertionItems.forEach {
             item ->
