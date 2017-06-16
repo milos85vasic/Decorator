@@ -134,62 +134,74 @@ try me
 <endfor/>
 </ul>
 
----
+--- latest stuff
+
+<ul>
+<foreach>names</foreach>
+    <li>Item [ <index> ][ <dc><item></dc> ]</li>
+<endfor/>
+</ul>
+
+...
+
+<ul>
+<foreach>cars</foreach>
+    <li>Item [ <index> ][ <dc><item>.model</dc> ]</li>
+
+<endfor/>
+</ul>
+
+...
 
 //<ul>
-//<foreach>names</foreach>
-//    <li>Item [ <dc><index></dc> ][ <dc><item></dc> ]</li>
+//<foreach>storage.stuff</foreach>
+//    <li>
+//        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
+//
+//
+//    </li>
 //<endfor/>
 //</ul>
 //
-//<ul>
-//<foreach>cars</foreach>
-//    <li>Item [ <dc><index></dc> ][ <dc><item>.model</dc> ]</li>
-//
-//<endfor/>
-//</ul>
+//...
 //
 //<ul>
 //<foreach>storage.stuff</foreach>
 //    <li>
-//        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ]</a>
-//
-//
+//        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ][ <dc>something</dc> ]</a>
 //    </li>
 //<endfor/>
 //</ul>
 //
-//<ul>
-//<foreach>storage.stuff</foreach>
-//    <li>
-//        <a href="/<dc><index></dc>">Item [ <dc><index></dc> ][ <dc><item></dc> ][ <dc>something</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
+//...
 //
 //<ul>
 //<foreach>workers</foreach>
 //    <li>
-//        <a href="/<dc><index></dc>">Worker [ <dc>something</dc> ]</a>
+//        <a href="/<index>">Worker [ <dc>something</dc> ]</a>
 //    </li>
 //<endfor/>
 //</ul>
 //
+//...
+//
 //<ul>
 //<foreach>workers</foreach>
 //    <li>
-//        <a href="/<dc><index></dc>">Worker [ <dc><index></dc> ][ <dc><item>.firstName</dc> ][ <dc><item>.lastName</dc> ][ <dc>something</dc> ][ <dc><item>.skills.social</dc> ]</a>
+//        <a href="/<index>>">Worker [ <index> ][ <dc><item>.firstName</dc> ][ <dc><item>.lastName</dc> ][ <dc>something</dc> ][ <dc><item>.skills.social</dc> ]</a>
 //    </li>
 //<endfor/>
 //</ul>
+//
+//...
 //
 //<ul>
 //<foreach>workers</foreach>
 //    <if>something</if>
 //    <li>
-//        <a href="/<dc><index></dc>">
+//        <a href="/<index>">
 //            Worker:
-//            Index [ <dc><index></dc> ]
+//            Index [ <index> ]
 //            First name: [ <dc><item>.firstName</dc> ]
 //            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
 //            Status: [ <dc>something</dc> ]
