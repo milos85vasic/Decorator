@@ -37,27 +37,6 @@ try me
 /* ok2
   */
 <foreach>    workers   </foreach> // Some Foreach...
-    <li>
-            <a href="/<index>">
-                Worker: <dc><item>.firstName</dc> <dc><item>.lastName</dc>
-                Index [ <index> ]
-
-//                First name: [ <if>   <item>.firstName</if><item>.firstName<else>- - -<endif/> ]
-//                Last name: [ <if><item>.lastName</if><item>.lastName<else>- - -<endif/> ]
-
-    //            Status: [ <dc>something</dc> ]
-    //            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
-            </a>
-    </li>
-<endfor/>
-</ul>
-
----
-
-<ul> /* ??? */ ok
-/* ok2
-  */
-<foreach>    workers   </foreach> // Some Foreach...
     <if>something</if>
     <li>
         <a href="/<index>">
@@ -79,6 +58,7 @@ try me
 
 ---
 
+<ul>
 <foreach>    workers   </foreach> // Some Foreach...
     <if>something</if>
     <li>
@@ -132,12 +112,6 @@ try me
 </ul>
 
 ---
-
-
-
-
-
-
 
 
 
