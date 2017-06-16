@@ -153,38 +153,38 @@ try me
 
 ...
 
-//<ul>
-//<foreach>storage.stuff</foreach>
-//    <li>
-//        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
-//
-//
-//    </li>
-//<endfor/>
-//</ul>
-//
-//...
-//
-//<ul>
-//<foreach>storage.stuff</foreach>
-//    <li>
-//        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ][ <dc>something</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//...
-//
-//<ul>
-//<foreach>workers</foreach>
-//    <li>
-//        <a href="/<index>">Worker [ <dc>something</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//...
-//
+<ul>
+<foreach>storage.stuff</foreach>
+    <li>
+        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ]</a>
+
+
+    </li>
+<endfor/>
+</ul>
+
+...
+
+<ul>
+<foreach>storage.stuff</foreach>
+    <li>
+        <a href="/<index>">Item [ <index> ][ <dc><item></dc> ][ <dc>something</dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+...
+
+<ul>
+<foreach>workers</foreach>
+    <li>
+        <a href="/<index>">Worker [ <dc>something</dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+...
+
 //<ul>
 //<foreach>workers</foreach>
 //    <li>
