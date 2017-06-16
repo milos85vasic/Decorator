@@ -355,7 +355,54 @@ Last name: Smith
         <a href="/2">Worker [ nice! ]</a>
     </li>
 </ul>
-..."""
+...""",
+
+"""<ul>
+    <li>
+        <a href="/0>">Worker [ 0 ][ John ][ Smith ][ nice! ][ excellent ]</a>
+    </li>
+    <li>
+        <a href="/1>">Worker [ 1 ][ Pera ][ Peric ][ nice! ][  ]</a>
+    </li>
+    <li>
+        <a href="/2>">Worker [ 2 ][ Unknown ][  ][ nice! ][  ]</a>
+    </li>
+</ul>
+...""",
+
+
+"""<ul>
+    <li>
+        <a href="/0">
+            Worker:
+            Index [ 0 ]
+            First name: [ John ]
+            Last name: [ Smith ]
+            Status: [ nice! ]
+            Social skills: [ excellent ]
+        </a>
+    </li>
+    <li>
+        <a href="/1">
+            Worker:
+            Index [ 1 ]
+            First name: [ Pera ]
+            Last name: [ Peric ]
+            Status: [ nice! ]
+            Social skills: [ - - - ]
+        </a>
+    </li>
+    <li>
+        <a href="/2">
+            Worker:
+            Index [ 2 ]
+            First name: [ Unknown ]
+            Last name: [ - - - ]
+            Status: [ nice! ]
+            Social skills: [ - - - ]
+        </a>
+    </li>
+</ul>"""
 
 
 )

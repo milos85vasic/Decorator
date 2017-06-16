@@ -185,33 +185,33 @@ try me
 
 ...
 
-//<ul>
-//<foreach>workers</foreach>
-//    <li>
-//        <a href="/<index>>">Worker [ <index> ][ <dc><item>.firstName</dc> ][ <dc><item>.lastName</dc> ][ <dc>something</dc> ][ <dc><item>.skills.social</dc> ]</a>
-//    </li>
-//<endfor/>
-//</ul>
-//
-//...
-//
-//<ul>
-//<foreach>workers</foreach>
-//    <if>something</if>
-//    <li>
-//        <a href="/<index>">
-//            Worker:
-//            Index [ <index> ]
-//            First name: [ <dc><item>.firstName</dc> ]
-//            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
-//            Status: [ <dc>something</dc> ]
-//            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
-//        </a>
-//    </li>
-//    <else>
-//    <li>
-//        <a href="/home">Home</a>
-//    </li>
-//    <endif/>
-//<endfor/>
-//</ul>
+<ul>
+<foreach>workers</foreach>
+    <li>
+        <a href="/<index>>">Worker [ <index> ][ <dc><item>.firstName</dc> ][ <dc><item>.lastName</dc> ][ <dc>something</dc> ][ <dc><item>.skills.social</dc> ]</a>
+    </li>
+<endfor/>
+</ul>
+
+...
+
+<ul>
+<foreach>workers</foreach>
+    <if>something</if>
+    <li>
+        <a href="/<index>">
+            Worker:
+            Index [ <index> ]
+            First name: [ <dc><item>.firstName</dc> ]
+            Last name: [ <if><item>.lastName</if><dc><item>.lastName</dc><else>- - -<endif/> ]
+            Status: [ <dc>something</dc> ]
+            Social skills: [ <if><item>.skills.social</if><dc><item>.skills.social</dc><else>- - -<endif/> ]
+        </a>
+    </li>
+    <else>
+    <li>
+        <a href="/home">Home</a>
+    </li>
+    <endif/>
+<endfor/>
+</ul>
