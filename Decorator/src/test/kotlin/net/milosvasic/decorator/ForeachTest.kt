@@ -88,10 +88,13 @@ class ForeachTest {
 
     fun assertHtml(html: String) {
         val assertionItems = listOf(
-                """---
+
+"""---
 Xxx
 Zzz
 ---""",
+
+
 """<ul>
  dd
     <li>
@@ -114,7 +117,14 @@ Zzz
         <a href="/4">Item [ 4 ][ 222 ]</a>
     </li>
 </ul>
----"""
+---""",
+
+
+"""<p>
+Name: John
+Last name: Smith
+</p>"""
+
         )
 
         assertionItems.forEach {
