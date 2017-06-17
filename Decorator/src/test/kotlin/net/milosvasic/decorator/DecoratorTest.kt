@@ -11,11 +11,10 @@ import org.junit.Test
 class DecoratorTest {
 
     private val tag = ""
-    private val logger = SimpleLogger()
+    val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     @Test
     fun testDecorator() {
-        val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
         val data = DataBuilder()
                 .append("doesNotExist", "")
                 .append("doesExist", "exist!")

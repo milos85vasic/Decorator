@@ -10,10 +10,10 @@ import org.junit.Test
 class IfTest {
 
     private val tag = ""
+    val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     @Test
     fun testForeach() {
-        val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
         val data = DataBuilder()
                 .append("exist", "exist")
                 .append("does_not_exist", "")
