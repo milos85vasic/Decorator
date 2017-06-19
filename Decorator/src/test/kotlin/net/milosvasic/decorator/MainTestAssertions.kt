@@ -22,7 +22,13 @@ object MainTestAssertions {
 
 """<p>If 2 ok.</p>""",
 
-"""If 4 not ok."""
+"""If 4 not ok.""",
+
+"""<p>If 6 not ok.</p>""",
+
+"""<p>If 7 ok.</p>""",
+
+"""<p>If 8 ok.</p>"""
 
     )
 
@@ -32,7 +38,13 @@ object MainTestAssertions {
 
 """<p>If 3 ok.</p>""",
 
-"""<p>If 4 ok.</p>"""
+"""<p>If 4 ok.</p>""",
+
+"""<p>If 5 ok.</p>""",
+
+"""<p>If 6 ok.</p>""",
+
+"""<p>If 8 not ok.</p>"""
 
     )
 

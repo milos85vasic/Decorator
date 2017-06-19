@@ -29,6 +29,26 @@
 <p>If 4 not ok.</p>
 <endif/>
 
+<if>enterprise</if>
+<p>If 5 ok.</p>
+<endif/>
+
+<if>enterprise</if>
+<p>If 6 ok.</p>
+<else>
+<p>If 6 not ok.</p>
+<endif/>
+
+<if>!enterprise</if>
+<p>If 7 ok.</p>
+<endif/>
+
+<if>!enterprise</if>
+<p>If 8 ok.</p>
+<else>
+<p>If 8 not ok.</p>
+<endif/>
+
 
 </body>
 </html>
