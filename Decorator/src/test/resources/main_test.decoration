@@ -10,7 +10,13 @@
 <include>main_test/header</include>
 
 <if>company</if>
-<p>Celebrating 10 years.</p>
+<p>If 1 ok.</p>
+<endif/>
+
+<if>company</if>
+<p>If 2 ok.</p>
+<else>
+<p>If 2 not ok.</p>
 <endif/>
 
 

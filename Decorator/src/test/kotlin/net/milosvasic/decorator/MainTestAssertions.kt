@@ -2,7 +2,7 @@ package net.milosvasic.decorator
 
 object MainTestAssertions {
 
-    val assertions = listOf(
+    val positiveAssertions = listOf(
 
 """!-- Template system: Decorator, https://github.com/milos85vasic/Decorator -->
 <!-- Template system version: 1.0.0 Alpha 1 DEV 1495451759151 -->
@@ -18,7 +18,15 @@ object MainTestAssertions {
 """</body>
 </html>""",
 
-"""<p>Celebrating 10 years.</p>"""
+"""<p>If 1 ok.</p>""",
+
+"""<p>If 2 ok.</p>"""
+
+    )
+
+    val negativeAssertions = listOf(
+
+"""If 2 not ok."""
 
     )
 

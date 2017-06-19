@@ -9,7 +9,6 @@ import org.junit.Test
 class MainTest {
 
     private val tag = ""
-    val assertions = MainTestAssertions.assertions
     val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     @Test
@@ -94,9 +93,13 @@ class MainTest {
     }
 
     fun assertHtml(html: String) {
-        assertions.forEach {
+        MainTestAssertions.positiveAssertions.forEach {
             item ->
             Assert.assertTrue(item in html)
+        }
+        MainTestAssertions.negativeAssertions.forEach {
+            item ->
+            Assert.assertFalse(item in html)
         }
     }
 
