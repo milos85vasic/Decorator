@@ -9,6 +9,7 @@ import org.junit.Test
 class MainTest {
 
     private val tag = ""
+    val assertions = MainTestAssertions
     val logger = SimpleLogger(VariantsConfiguration(BuildConfig.VARIANT, listOf("DEV")))
 
     @Test
@@ -94,9 +95,8 @@ class MainTest {
 
     fun assertHtml(html: String) {
         val assertionItems = listOf(
-                """"""
+            assertions.TOP
         )
-
         assertionItems.forEach {
             item ->
             Assert.assertTrue(item in html)
