@@ -1,1 +1,16 @@
+<if>company</if><p>If 1a ok.</p><endif/>
+
+<if>company</if><p>If 2a ok.</p><else><p>If 2a not ok.</p><endif/>
+
+<if>!company</if><p>If 3a ok.</p><endif/>
+
+<if>!company</if><p>If 4a ok.</p><else><p>If 4a not ok.</p><endif/>
+
+<if>enterprise</if><p>If 5a ok.</p><endif/>
+
+<if>enterprise</if><p>If 6a ok.</p><else><p>If 6a not ok.</p><endif/>
+
+<if>!enterprise</if><p>If 7a ok.</p><endif/>
+
+<if>!enterprise</if><p>If 8a ok.</p><else><p>If 8a not ok.</p><endif/>
 
