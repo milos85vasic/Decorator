@@ -95,7 +95,8 @@ class MainTest {
 
     fun assertHtml(html: String) {
         val assertionItems = listOf(
-            assertions.TOP
+                assertions.TOP,
+                assertions.BOTTOM
         )
         assertionItems.forEach {
             item ->

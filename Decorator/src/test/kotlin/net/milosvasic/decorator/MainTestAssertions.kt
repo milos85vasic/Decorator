@@ -13,6 +13,7 @@ object MainTestAssertions {
 <body>
 <h1>Umbrella Corporation</h1>"""
 
-
+    val BOTTOM = """</body>
+</html>"""
 
 }
