@@ -20,13 +20,19 @@ object MainTestAssertions {
 
 """<p>If 1 ok.</p>""",
 
-"""<p>If 2 ok.</p>"""
+"""<p>If 2 ok.</p>""",
+
+"""If 4 not ok."""
 
     )
 
     val negativeAssertions = listOf(
 
-"""If 2 not ok."""
+"""If 2 not ok.""",
+
+"""<p>If 3 ok.</p>""",
+
+"""<p>If 4 ok.</p>"""
 
     )
 

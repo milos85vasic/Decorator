@@ -19,6 +19,16 @@
 <p>If 2 not ok.</p>
 <endif/>
 
+<if>!company</if>
+<p>If 3 ok.</p>
+<endif/>
+
+<if>!company</if>
+<p>If 4 ok.</p>
+<else>
+<p>If 4 not ok.</p>
+<endif/>
+
 
 </body>
 </html>
