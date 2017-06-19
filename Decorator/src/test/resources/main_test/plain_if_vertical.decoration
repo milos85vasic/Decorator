@@ -1,0 +1,39 @@
+<if>company</if>
+<p>If 1 ok.</p>
+<endif/>
+
+<if>company</if>
+<p>If 2 ok.</p>
+<else>
+<p>If 2 not ok.</p>
+<endif/>
+
+<if>!company</if>
+<p>If 3 ok.</p>
+<endif/>
+
+<if>!company</if>
+<p>If 4 ok.</p>
+<else>
+<p>If 4 not ok.</p>
+<endif/>
+
+<if>enterprise</if>
+<p>If 5 ok.</p>
+<endif/>
+
+<if>enterprise</if>
+<p>If 6 ok.</p>
+<else>
+<p>If 6 not ok.</p>
+<endif/>
+
+<if>!enterprise</if>
+<p>If 7 ok.</p>
+<endif/>
+
+<if>!enterprise</if>
+<p>If 8 ok.</p>
+<else>
+<p>If 8 not ok.</p>
+<endif/>
