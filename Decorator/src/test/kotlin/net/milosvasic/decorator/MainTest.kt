@@ -72,7 +72,7 @@ class MainTest {
                                                 "skills",
                                                 data()
                                                         .append("social", "fair")
-                                                        .append("engineer", "excelent")
+                                                        .append("engineer", "excellent")
                                         )
                                         .build()
                         )
