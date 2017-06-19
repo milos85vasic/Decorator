@@ -412,9 +412,4 @@ Last name: Smith
         }
     }
 
-    @After
-    fun afterTest() {
-        // TODO: TBD.
-    }
-
 }

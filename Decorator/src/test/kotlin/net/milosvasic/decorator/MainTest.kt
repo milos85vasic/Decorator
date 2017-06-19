@@ -3,6 +3,7 @@ package net.milosvasic.decorator
 import net.milosvasic.decorator.data.data
 import net.milosvasic.logger.SimpleLogger
 import net.milosvasic.logger.VariantsConfiguration
+import org.junit.Assert
 import org.junit.Test
 
 class MainTest {
@@ -78,7 +79,28 @@ class MainTest {
                 .append("coworkers", data().build())
                 .build()
 
+        var html = ""
+        val decorator = Decorator("main_test", data)
+        for (x in 0..10) { // Repeat a few times to see timings.
+            val start = System.currentTimeMillis()
+            html = decorator.getContent()
+            val end = System.currentTimeMillis() - start
+            logger.i(tag, "Template generated in $end ms.")
+            assertHtml(html) // Check if we got valid result.
+        }
 
+        logger.v("", html)
+    }
+
+    fun assertHtml(html: String) {
+        val assertionItems = listOf(
+                """"""
+        )
+
+        assertionItems.forEach {
+            item ->
+            Assert.assertTrue(item in html)
+        }
     }
 
 }
