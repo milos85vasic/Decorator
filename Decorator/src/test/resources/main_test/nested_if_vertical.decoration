@@ -229,3 +229,50 @@
     Never happen 2
 <endif/>
 
+<if>enterprise || company</if> // FIXME: Does not resolve condition properly!
+dfdfdfdfd
+<else>
+xxx
+<endif/>
+
+<if>enterprise && !company</if>
+    <if>enterprise</if>
+        Never happen B
+    <else>
+        <if>company</if>
+            We have company!  B
+            <if>!company</if>
+                Never happen 4 B
+            <else>
+                And the rest of text... Bs
+            <endif/>
+        <else>
+            Never happen 3 B
+        <endif/>
+    <endif/>
+<else>
+    <if>enterprise || company</if>
+            <if>company && !enterprise</if>
+                            We have company! B
+                            <if>!company || </if>
+                                Never happen 4 B
+                            <else>
+                                And the rest of text... B
+                            <endif/>
+                        <else>
+                            Never happen 3 B
+                        <endif/>
+        <else>
+            <if>company</if>
+                We have company! B2s
+                <if>!company</if>
+                    Never happen 4 B2s
+                <else>
+                    And the rest of text... B2s
+                <endif/>
+            <else>
+                Never happen 3 B2s
+            <endif/>
+        <endif/>
+<endif/>
+
