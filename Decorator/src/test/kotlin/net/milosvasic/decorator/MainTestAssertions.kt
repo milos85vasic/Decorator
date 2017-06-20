@@ -66,8 +66,11 @@ object MainTestAssertions {
 
 """    <p>If 2i ok.</p>""",
 
-"""        <p>If 2j not ok.</p>"""
+"""        <p>If 2j not ok.</p>""",
 
+"""<p>If 7b ok.</p>""",
+
+"""        <p>If 8b not ok.</p>"""
 
     )
 
@@ -157,9 +160,21 @@ object MainTestAssertions {
 
 """        <p>If 2j2 not ok.</p>""",
 
-"""        <p>If 3 ok.</p>""",
+"""        <p>If 3b ok.</p>""",
 
-"""        <p>If 3b ok.</p>"""
+"""        <p>If 3b2 ok.</p>""",
+
+"""        <p>If 5b ok.</p>""",
+
+"""        <p>If 6b ok.</p>""",
+
+"""        <p>If 6b not ok.</p>""",
+
+"""        <p>If 7b2 ok.</p>""",
+
+"""           <p>If 7b3 ok.</p>""",
+
+"""<p>If 8b ok.</p>"""
 
     )
 
