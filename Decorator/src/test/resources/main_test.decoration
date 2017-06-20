@@ -10,6 +10,7 @@
 <include>main_test/header</include>
 <include>main_test/plain_if_vertical</include>
 <include>main_test/plain_if_horizontal</include>
+<include>main_test/nested_if_vertical</include>
 
 
 </body>

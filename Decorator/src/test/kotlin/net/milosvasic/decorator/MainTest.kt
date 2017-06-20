@@ -15,6 +15,7 @@ class MainTest {
     fun testDecoratorCompletely() {
         val data = data()
                 .append("company", "Umbrella Corporation")
+                .append("company2", "Umbrella Corporation 2")
                 .append("enterprise", "")
                 .append(
                         "sections",
