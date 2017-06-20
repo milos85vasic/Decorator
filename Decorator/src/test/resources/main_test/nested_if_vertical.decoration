@@ -210,5 +210,22 @@
         <endif/><endif/><endif/>
 <endif/>
 
-// Multiple nesting 3 - 5 levels examples
+<if>!enterprise</if>
+    <if>enterprise</if>
+        Never happen
+    <else>
+        <if>company</if>
+            We have company!
+            <if>!company</if>
+                Never happen 4
+            <else>
+                And the rest of text...
+            <endif/>
+        <else>
+            Never happen 3
+        <endif/>
+    <endif/>
+<else>
+    Never happen 2
+<endif/>
 
