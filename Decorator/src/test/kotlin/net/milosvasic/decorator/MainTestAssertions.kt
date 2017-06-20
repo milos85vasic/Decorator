@@ -2,6 +2,8 @@ package net.milosvasic.decorator
 
 object MainTestAssertions {
 
+    private val tags = DecoratorTags()
+
     val positiveAssertions = listOf(
 
 """!-- Template system: Decorator, https://github.com/milos85vasic/Decorator -->
@@ -174,7 +176,9 @@ object MainTestAssertions {
 
 """           <p>If 7b3 ok.</p>""",
 
-"""<p>If 8b ok.</p>"""
+"""<p>If 8b ok.</p>""",
+
+    tags.ifOpen, tags.ifClose, tags.foreachOpen, tags.foreachClose, tags.open, tags.close, tags.endIf, tags.endFor, tags.tabPlaceholder
 
     )
 
