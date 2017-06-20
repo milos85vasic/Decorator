@@ -60,7 +60,14 @@ object MainTestAssertions {
 
 """        <p>If 2f2 not ok.</p>""",
 
-"""        <p>If 2g2 not ok.</p>"""
+"""        <p>If 2g2 not ok.</p>""",
+
+"""        <p>If 2h not ok.</p>""",
+
+"""    <p>If 2i ok.</p>""",
+
+"""        <p>If 2j not ok.</p>"""
+
 
     )
 
@@ -134,7 +141,21 @@ object MainTestAssertions {
 
 """        <p>If 2g not ok.</p>""",
 
-"""        <p>If 2g2 ok.</p>"""
+"""        <p>If 2g2 ok.</p>""",
+
+"""        <p>If 2h ok.</p>""",
+
+"""    <p>If 2h2 not ok.</p>""",
+
+"""        <p>If 2i2 ok.</p>""",
+
+"""        <p>If 2i not ok.</p>""",
+
+"""        <p>If 2j ok.</p>""",
+
+"""        <p>If 2j2 ok.</p>""",
+
+"""        <p>If 2j2 not ok.</p>"""
 
     )
 
