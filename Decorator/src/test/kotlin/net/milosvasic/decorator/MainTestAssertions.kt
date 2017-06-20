@@ -155,7 +155,11 @@ object MainTestAssertions {
 
 """        <p>If 2j2 ok.</p>""",
 
-"""        <p>If 2j2 not ok.</p>"""
+"""        <p>If 2j2 not ok.</p>""",
+
+"""        <p>If 3 ok.</p>""",
+
+"""        <p>If 3b ok.</p>"""
 
     )
 

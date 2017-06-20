@@ -162,11 +162,22 @@
 
 ---
 
-
+<if>!company</if>
+    <if>company2</if>
+        <p>If 3 ok.</p>
+    <endif/>
+<endif/>
 
 <if>!company</if>
-<p>If 3 ok.</p>
+    <if>!company2</if>
+        <p>If 3b ok.</p>
+    <endif/>
 <endif/>
+
+---
+
+
+
 
 <if>!company</if>
 <p>If 4 ok.</p>
@@ -193,4 +204,6 @@
 <else>
 <p>If 8 not ok.</p>
 <endif/>
+
+// Multiple nesting 3 - 5 levels examples
 
