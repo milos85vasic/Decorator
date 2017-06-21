@@ -183,7 +183,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             val g1 = matcherData.group(1)
             val ctx = g1.trim()
             val value = resolve(ctx)
-            content = content.replaceFirst("${tags.open}$g1${tags.close}", value)
+            content = content.replaceFirst("${tags.open}$g1${tags.close}", value ?: "")
         }
         // Parse data tags - END
 
@@ -236,7 +236,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
         return tdata
     }
 
-    private fun resolve(key: String): String {
+    private fun resolve(key: String): String? {
         val data = getData(key)
         if (data != null && data is Value) {
             return data.content
@@ -244,7 +244,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
             if (data is Collection) {
                 throw IllegalArgumentException(Messages.COLLECTION_NOT_ALLOWED(key, template))
             } else {
-                return ""
+                return null
             }
         }
     }
@@ -252,22 +252,29 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     private fun resolveIf(key: String): Boolean {
         val delegate = object : TautologyParserDelegate {
             override fun getExpressionValue(key: String): ExpressionValue? {
-                val resolve: String
+                val resolve: String?
                 try {
                     resolve = resolve(key)
                 } catch (e: Exception) {
                     return null
                 }
-                return object : ExpressionValue {
-                    override fun getValue(): Boolean {
-                        return !resolve.isEmpty()
+                if (resolve != null) {
+                    return object : ExpressionValue {
+                        override fun getValue(): Boolean {
+                            return !resolve.isEmpty()
+                        }
                     }
                 }
+                return resolve
             }
         }
-        val parser = TautologyParser(delegate)
-        val expressions = parser.parse(key)
-        return tautology.evaluate(expressions)
+        try {
+            val parser = TautologyParser(delegate)
+            val expressions = parser.parse(key)
+            return tautology.evaluate(expressions)
+        } catch (e: Exception) {
+            return false
+        }
     }
 
 }
