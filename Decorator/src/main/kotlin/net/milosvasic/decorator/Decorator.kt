@@ -35,7 +35,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
     }
 
     override fun getContent(): String {
-        val templateFile = javaClass.classLoader.getResource("$template.$templateExtension")
+        val templateFile = javaClass.classLoader.getResource("$template.$templateExtension") ?: throw IllegalArgumentException(Messages.TEMPLATE_DOES_NOT_EXIST(template))
         var content = templateFile.readText()
                 .replace(Regex("${tags.multiLineCommentOpen}(?:.|[\\n\\r])*?${tags.multiLineCommentClose}"), "") // Clean up multiline comments
                 .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments

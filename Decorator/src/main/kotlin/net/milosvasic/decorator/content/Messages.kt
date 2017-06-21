@@ -8,6 +8,10 @@ object Messages {
 
     val UNKNOWN_TEMPLATE_DATA_TYPE = "Unknown type passed."
 
+    fun TEMPLATE_DOES_NOT_EXIST(template: String): String {
+        return "Template '$template' does not exist."
+    }
+
     fun COULD_NOT_RESOLVE(line: String, template: String): String {
         return "Could not resolve '$line' ${where(template)}"
     }
@@ -64,7 +68,7 @@ object Messages {
         return "Collection data type not allowed here ${where(template)}"
     }
 
-    fun INVALID_INDEX(key: String, size: Int) : String {
+    fun INVALID_INDEX(key: String, size: Int): String {
         return "No results for '$key', size is: $size"
     }
 
