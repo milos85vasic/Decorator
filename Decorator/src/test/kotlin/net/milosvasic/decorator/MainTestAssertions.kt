@@ -79,7 +79,10 @@ object MainTestAssertions {
 
 """x1""",
 
-"""x2"""
+"""x2""",
+
+"""                            We have company! B
+                                And the rest of text... B"""
 
     )
 
@@ -196,6 +199,28 @@ object MainTestAssertions {
 """x1 else""",
 
 """x2 else""",
+
+"""        Never happen B""",
+
+"""            We have company!  B""",
+
+"""                Never happen 4 B""",
+
+"""                And the rest of text... Bs""",
+
+"""            Never happen 3 B""",
+
+"""                                Never happen 4 B""",
+
+"""                            Never happen 3 B""",
+
+"""                We have company! B2s""",
+
+"""                    Never happen 4 B2s""",
+
+"""                    And the rest of text... B2s""",
+
+"""                Never happen 3 B2s""",
 
     tags.ifOpen, tags.ifClose, tags.foreachOpen, tags.foreachClose, tags.open, tags.close, tags.endIf, tags.endFor, tags.tabPlaceholder
 
