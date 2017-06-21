@@ -82,7 +82,23 @@ object MainTestAssertions {
 """x2""",
 
 """                            We have company! B
-                                And the rest of text... B"""
+                                And the rest of text... B""",
+
+"""a-1""",
+
+"""a2- else""",
+
+"""a-3""",
+
+"""a-4""",
+
+"""a-5""",
+
+"""a-6""",
+
+"""a7- else""",
+
+"""a-8"""
 
     )
 
@@ -221,6 +237,22 @@ object MainTestAssertions {
 """                    And the rest of text... B2s""",
 
 """                Never happen 3 B2s""",
+
+"""a1- else""",
+
+"""a-2""",
+
+"""a3- else""",
+
+"""a4- else""",
+
+"""a5- else""",
+
+"""a6- else""",
+
+"""a-7""",
+
+"""a8- else""",
 
     tags.ifOpen, tags.ifClose, tags.foreachOpen, tags.foreachClose, tags.open, tags.close, tags.endIf, tags.endFor, tags.tabPlaceholder
 

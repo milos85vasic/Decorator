@@ -282,3 +282,51 @@ x2 else
         <endif/>
 <endif/>
 
+<if>!enterprise || (company && enterprise)</if>
+a-1
+<else>
+a1- else
+<endif/>
+
+<if>enterprise || (company && enterprise)</if>
+a-2
+<else>
+a2- else
+<endif/>
+
+<if>enterprise || (company && !enterprise)</if>
+a-3
+<else>
+a3- else
+<endif/>
+
+<if>!enterprise && (company && !enterprise)</if>
+a-4
+<else>
+a4- else
+<endif/>
+
+<if>!enterprise && company</if>
+a-5
+<else>
+a5- else
+<endif/>
+
+<if>!enterprise</if>
+a-6
+<else>
+a6- else
+<endif/>
+
+<if>!enterprise && !company</if>
+a-7
+<else>
+a7- else
+<endif/>
+
+<if>company</if>
+a-8
+<else>
+a8- else
+<endif/>
+
