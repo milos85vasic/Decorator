@@ -75,7 +75,11 @@ object MainTestAssertions {
 """        <p>If 8b not ok.</p>""",
 
 """            We have company!
-                And the rest of text..."""
+                And the rest of text...""",
+
+"""x1""",
+
+"""x2"""
 
     )
 
@@ -188,6 +192,10 @@ object MainTestAssertions {
 """            Never happen 3""",
 
 """                Never happen 4""",
+
+"""x1 else""",
+
+"""x2 else""",
 
     tags.ifOpen, tags.ifClose, tags.foreachOpen, tags.foreachClose, tags.open, tags.close, tags.endIf, tags.endFor, tags.tabPlaceholder
 

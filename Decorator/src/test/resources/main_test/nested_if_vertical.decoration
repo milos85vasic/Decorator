@@ -229,10 +229,16 @@
     Never happen 2
 <endif/>
 
-<if>enterprise || company</if> // FIXME: Does not resolve condition properly!
-dfdfdfdfd
+<if>enterprise || company</if>
+x1
 <else>
-xxx
+x1 else
+<endif/>
+
+<if>company || enterprise</if>
+x2
+<else>
+x2 else
 <endif/>
 
 <if>enterprise && !company</if>
