@@ -96,11 +96,21 @@ class MainTest {
     fun assertHtml(html: String) {
         MainTestAssertions.positiveAssertions.forEach {
             item ->
-            Assert.assertTrue(item in html)
+            val result = item in html
+            if (!result) {
+                logger.e("", "Assert true failed: $item")
+                logger.v("", html)
+            }
+            Assert.assertTrue(result)
         }
         MainTestAssertions.negativeAssertions.forEach {
             item ->
-            Assert.assertFalse(item in html)
+            val result = item in html
+            if (result) {
+                logger.e("", "Assert false failed: $item")
+                logger.v("", html)
+            }
+            Assert.assertFalse(result)
         }
     }
 
