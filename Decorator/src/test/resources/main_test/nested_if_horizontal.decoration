@@ -1,10 +1,6 @@
 <if>company</if><if>company2</if>        <p>@@@ If 1b ok.</p><endif/><endif/>
 
-<if>company</if>
-    <if>!company2</if>
-        <p>@@@ If 1b2 ok.</p>
-    <endif/>
-<endif/>
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/> // TODO: Fixme: Solve '!' problem.
 
 <if>!company</if>
     <if>company2</if>
