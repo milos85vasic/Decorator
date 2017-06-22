@@ -4,69 +4,21 @@
 
 <if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
 
-<if>!company</if>
-    <if>company2</if>
-        <p>@@@ If 1b3 ok.</p>
-    <endif/>
-<endif/>
+<if>!company</if><if>company2</if>        <p>@@@ If 1b3 ok.</p><endif/><endif/>
 
 ---
 
-<if>company</if>
-    <if>company2</if>
-        <p>@@@ If 2 ok.</p>
-    <else>
-        <p>@@@ If 2 not ok.</p>
-    <endif/>
-<else>
-    <p>@@@ If 2 not not ok.</p>
-<endif/>
+<if>company</if><if>company2</if>        <p>@@@ If 2 ok.</p><else>        <p>@@@ If 2 not ok.</p><endif/><else>    <p>@@@ If 2 not not ok.</p><endif/>
 
-<if>company</if>
-    <p>@@@ If 2k ok.</p>
-<else>
-    <if>company2</if>
-        <p>@@@ If 2k2 ok.</p>
-    <else>
-        <p>@@@ If 2k not ok.</p>
-    <endif/>
-<endif/>
+<if>company</if>    <p>@@@ If 2k ok.</p><else><if>company2</if>        <p>@@@ If 2k2 ok.</p><else>        <p>@@@ If 2k not ok.</p><endif/><endif/>
 
-<if>company</if>
-    <if>company2</if>
-        <p>@@@ If 2l ok.</p>
-    <else>
-        <p>@@@ If 2l not ok.</p>
-    <endif/>
-<else>
-    <if>company2</if>
-        <p>@@@ If 2l2 ok.</p>
-    <else>
-        <p>@@@ If 2l2 not ok.</p>
-    <endif/>
-<endif/>
+<if>company</if><if>company2</if>        <p>@@@ If 2l ok.</p><else>        <p>@@@ If 2l not ok.</p><endif/><else><if>company2</if>        <p>@@@ If 2l2 ok.</p><else>        <p>@@@ If 2l2 not ok.</p><endif/><endif/>
 
 ---
 
-<if>!company</if>
-    <if>company2</if>
-        <p>@@@ If 2b ok.</p>
-    <else>
-        <p>@@@ If 2b not ok.</p>
-    <endif/>
-<else>
-    <p>@@@ If 2b2 not ok.</p>
-<endif/>
+<if>!company</if><if>company2</if>        <p>@@@ If 2b ok.</p><else>        <p>@@@ If 2b not ok.</p><endif/><else>    <p>@@@ If 2b2 not ok.</p><endif/>
 
-<if>!company</if>
-    <p>@@@ If 2c ok.</p>
-<else>
-    <if>company2</if>
-        <p>@@@ If 2c2 ok.</p>
-    <else>
-        <p>@@@ If 2c not ok.</p>
-    <endif/>
-<endif/>
+<if>!company</if>    <p>@@@ If 2c ok.</p><else><if>company2</if>        <p>@@@ If 2c2 ok.</p><else>        <p>@@@ If 2c not ok.</p><endif/><endif/>
 
 <if>!company</if>
     <if>company2</if>
