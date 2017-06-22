@@ -41,7 +41,8 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments
                 .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
                 .replace("\n", tags.newLine)
-                .replace(tags.ifClose, "${tags.ifClose}${tags.tabPlaceholder}")
+                .replace(tags.ifClose, "${tags.ifClose}${tags.tabPlaceholder}") // Preventing regex pass ok
+                .replace(tags.elseTag, "${tags.elseTag}${tags.tabPlaceholder}")
 
         // Parse 'For'
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")

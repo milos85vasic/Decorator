@@ -291,4 +291,76 @@ s 7
 
 <if>company</if> mm  <if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
 
--- E N D
+-- -- --
+
+<if>company</if><else><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>company2</if>ggg<endif/><endif/><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg2<endif/><endif/> <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>company2</if>ggg2<endif/><endif/> <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p> <else> sss<endif/>  <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><endif/>     <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else>sss2<endif/>     <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else>x1<endif/> <endif/>
+
+-
+
+<if>company</if> <if>!company2</if>        <p>@@@ If 1b2 ok.</p><else>x2<endif/><endif/>
+
+-
+
+<if>company</if>    <if>!company2</if>        <p>@@@ If 1b2 ok.</p><else>x3<endif/><endif/>
+
+-
+
+<if>company</if>    <if>!company2</if>        <p>@@@ If 1b2 ok.</p><else>x4<endif/><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/>mm<endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/> mm<endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/> mm <endif/>
+
+-
+
+<if>company</if>mm<if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/><endif/>
+
+-
+
+<if>company</if> mm<if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/><endif/>
+
+-
+
+<if>company</if> mm  <if>!company2</if>        <p>@@@ If 1b2 ok.</p><else><if>!company2</if>ggg<endif/><endif/><endif/>
+
+-- END
