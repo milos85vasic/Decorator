@@ -1,326 +1,326 @@
 <if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
 
-//<if>company</if><if>company2</if>        <p>@@@ If 1b ok.</p><endif/><endif/>
-//
-//<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/> // TODO: Fixme: Solve '!' problem.
-//
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>@@@ If 1b3 ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
-//<if>company</if>
-//    <if>company2</if>
-//        <p>@@@ If 2 ok.</p>
-//    <else>
-//        <p>@@@ If 2 not ok.</p>
-//    <endif/>
-//<else>
-//    <p>@@@ If 2 not not ok.</p>
-//<endif/>
-//
-//<if>company</if>
-//    <p>@@@ If 2k ok.</p>
-//<else>
-//    <if>company2</if>
-//        <p>@@@ If 2k2 ok.</p>
-//    <else>
-//        <p>@@@ If 2k not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//<if>company</if>
-//    <if>company2</if>
-//        <p>@@@ If 2l ok.</p>
-//    <else>
-//        <p>@@@ If 2l not ok.</p>
-//    <endif/>
-//<else>
-//    <if>company2</if>
-//        <p>@@@ If 2l2 ok.</p>
-//    <else>
-//        <p>@@@ If 2l2 not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>@@@ If 2b ok.</p>
-//    <else>
-//        <p>@@@ If 2b not ok.</p>
-//    <endif/>
-//<else>
-//    <p>@@@ If 2b2 not ok.</p>
-//<endif/>
-//
-//<if>!company</if>
-//    <p>@@@ If 2c ok.</p>
-//<else>
-//    <if>company2</if>
-//        <p>@@@ If 2c2 ok.</p>
-//    <else>
-//        <p>@@@ If 2c not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>@@@ If 2d ok.</p>
-//    <else>
-//        <p>@@@ If 2d not ok.</p>
-//    <endif/>
-//<else>
-//    <if>company2</if>
-//        <p>@@@ If 2d2 ok.</p>
-//    <else>
-//        <p>@@@ If 2d2 not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
-//<if>!company</if>
-//    <if>!company2</if>
-//        <p>@@@ If 2e ok.</p>
-//    <else>
-//        <p>@@@ If 2e not ok.</p>
-//    <endif/>
-//<else>
-//    <p>@@@ If 2e2 not ok.</p>
-//<endif/>
-//
-//<if>!company</if>
-//    <p>@@@ If 2f ok.</p>
-//<else>
-//    <if>!company2</if>
-//        <p>@@@ If 2f2 ok.</p>
-//    <else>
-//        <p>@@@ If 2f2 not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//<if>!company</if>
-//    <if>!company2</if>
-//        <p>@@@ If 2g ok.</p>
-//    <else>
-//        <p>@@@ If 2g not ok.</p>
-//    <endif/>
-//<else>
-//    <if>!company2</if>
-//        <p>@@@ If 2g2 ok.</p>
-//    <else>
-//        <p>@@@ If 2g2 not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
-//<if>company</if>
-//    <if>!company2</if>
-//        <p>@@@ If 2h ok.</p>
-//    <else>
-//        <p>@@@ If 2h not ok.</p>
-//    <endif/>
-//<else>
-//    <p>@@@ If 2h2 not ok.</p>
-//<endif/>
-//
-//<if>company</if>
-//    <p>@@@ If 2i ok.</p>
-//<else>
-//    <if>!company2</if>
-//        <p>@@@ If 2i2 ok.</p>
-//    <else>
-//        <p>@@@ If 2i not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//<if>company</if>
-//    <if>!company2</if>
-//        <p>@@@ If 2j ok.</p>
-//    <else>
-//        <p>@@@ If 2j not ok.</p>
-//    <endif/>
-//<else>
-//    <if>!company2</if>
-//        <p>@@@ If 2j2 ok.</p>
-//    <else>
-//        <p>@@@ If 2j2 not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>@@@ If 3b ok.</p>
-//    <endif/>
-//<endif/>
-//
-//<if>!company</if>
-//    <if>!company2</if>
-//        <p>@@@ If 3b2 ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
-//<if>enterprise</if>
-//    <if>enterprise</if>
-//        <p>@@@ If 5b ok.</p>
-//    <endif/>
-//<endif/>
-//
-//<if>enterprise</if>
-//    <if>enterprise</if>
-//        <p>@@@ If 6b ok.</p>
-//    <else>
-//        <p>@@@ If 6b not ok.</p>
-//            <endif/>
-//<endif/>
-//
-//<if>!enterprise</if>
-//<p>@@@ If 7b ok.</p>
-//<else>
-//                <if>enterprise          </if>
-//        <p>@@@ If 7b2 ok.</p>
-//<else>
-//           <p>@@@ If 7b3 ok.</p>
-//                        <endif/>
-//<endif/>
-//
-//<if>enterprise</if>
-//<p>@@@ If 8b ok.</p>
-//<else>
-//    <if>!enterprise</if>
-//            <if>!enterprise</if>
-//       <if>!enterprise</if>
-//        <p>@@@ If 8b not ok.</p>
-//        <endif/><endif/><endif/>
-//<endif/>
-//
-//<if>!enterprise</if>
-//    <if>enterprise</if>
-//        @@@ Never happen
-//    <else>
-//        <if>company</if>
-//            @@@ We have company!
-//            <if>!company</if>
-//                @@@ Never happen 4
-//            <else>
-//                @@@ And the rest of text...
-//            <endif/>
-//        <else>
-//            @@@ Never happen 3
-//        <endif/>
-//    <endif/>
-//<else>
-//    @@@ Never happen 2
-//<endif/>
-//
-//<if>enterprise || company</if>
-//@@@ x1
-//<else>
-//@@@ x1 else
-//<endif/>
-//
-//<if>company || enterprise</if>
-//@@@ x2
-//<else>
-//@@@ x2 else
-//<endif/>
-//
-//<if>enterprise && !company</if>
-//    <if>enterprise</if>
-//        @@@ Never happen B
-//    <else>
-//        <if>company</if>
-//            @@@ We have company!  B
-//            <if>!company</if>
-//                @@@ Never happen 4 B
-//            <else>
-//                @@@ And the rest of text... Bs
-//            <endif/>
-//        <else>
-//            @@@ Never happen 3 B
-//        <endif/>
-//    <endif/>
-//<else>
-//    <if>enterprise || company</if>
-//            <if>company && !enterprise</if>
-//                            @@@ We have company! B
-//                            <if>!company || </if>
-//                                @@@ Never happen 4 B
-//                            <else>
-//                                @@@ And the rest of text... B
-//                            <endif/>
-//                        <else>
-//                            @@@ Never happen 3 B
-//                        <endif/>
-//        <else>
-//            <if>company</if>
-//                @@@ We have company! B2s
-//                <if>!company</if>
-//                    @@@ Never happen 4 B2s
-//                <else>
-//                    @@@ And the rest of text... B2s
-//                <endif/>
-//            <else>
-//                @@@ Never happen 3 B2s
-//            <endif/>
-//        <endif/>
-//<endif/>
-//
-//<if>!enterprise || (company && enterprise)</if>
-//@@@ a-1
-//<else>
-//@@@ a1- else
-//<endif/>
-//
-//<if>enterprise || (company && enterprise)</if>
-//@@@ a-2
-//<else>
-//@@@ a2- else
-//<endif/>
-//
-//<if>enterprise || (company && !enterprise)</if>
-//@@@ a-3
-//<else>
-//@@@ a3- else
-//<endif/>
-//
-//<if>!enterprise && (company && !enterprise)</if>
-//@@@ a-4
-//<else>
-//@@@ a4- else
-//<endif/>
-//
-//<if>!enterprise && company</if>
-//@@@ a-5
-//<else>
-//@@@ a5- else
-//<endif/>
-//
-//<if>!enterprise</if>
-//@@@ a-6
-//<else>
-//@@@ a6- else
-//<endif/>
-//
-//<if>!enterprise && !company</if>
-//@@@ a-7
-//<else>
-//@@@ a7- else
-//<endif/>
-//
-//<if>company</if>
-//@@@ a-8
-//<else>
-//@@@ a8- else
-//<endif/>
+<if>company</if><if>company2</if>        <p>@@@ If 1b ok.</p><endif/><endif/>
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+<if>!company</if>
+    <if>company2</if>
+        <p>@@@ If 1b3 ok.</p>
+    <endif/>
+<endif/>
+
+---
+
+<if>company</if>
+    <if>company2</if>
+        <p>@@@ If 2 ok.</p>
+    <else>
+        <p>@@@ If 2 not ok.</p>
+    <endif/>
+<else>
+    <p>@@@ If 2 not not ok.</p>
+<endif/>
+
+<if>company</if>
+    <p>@@@ If 2k ok.</p>
+<else>
+    <if>company2</if>
+        <p>@@@ If 2k2 ok.</p>
+    <else>
+        <p>@@@ If 2k not ok.</p>
+    <endif/>
+<endif/>
+
+<if>company</if>
+    <if>company2</if>
+        <p>@@@ If 2l ok.</p>
+    <else>
+        <p>@@@ If 2l not ok.</p>
+    <endif/>
+<else>
+    <if>company2</if>
+        <p>@@@ If 2l2 ok.</p>
+    <else>
+        <p>@@@ If 2l2 not ok.</p>
+    <endif/>
+<endif/>
+
+---
+
+<if>!company</if>
+    <if>company2</if>
+        <p>@@@ If 2b ok.</p>
+    <else>
+        <p>@@@ If 2b not ok.</p>
+    <endif/>
+<else>
+    <p>@@@ If 2b2 not ok.</p>
+<endif/>
+
+<if>!company</if>
+    <p>@@@ If 2c ok.</p>
+<else>
+    <if>company2</if>
+        <p>@@@ If 2c2 ok.</p>
+    <else>
+        <p>@@@ If 2c not ok.</p>
+    <endif/>
+<endif/>
+
+<if>!company</if>
+    <if>company2</if>
+        <p>@@@ If 2d ok.</p>
+    <else>
+        <p>@@@ If 2d not ok.</p>
+    <endif/>
+<else>
+    <if>company2</if>
+        <p>@@@ If 2d2 ok.</p>
+    <else>
+        <p>@@@ If 2d2 not ok.</p>
+    <endif/>
+<endif/>
+
+---
+
+<if>!company</if>
+    <if>!company2</if>
+        <p>@@@ If 2e ok.</p>
+    <else>
+        <p>@@@ If 2e not ok.</p>
+    <endif/>
+<else>
+    <p>@@@ If 2e2 not ok.</p>
+<endif/>
+
+<if>!company</if>
+    <p>@@@ If 2f ok.</p>
+<else>
+    <if>!company2</if>
+        <p>@@@ If 2f2 ok.</p>
+    <else>
+        <p>@@@ If 2f2 not ok.</p>
+    <endif/>
+<endif/>
+
+<if>!company</if>
+    <if>!company2</if>
+        <p>@@@ If 2g ok.</p>
+    <else>
+        <p>@@@ If 2g not ok.</p>
+    <endif/>
+<else>
+    <if>!company2</if>
+        <p>@@@ If 2g2 ok.</p>
+    <else>
+        <p>@@@ If 2g2 not ok.</p>
+    <endif/>
+<endif/>
+
+---
+
+<if>company</if>
+    <if>!company2</if>
+        <p>@@@ If 2h ok.</p>
+    <else>
+        <p>@@@ If 2h not ok.</p>
+    <endif/>
+<else>
+    <p>@@@ If 2h2 not ok.</p>
+<endif/>
+
+<if>company</if>
+    <p>@@@ If 2i ok.</p>
+<else>
+    <if>!company2</if>
+        <p>@@@ If 2i2 ok.</p>
+    <else>
+        <p>@@@ If 2i not ok.</p>
+    <endif/>
+<endif/>
+
+<if>company</if>
+    <if>!company2</if>
+        <p>@@@ If 2j ok.</p>
+    <else>
+        <p>@@@ If 2j not ok.</p>
+    <endif/>
+<else>
+    <if>!company2</if>
+        <p>@@@ If 2j2 ok.</p>
+    <else>
+        <p>@@@ If 2j2 not ok.</p>
+    <endif/>
+<endif/>
+
+---
+
+<if>!company</if>
+    <if>company2</if>
+        <p>@@@ If 3b ok.</p>
+    <endif/>
+<endif/>
+
+<if>!company</if>
+    <if>!company2</if>
+        <p>@@@ If 3b2 ok.</p>
+    <endif/>
+<endif/>
+
+---
+
+<if>enterprise</if>
+    <if>enterprise</if>
+        <p>@@@ If 5b ok.</p>
+    <endif/>
+<endif/>
+
+<if>enterprise</if>
+    <if>enterprise</if>
+        <p>@@@ If 6b ok.</p>
+    <else>
+        <p>@@@ If 6b not ok.</p>
+            <endif/>
+<endif/>
+
+<if>!enterprise</if>
+<p>@@@ If 7b ok.</p>
+<else>
+                <if>enterprise          </if>
+        <p>@@@ If 7b2 ok.</p>
+<else>
+           <p>@@@ If 7b3 ok.</p>
+                        <endif/>
+<endif/>
+
+<if>enterprise</if>
+<p>@@@ If 8b ok.</p>
+<else>
+    <if>!enterprise</if>
+            <if>!enterprise</if>
+       <if>!enterprise</if>
+        <p>@@@ If 8b not ok.</p>
+        <endif/><endif/><endif/>
+<endif/>
+
+<if>!enterprise</if>
+    <if>enterprise</if>
+        @@@ Never happen
+    <else>
+        <if>company</if>
+            @@@ We have company!
+            <if>!company</if>
+                @@@ Never happen 4
+            <else>
+                @@@ And the rest of text...
+            <endif/>
+        <else>
+            @@@ Never happen 3
+        <endif/>
+    <endif/>
+<else>
+    @@@ Never happen 2
+<endif/>
+
+<if>enterprise || company</if>
+@@@ x1
+<else>
+@@@ x1 else
+<endif/>
+
+<if>company || enterprise</if>
+@@@ x2
+<else>
+@@@ x2 else
+<endif/>
+
+<if>enterprise && !company</if>
+    <if>enterprise</if>
+        @@@ Never happen B
+    <else>
+        <if>company</if>
+            @@@ We have company!  B
+            <if>!company</if>
+                @@@ Never happen 4 B
+            <else>
+                @@@ And the rest of text... Bs
+            <endif/>
+        <else>
+            @@@ Never happen 3 B
+        <endif/>
+    <endif/>
+<else>
+    <if>enterprise || company</if>
+            <if>company && !enterprise</if>
+                            @@@ We have company! B
+                            <if>!company || </if>
+                                @@@ Never happen 4 B
+                            <else>
+                                @@@ And the rest of text... B
+                            <endif/>
+                        <else>
+                            @@@ Never happen 3 B
+                        <endif/>
+        <else>
+            <if>company</if>
+                @@@ We have company! B2s
+                <if>!company</if>
+                    @@@ Never happen 4 B2s
+                <else>
+                    @@@ And the rest of text... B2s
+                <endif/>
+            <else>
+                @@@ Never happen 3 B2s
+            <endif/>
+        <endif/>
+<endif/>
+
+<if>!enterprise || (company && enterprise)</if>
+@@@ a-1
+<else>
+@@@ a1- else
+<endif/>
+
+<if>enterprise || (company && enterprise)</if>
+@@@ a-2
+<else>
+@@@ a2- else
+<endif/>
+
+<if>enterprise || (company && !enterprise)</if>
+@@@ a-3
+<else>
+@@@ a3- else
+<endif/>
+
+<if>!enterprise && (company && !enterprise)</if>
+@@@ a-4
+<else>
+@@@ a4- else
+<endif/>
+
+<if>!enterprise && company</if>
+@@@ a-5
+<else>
+@@@ a5- else
+<endif/>
+
+<if>!enterprise</if>
+@@@ a-6
+<else>
+@@@ a6- else
+<endif/>
+
+<if>!enterprise && !company</if>
+@@@ a-7
+<else>
+@@@ a7- else
+<endif/>
+
+<if>company</if>
+@@@ a-8
+<else>
+@@@ a8- else
+<endif/>
 

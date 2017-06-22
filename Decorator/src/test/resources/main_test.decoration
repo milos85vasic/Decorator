@@ -1,17 +1,17 @@
-//<dc>decorator.describe</dc>
-//<?xml version="1.0" encoding="UTF-8"?>
-//<!DOCTYPE html PUBLIC <dc>decorator.doctype</dc>>
-//<html <dc>decorator.xmlns</dc> xml:lang="en" lang="en">
-//<head>
-//  <title>Main Decorator test</title>
-//</head>
-//<body>
+<dc>decorator.describe</dc>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC <dc>decorator.doctype</dc>>
+<html <dc>decorator.xmlns</dc> xml:lang="en" lang="en">
+<head>
+  <title>Main Decorator test</title>
+</head>
+<body>
 
-//<include>main_test/header</include>
-//<include>main_test/plain_if_vertical</include>
-//<include>main_test/plain_if_horizontal</include>
-//<include>main_test/nested_if_vertical</include>
+<include>main_test/header</include>
+<include>main_test/plain_if_vertical</include>
+<include>main_test/plain_if_horizontal</include>
+<include>main_test/nested_if_vertical</include>
 <include>main_test/nested_if_horizontal</include>
 
-//</body>
-//</html>
+</body>
+</html>
