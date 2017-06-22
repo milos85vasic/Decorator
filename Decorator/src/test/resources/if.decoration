@@ -232,3 +232,63 @@ Repeating - END
 s 7
 <endif/>
 ---
+
+<if>company</if><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/> <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/>  <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/>     <endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/> <endif/>
+
+-
+
+<if>company</if> <if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-
+
+<if>company</if>    <if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-
+
+<if>company</if>    <if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/>mm<endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/> mm<endif/>
+
+-
+
+<if>company</if><if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/> mm <endif/>
+
+-
+
+<if>company</if>mm<if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-
+
+<if>company</if> mm<if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-
+
+<if>company</if> mm  <if>!company2</if>        <p>@@@ If 1b2 ok.</p><endif/><endif/>
+
+-- E N D

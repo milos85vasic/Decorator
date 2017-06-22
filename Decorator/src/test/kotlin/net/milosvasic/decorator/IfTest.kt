@@ -19,6 +19,8 @@ class IfTest {
                 .append("does_not_exist", "")
                 .append("something", "nice!")
                 .append("person", "John")
+                .append("company", "has value")
+                .append("company2", "has value too")
                 .build()
 
         var html = ""
@@ -133,7 +135,28 @@ class IfTest {
         Assert.assertEquals("Repeating - END", lines[90])
         Assert.assertEquals("s 7", lines[91])
         Assert.assertEquals("---", lines[92])
-        Assert.assertEquals(93, lines.size)
+        Assert.assertEquals("-", lines[93])
+        Assert.assertEquals("-", lines[94])
+        Assert.assertEquals("-", lines[95])
+        Assert.assertEquals("-", lines[96])
+        Assert.assertEquals("-", lines[97])
+        Assert.assertEquals("-", lines[98])
+        Assert.assertEquals("-", lines[99])
+        Assert.assertEquals("-", lines[100])
+        Assert.assertEquals("-", lines[101])
+        Assert.assertEquals("mm", lines[102])
+        Assert.assertEquals("-", lines[103])
+        Assert.assertEquals(" mm", lines[104])
+        Assert.assertEquals("-", lines[105])
+        Assert.assertEquals(" mm ", lines[106])
+        Assert.assertEquals("-", lines[107])
+        Assert.assertEquals("mm", lines[108])
+        Assert.assertEquals("-", lines[109])
+        Assert.assertEquals(" mm", lines[110])
+        Assert.assertEquals("-", lines[111])
+        Assert.assertEquals(" mm  ", lines[112])
+        Assert.assertEquals("-- E N D", lines[113])
+        Assert.assertEquals(114, lines.size)
     }
 
 }
