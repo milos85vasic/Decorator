@@ -41,6 +41,7 @@ class Decorator(template: String, data: Data) : Template(template, data) {
                 .replace(Regex("${tags.lineComment}.*"), "") // Clean up single line comments
                 .replace(Regex("(?m)^[ \t]*\r?\n"), "") // Clean up empty lines
                 .replace("\n", tags.newLine)
+                .replace(tags.ifClose, "${tags.ifClose}${tags.tabPlaceholder}")
 
         // Parse 'For'
         val patternFor = Pattern.compile("${tags.foreachOpen}(.+?)${tags.foreachClose}(.+?)${tags.endFor}")
@@ -137,45 +138,41 @@ class Decorator(template: String, data: Data) : Template(template, data) {
 
         // Parse 'If'
         for (x in highestIfIndex downTo 1) {
-            listOf(true, false).forEach {
-                empty ->
-                val expr = if (empty) "()" else "(.+?)"
-                val pattern: String
+            val pattern: String
+            if (x == 1) {
+                pattern = "${tags.ifOpen}(.+?)${tags.ifClose}(.+?)${tags.endIf}"
+            } else {
+                pattern = "${tags.tagStart}if_$x${tags.tagEnd}(.+?)${tags.tagClosedStart}if_$x${tags.tagEnd}(.+?)${tags.tagStart}endif_$x${tags.tagClosedEnd}"
+            }
+            val patternIf = Pattern.compile(pattern)
+            var matcherIf = patternIf.matcher(content)
+            while (matcherIf.find()) {
+                val g1 = matcherIf.group(1)
+                val g2 = matcherIf.group(2)
+                val ctx = g1.trim()
+                val result = resolveIf(ctx)
+                val replace: String
                 if (x == 1) {
-                    pattern = "${tags.ifOpen}(.+?)${tags.ifClose}$expr${tags.endIf}"
+                    replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
                 } else {
-                    pattern = "${tags.tagStart}if_$x${tags.tagEnd}(.+?)${tags.tagClosedStart}if_$x${tags.tagEnd}$expr${tags.tagStart}endif_$x${tags.tagClosedEnd}"
+                    replace = "${tags.tagStart}if_$x${tags.tagEnd}$g1${tags.tagClosedStart}if_$x${tags.tagEnd}$g2${tags.tagStart}endif_$x${tags.tagClosedEnd}"
                 }
-                val patternIf = Pattern.compile(pattern)
-                var matcherIf = patternIf.matcher(content)
-                while (matcherIf.find()) {
-                    val g1 = matcherIf.group(1)
-                    val g2 = matcherIf.group(2)
-                    val ctx = g1.trim()
-                    val result = resolveIf(ctx)
-                    val replace: String
-                    if (x == 1) {
-                        replace = "${tags.ifOpen}$g1${tags.ifClose}$g2${tags.endIf}"
+                if (result) {
+                    if (g2.contains(tags.elseTag)) {
+                        val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
+                        content = content.replaceFirst(replace, replaceWith)
                     } else {
-                        replace = "${tags.tagStart}if_$x${tags.tagEnd}$g1${tags.tagClosedStart}if_$x${tags.tagEnd}$g2${tags.tagStart}endif_$x${tags.tagClosedEnd}"
+                        content = content.replaceFirst(replace, g2)
                     }
-                    if (result) {
-                        if (g2.contains(tags.elseTag)) {
-                            val replaceWith = g2.substring(0, g2.indexOf(tags.elseTag))
-                            content = content.replaceFirst(replace, replaceWith)
-                        } else {
-                            content = content.replaceFirst(replace, g2)
-                        }
+                } else {
+                    if (g2.contains(tags.elseTag)) {
+                        val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
+                        content = content.replaceFirst(replace, replaceWith)
                     } else {
-                        if (g2.contains(tags.elseTag)) {
-                            val replaceWith = g2.substring(g2.indexOf(tags.elseTag) + tags.elseTag.length, g2.length)
-                            content = content.replaceFirst(replace, replaceWith)
-                        } else {
-                            content = content.replaceFirst(replace, "")
-                        }
+                        content = content.replaceFirst(replace, "")
                     }
-                    matcherIf = patternIf.matcher(content)
                 }
+                matcherIf = patternIf.matcher(content)
             }
         }
         // Parse 'If' - END
