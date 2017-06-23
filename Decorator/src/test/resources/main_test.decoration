@@ -12,6 +12,7 @@
 <include>main_test/plain_if_horizontal</include>
 <include>main_test/nested_if_vertical</include>
 <include>main_test/nested_if_horizontal</include>
+<include>main_test/nested_if_with_for</include>
 
 </body>
 </html>
