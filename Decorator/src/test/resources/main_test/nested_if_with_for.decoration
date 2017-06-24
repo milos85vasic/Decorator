@@ -6,12 +6,22 @@
     <endif/>
 <endif/>
 
-//<if>company</if>
-//<p>If 2 ok.</p>
-//<else>
-//<p>If 2 not ok.</p>
-//<endif/>
-//
+<if>company</if>
+    <foreach>skills </foreach>
+<t/><t/><t/>[2] -> <index>: <dc> <item></dc>
+    <endfor/>
+<else>
+    <p>[2] -> skills[0]</p>
+<endif/>
+
+<if>    enterprise</if>
+    <foreach>   skills</foreach>
+<t/><t/><t/>[3] -> <index>: <dc> <item></dc>
+    <endfor/>
+<else>
+<t/><p>[3] -> <dc>skills[0]</dc></p>
+<endif/>
+
 //<if>!company</if>
 //<p>If 3 ok.</p>
 //<endif/>
