@@ -22,10 +22,12 @@
 <t/><p>[3] -> <dc>skills[0]</dc></p>
 <endif/>
 
-//<if>!company</if>
-//<p>If 3 ok.</p>
-//<endif/>
-//
+<if>!company</if>
+    <foreach>skills</foreach>
+<t/><t/>[4] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>!company</if>
 //<p>If 4 ok.</p>
 //<else>
