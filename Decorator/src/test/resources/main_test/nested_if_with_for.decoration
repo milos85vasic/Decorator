@@ -38,10 +38,12 @@
     <endfor/>
 <endif/>
 
-//<if>enterprise</if>
-//<p>If 5 ok.</p>
-//<endif/>
-//
+<if>enterprise</if>
+    <foreach>skills</foreach>
+<t/><t/>[7] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>enterprise</if>
 //<p>If 6 ok.</p>
 //<else>
