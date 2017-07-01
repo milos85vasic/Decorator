@@ -54,10 +54,12 @@
     <endfor/>
 <endif/>
 
-//<if>!enterprise</if>
-//<p>If 7 ok.</p>
-//<endif/>
-//
+<if>!enterprise</if>
+    <foreach>skills</foreach>
+<t/><t/>[10] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>!enterprise</if>
 //<p>If 8 ok.</p>
 //<else>
