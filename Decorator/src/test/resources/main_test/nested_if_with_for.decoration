@@ -60,12 +60,16 @@
     <endfor/>
 <endif/>
 
-//<if>!enterprise</if>
-//<p>If 8 ok.</p>
-//<else>
-//<p>If 8 not ok.</p>
-//<endif/>
-//
+<if>!enterprise</if>
+    <foreach>skills</foreach>
+<t/><t/>[11] -> <index>: <dc> <item></dc>
+    <endfor/>
+<else>
+    <foreach>skills</foreach>
+<t/><t/>[12] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>company</if>
 //    <if>company2</if>
 //        <p>If 1b ok.</p>
