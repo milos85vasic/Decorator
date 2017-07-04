@@ -78,12 +78,14 @@
     <endif/>
 <endif/>
 
-//<if>company</if>
-//    <if>!company2</if>
-//        <p>If 1b2 ok.</p>
-//    <endif/>
-//<endif/>
-//
+<if>company</if>
+    <if>!company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[14] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<endif/>
+
 //<if>!company</if>
 //    <if>company2</if>
 //        <p>If 1b3 ok.</p>
