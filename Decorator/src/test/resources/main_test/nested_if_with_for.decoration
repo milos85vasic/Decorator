@@ -95,17 +95,23 @@
 <endif/>
 
 ---
-//
-//<if>company</if>
-//    <if>company2</if>
-//        <p>If 2 ok.</p>
-//    <else>
-//        <p>If 2 not ok.</p>
-//    <endif/>
-//<else>
-//    <p>If 2 not not ok.</p>
-//<endif/>
-//
+
+<if>company</if>
+    <if>company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[16] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <foreach>skills</foreach>
+        <t/><t/>[17] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<else>
+    <foreach>skills</foreach>
+    <t/><t/>[18] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>company</if>
 //    <p>If 2k ok.</p>
 //<else>
