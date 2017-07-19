@@ -152,16 +152,22 @@
 
 ---
 
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>If 2b ok.</p>
-//    <else>
-//        <p>If 2b not ok.</p>
-//    <endif/>
-//<else>
-//    <p>If 2b2 not ok.</p>
-//<endif/>
-//
+<if>!company</if>
+    <if>company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[26] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <foreach>skills</foreach>
+        <t/><t/>[27] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<else>
+    <foreach>skills</foreach>
+    <t/><t/>[28] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>!company</if>
 //    <p>If 2c ok.</p>
 //<else>
