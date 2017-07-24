@@ -184,22 +184,30 @@
     <endif/>
 <endif/>
 
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>If 2d ok.</p>
-//    <else>
-//        <p>If 2d not ok.</p>
-//    <endif/>
-//<else>
-//    <if>company2</if>
-//        <p>If 2d2 ok.</p>
-//    <else>
-//        <p>If 2d2 not ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
+<if>!company</if>
+    <if>company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[32] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <foreach>skills</foreach>
+        <t/><t/>[33] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<else>
+    <if>company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[34] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <foreach>skills</foreach>
+        <t/><t/>[35] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<endif/>
+
+---
+
 //<if>!company</if>
 //    <if>!company2</if>
 //        <p>If 2e ok.</p>
