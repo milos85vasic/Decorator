@@ -264,16 +264,22 @@
 
 ---
 
-//<if>company</if>
-//    <if>!company2</if>
-//        <p>If 2h ok.</p>
-//    <else>
-//        <p>If 2h not ok.</p>
-//    <endif/>
-//<else>
-//    <p>If 2h2 not ok.</p>
-//<endif/>
-//
+<if>company</if>
+    <if>!company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[46] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <foreach>skills</foreach>
+        <t/><t/>[47] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<else>
+    <foreach>skills</foreach>
+    <t/><t/>[48] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>company</if>
 //    <p>If 2i ok.</p>
 //<else>
