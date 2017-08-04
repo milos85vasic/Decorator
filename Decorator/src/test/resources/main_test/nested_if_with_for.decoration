@@ -320,11 +320,14 @@
 
 ---
 
-//<if>!company</if>
-//    <if>company2</if>
-//        <p>If 3b ok.</p>
-//    <endif/>
-//<endif/>
+<if>!company</if>
+    <if>company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[56] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<endif/>
+
 //
 //<if>!company</if>
 //    <if>!company2</if>
