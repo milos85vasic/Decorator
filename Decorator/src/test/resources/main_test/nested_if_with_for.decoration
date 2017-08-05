@@ -328,15 +328,17 @@
     <endif/>
 <endif/>
 
-//
-//<if>!company</if>
-//    <if>!company2</if>
-//        <p>If 3b2 ok.</p>
-//    <endif/>
-//<endif/>
-//
-//---
-//
+
+<if>!company</if>
+    <if>!company2</if>
+        <foreach>skills</foreach>
+        <t/><t/>[57] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<endif/>
+
+---
+
 //<if>enterprise</if>
 //    <if>enterprise</if>
 //        <p>If 5b ok.</p>
