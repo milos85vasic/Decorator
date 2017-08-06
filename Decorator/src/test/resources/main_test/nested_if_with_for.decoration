@@ -339,12 +339,14 @@
 
 ---
 
-//<if>enterprise</if>
-//    <if>enterprise</if>
-//        <p>If 5b ok.</p>
-//    <endif/>
-//<endif/>
-//
+<if>enterprise</if>
+    <if>enterprise</if>
+        <foreach>skills</foreach>
+        <t/><t/>[58] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <endif/>
+<endif/>
+
 //<if>enterprise</if>
 //    <if>enterprise</if>
 //        <p>If 6b ok.</p>
