@@ -347,14 +347,18 @@
     <endif/>
 <endif/>
 
-//<if>enterprise</if>
-//    <if>enterprise</if>
-//        <p>If 6b ok.</p>
-//    <else>
-//        <p>If 6b not ok.</p>
-//            <endif/>
-//<endif/>
-//
+<if>enterprise</if>
+    <if>enterprise</if>
+        <foreach>skills</foreach>
+        <t/><t/>[59] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <foreach>skills</foreach>
+        <t/><t/>[60] -> <index>: <dc> <item></dc>
+        <endfor/>
+            <endif/>
+<endif/>
+
 //<if>!enterprise</if>
 //<p>If 7b ok.</p>
 //<else>
