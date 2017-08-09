@@ -375,16 +375,20 @@
                         <endif/>
 <endif/>
 
-//<if>enterprise</if>
-//<p>If 8b ok.</p>
-//<else>
-//    <if>!enterprise</if>
-//            <if>!enterprise</if>
-//       <if>!enterprise</if>
-//        <p>If 8b not ok.</p>
-//        <endif/><endif/><endif/>
-//<endif/>
-//
+<if>enterprise</if>
+<foreach>skills</foreach>
+<t/><t/>[64] -> <index>: <dc> <item></dc>
+<endfor/>
+<else>
+    <if>!enterprise</if>
+            <if>!enterprise</if>
+       <if>!enterprise</if>
+        <foreach>skills</foreach>
+        <t/><t/>[65] -> <index>: <dc> <item></dc>
+        <endfor/>
+        <endif/><endif/><endif/>
+<endif/>
+
 //<if>!enterprise</if>
 //    <if>enterprise</if>
 //        Never happen
