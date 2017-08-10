@@ -389,25 +389,37 @@
         <endif/><endif/><endif/>
 <endif/>
 
-//<if>!enterprise</if>
-//    <if>enterprise</if>
-//        Never happen
-//    <else>
-//        <if>company</if>
-//            We have company!
-//            <if>!company</if>
-//                Never happen 4
-//            <else>
-//                And the rest of text...
-//            <endif/>
-//        <else>
-//            Never happen 3
-//        <endif/>
-//    <endif/>
-//<else>
-//    Never happen 2
-//<endif/>
-//
+<if>!enterprise</if>
+    <if>enterprise</if>
+        <foreach>skills</foreach>
+        <t/><t/>[66] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <if>company</if>
+            <foreach>skills</foreach>
+            <t/><t/>[67] -> <index>: <dc> <item></dc>
+            <endfor/>
+            <if>!company</if>
+                <foreach>skills</foreach>
+                <t/><t/>[68] -> <index>: <dc> <item></dc>
+                <endfor/>
+            <else>
+                <foreach>skills</foreach>
+                <t/><t/>[69] -> <index>: <dc> <item></dc>
+                <endfor/>
+            <endif/>
+        <else>
+            <foreach>skills</foreach>
+            <t/><t/>[70] -> <index>: <dc> <item></dc>
+            <endfor/>
+        <endif/>
+    <endif/>
+<else>
+    <foreach>skills</foreach>
+    <t/><t/>[71] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>enterprise || company</if>
 //x1
 //<else>
