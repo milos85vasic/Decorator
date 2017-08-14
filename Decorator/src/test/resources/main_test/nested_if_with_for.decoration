@@ -420,12 +420,16 @@
     <endfor/>
 <endif/>
 
-//<if>enterprise || company</if>
-//x1
-//<else>
-//x1 else
-//<endif/>
-//
+<if>enterprise || company</if>
+    <foreach>skills</foreach>
+    <t/><t/>[72] -> <index>: <dc> <item></dc>
+    <endfor/>
+<else>
+    <foreach>skills</foreach>
+    <t/><t/>[73] -> <index>: <dc> <item></dc>
+    <endfor/>
+<endif/>
+
 //<if>company || enterprise</if>
 //x2
 //<else>
