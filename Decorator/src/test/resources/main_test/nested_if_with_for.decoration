@@ -430,12 +430,16 @@
     <endfor/>
 <endif/>
 
-//<if>company || enterprise</if>
-//x2
-//<else>
-//x2 else
-//<endif/>
-//
+<if>company || enterprise</if>
+<foreach>skills</foreach>
+<t/><t/>[74] -> <index>: <dc> <item></dc>
+<endfor/>
+<else>
+<foreach>skills</foreach>
+<t/><t/>[75] -> <index>: <dc> <item></dc>
+<endfor/>
+<endif/>
+
 //<if>enterprise && !company</if>
 //    <if>enterprise</if>
 //        Never happen B
