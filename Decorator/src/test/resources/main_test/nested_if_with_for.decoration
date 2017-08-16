@@ -440,47 +440,73 @@
 <endfor/>
 <endif/>
 
-//<if>enterprise && !company</if>
-//    <if>enterprise</if>
-//        Never happen B
-//    <else>
-//        <if>company</if>
-//            We have company!  B
-//            <if>!company</if>
-//                Never happen 4 B
-//            <else>
-//                And the rest of text... Bs
-//            <endif/>
-//        <else>
-//            Never happen 3 B
-//        <endif/>
-//    <endif/>
-//<else>
-//    <if>enterprise || company</if>
-//            <if>company && !enterprise</if>
-//                            We have company! B
-//                            <if>!company || </if>
-//                                Never happen 4 B
-//                            <else>
-//                                And the rest of text... B
-//                            <endif/>
-//                        <else>
-//                            Never happen 3 B
-//                        <endif/>
-//        <else>
-//            <if>company</if>
-//                We have company! B2s
-//                <if>!company</if>
-//                    Never happen 4 B2s
-//                <else>
-//                    And the rest of text... B2s
-//                <endif/>
-//            <else>
-//                Never happen 3 B2s
-//            <endif/>
-//        <endif/>
-//<endif/>
-//
+<if>enterprise && !company</if>
+    <if>enterprise</if>
+        <foreach>skills</foreach>
+        <t/><t/>[76] -> <index>: <dc> <item></dc>
+        <endfor/>
+    <else>
+        <if>company</if>
+            <foreach>skills</foreach>
+            <t/><t/>[76] -> <index>: <dc> <item></dc>
+            <endfor/>
+            <if>!company</if>
+                <foreach>skills</foreach>
+                <t/><t/>[77] -> <index>: <dc> <item></dc>
+                <endfor/>
+            <else>
+                <foreach>skills</foreach>
+                <t/><t/>[78] -> <index>: <dc> <item></dc>
+                <endfor/>
+            <endif/>
+        <else>
+            <foreach>skills</foreach>
+            <t/><t/>[79] -> <index>: <dc> <item></dc>
+            <endfor/>
+        <endif/>
+    <endif/>
+<else>
+    <if>enterprise || company</if>
+            <if>company && !enterprise</if>
+                            <foreach>skills</foreach>
+                            <t/><t/>[80] -> <index>: <dc> <item></dc>
+                            <endfor/>
+                            <if>!company || </if>
+                                <foreach>skills</foreach>
+                                <t/><t/>[81] -> <index>: <dc> <item></dc>
+                                <endfor/>
+                            <else>
+                                <foreach>skills</foreach>
+                                <t/><t/>[82] -> <index>: <dc> <item></dc>
+                                <endfor/>
+                            <endif/>
+                        <else>
+                            <foreach>skills</foreach>
+                            <t/><t/>[83] -> <index>: <dc> <item></dc>
+                            <endfor/>
+                        <endif/>
+        <else>
+            <if>company</if>
+                <foreach>skills</foreach>
+                <t/><t/>[84] -> <index>: <dc> <item></dc>
+                <endfor/>
+                <if>!company</if>
+                    <foreach>skills</foreach>
+                    <t/><t/>[85] -> <index>: <dc> <item></dc>
+                    <endfor/>
+                <else>
+                    <foreach>skills</foreach>
+                    <t/><t/>[86] -> <index>: <dc> <item></dc>
+                    <endfor/>
+                <endif/>
+            <else>
+                <foreach>skills</foreach>
+                <t/><t/>[87] -> <index>: <dc> <item></dc>
+                <endfor/>
+            <endif/>
+        <endif/>
+<endif/>
+
 //<if>!enterprise || (company && enterprise)</if>
 //a-1
 //<else>
