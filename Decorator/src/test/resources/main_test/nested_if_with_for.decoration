@@ -517,12 +517,16 @@
 <endfor/>
 <endif/>
 
-//<if>enterprise || (company && enterprise)</if>
-//a-2
-//<else>
-//a2- else
-//<endif/>
-//
+<if>enterprise || (company && enterprise)</if>
+<foreach>skills</foreach>
+<t/><t/>[90] -> <index>: <dc> <item></dc>
+<endfor/>
+<else>
+<foreach>skills</foreach>
+<t/><t/>[91] -> <index>: <dc> <item></dc>
+<endfor/>
+<endif/>
+
 //<if>enterprise || (company && !enterprise)</if>
 //a-3
 //<else>
