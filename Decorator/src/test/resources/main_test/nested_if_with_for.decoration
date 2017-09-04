@@ -567,12 +567,16 @@
 <endfor/>
 <endif/>
 
-//<if>!enterprise && !company</if>
-//a-7
-//<else>
-//a7- else
-//<endif/>
-//
+<if>!enterprise && !company</if>
+<foreach>skills</foreach>
+<t/><t/>[100] -> <index>: <dc> <item></dc>
+<endfor/>
+<else>
+<foreach>skills</foreach>
+<t/><t/>[101] -> <index>: <dc> <item></dc>
+<endfor/>
+<endif/>
+
 //<if>company</if>
 //a-8
 //<else>
