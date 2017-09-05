@@ -577,10 +577,14 @@
 <endfor/>
 <endif/>
 
-//<if>company</if>
-//a-8
-//<else>
-//a8- else
-//<endif/>
-//
+<if>company</if>
+<foreach>skills</foreach>
+<t/><t/>[102] -> <index>: <dc> <item></dc>
+<endfor/>
+<else>
+<foreach>skills</foreach>
+<t/><t/>[103] -> <index>: <dc> <item></dc>
+<endfor/>
+<endif/>
+
 
